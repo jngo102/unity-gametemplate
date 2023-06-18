@@ -60,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Builds
-          path: *.zip
+          path: ./*.zip
       - name: Upload Pages artifact
         uses: actions/upload-artifact@v3
         with:
