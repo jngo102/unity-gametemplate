@@ -1,4 +1,5 @@
 name: Build and Deploy
+
 on:
   workflow_dispatch:
   push:
@@ -8,8 +9,10 @@ on:
   pull_request:
     branches:
       - main
+
 env:
   VERSION: 0.0.${{ github.run_number }}
+
 jobs:
   build:
     name: Build Project for ${{ matrix.targetPlatform }}
@@ -28,10 +31,14 @@ jobs:
           - 2022.3.2f1
     steps:
       - name: Checkout repository
+        id: checkout-repo
         uses: actions/checkout@v3
         with:
           lfs: true
-      - uses: actions/cache@v3
+
+      - name: Cache library
+        id: cache-library
+        uses: actions/cache@v3
         with:
           path: Library
           key: Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-${{ hashFiles(matrix.projectPath) }}
@@ -39,6 +46,7 @@ jobs:
             Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-
             Library-${{ matrix.projectPath }}-
             Library-
+
       # - name: Run tests
       #   id: run-tests
       #   uses: game-ci/unity-test-runner@v2
@@ -46,25 +54,29 @@ jobs:
       #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
       #   with:
       #     githubToken: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build project
+        id: build-project
         uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
           unityVersion: ${{ matrix.unityVersion }}
+
       - name: Zip builds
-        run: zip -r ${{ matrix.targetPlatform }}.zip build/${{ matrix.targetPlatform }}/*
+        id: zip-builds
+        run: |
+          cd build/${{ matrix.targetPlatform }}
+          zip -r ../../${{ matrix.targetPlatform }}.zip *
+
       - name: Upload artifacts
+        id: upload-builds
         uses: actions/upload-artifact@v3
         with:
           name: Builds
           path: ./*.zip
-      - name: Upload Pages artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: github-pages
-          path: build/WebGL
+
   create-release:
     needs: build
     runs-on: ubuntu-latest
@@ -81,6 +93,7 @@ jobs:
           release_name: Release v${{ env.VERSION }}
           draft: false
           prerelease: false
+          
   upload-assets:
     needs: create-release
     runs-on: ubuntu-latest
@@ -91,7 +104,7 @@ jobs:
           - { platform: StandaloneOSX, name: macOS }
           - { platform: StandaloneLinux64, name: Linux }
     steps:
-      - name: Download artifacts
+      - name: Download artifact
         uses: actions/download-artifact@v3
         with:
           name: Builds
@@ -118,13 +131,18 @@ jobs:
           - { platform: WebGL, channel: html5 }
     steps:
       - name: Checkout
+        id: checkout-repo
         uses: actions/checkout@v3
-      - name: Download artifacts
+
+      - name: Download artifact
+        id: download-builds
         uses: actions/download-artifact@v3
         with:
           name: Builds
           path: ./
+
       - name: Deploy to Itch.io
+        id: deploy-itch
         uses: josephbmanley/butler-publish-itchio-action@master
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
@@ -132,6 +150,7 @@ jobs:
           ITCH_GAME: ${{ secrets.ITCH_GAME }}
           ITCH_USER: ${{ secrets.ITCH_USER }}
           PACKAGE: ${{ matrix.os.platform }}.zip
+
   deploy-pages:
     needs: build
     permissions: write-all
@@ -141,13 +160,25 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - name: Checkout
+        id: checkout-repo
         uses: actions/checkout@v3
-      - name: Download artifacts
+
+      - name: Download artifact
+        id: download-builds
         uses: actions/download-artifact@v3
         with:
-          name: github-pages
-          path: github-pages
+          name: Builds
+          path: Builds
+
+      - name: Unzip WebGL build
+        id: unzip-webgl
+        run: |
+          cd Builds
+          unzip WebGL.zip
+          rm WebGL.zip
+         
       - name: Upload Pages artifact
+        id: upload-pages-artifact
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: github-pages
+          folder: WebGL/
