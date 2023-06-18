@@ -1,0 +1,94 @@
+name: Build Project and Publish to itch.io
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    branches: main
+env:
+  VERSION: 0.0.$GITHUB_RUN_NUMBER
+jobs:
+  build:
+    name: Build Project for ${{ matrix.os.platform }} and Deploy to Itch.io
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          [
+            { platform: WebGL, channel: html5 },
+            { platform: StandaloneWindows64, channel: windows },
+            { platform: StandaloneOSX, channel: osx },
+            { platform: StandaloneLinux64, channel: linux },
+          ]
+        unityVersion:
+          - 2022.3.2f1
+    # This stops builds that are in-progress once a new commit comes in
+    concurrency:
+      group: unity-build
+      cancel-in-progress: true
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          lfs: true # Cache
+      - uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ matrix.os.platform }}-${{ matrix.unityVersion }}
+          restore-keys: |
+            Library-${{ matrix.os.platform }}-
+            Library-
+      # Test
+      - name: Run tests
+        uses: game-ci/unity-test-runner@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build project
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: ${{ matrix.os.platform }}
+          unityVersion: ${{ matrix.unityVersion }}
+      - name: Upload Pages artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: github-pages
+          path: build/WebGL
+      # Upload to Itch
+      - uses: josephbmanley/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: ${{ matrix.os.channel }}
+          ITCH_GAME: ${{ secrets.ITCH_GAME }}
+          ITCH_USER: ${{ secrets.ITCH_USER }}
+          PACKAGE: build/${{ matrix.os.platform }}
+      - name: Create release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          generateReleaseNotes: true
+          tag: ${{ env.VERSION }}
+          artifacts: build/*
+  deploy-pages:
+    needs: build
+    permissions: write-all
+    runs-on: ubuntu-latest
+    environment: 
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: github-pages
+          path: github-pages
+      - name: Upload Pages artifact
+        uses: JamesIves/github-pages-deploy-action@v4
+        with: 
+          folder: github-pages
