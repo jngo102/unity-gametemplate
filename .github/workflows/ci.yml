@@ -1,11 +1,15 @@
-name: Build Project and Deploy
+name: Build and Deploy
 on:
+  workflow_dispatch:
   push:
-    branches: [dev, main]
+    branches:
+      - dev
+      - main
   pull_request:
-    branches: main
+    branches:
+      - main
 env:
-  VERSION: 0.0.$GITHUB_RUN_NUMBER
+  VERSION: 0.0.${{ github.run_number }}
 jobs:
   build:
     name: Build Project for ${{ matrix.targetPlatform }}
@@ -49,11 +53,14 @@ jobs:
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
           unityVersion: ${{ matrix.unityVersion }}
+      - name: Zip builds
+        if: matrix.targetPlatform != 'WebGL'
+        run: zip -r ${{ matrix.targetPlatform }}.zip build/${{ matrix.targetPlatform }}/*
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: artifacts
-          path: build
+          name: Builds
+          path: *.zip
       - name: Upload Pages artifact
         uses: actions/upload-artifact@v3
         with:
@@ -63,7 +70,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     outputs:
-      UPLOAD_URL: ${{ steps.create-release.outputs.upload_url }}
+      UPLOAD-URL: ${{ steps.create-release.outputs.upload_url }}
     steps:
       - name: Create Release
         id: create-release
@@ -80,27 +87,24 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        targetPlatform:
-          - StandaloneWindows64
-          - StandaloneOSX
-          - StandaloneLinux64
-          - WebGL
+        os:
+          - { platform: StandaloneWindows64, name: Windows }
+          - { platform: StandaloneOSX, name: macOS }
+          - { platform: StandaloneLinux64, name: Linux }
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: artifacts
+          name: Builds
           path: ./
-      - name: Zip builds
-        run: zip -r ${{ matrix.targetPlatform }}.zip build/${{ matrix.targetPlatform }}/*
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ needs.create-release.outputs.UPLOAD_URL }}
-          asset_path: ${{ matrix.targetPlatform }}.zip
-          asset_name: ${{ secrets.ITCH_GAME }}-${{ matrix.targetPlatform }}.zip
+          upload_url: ${{ needs.create-release.outputs.UPLOAD-URL }}
+          asset_path: ${{ matrix.os.platform }}.zip
+          asset_name: ${{ secrets.ITCH_GAME }}_${{ matrix.os.name }}.zip
           asset_content_type: application/zip
   deploy-itch:
     needs: build
@@ -114,6 +118,13 @@ jobs:
           - { platform: StandaloneLinux64, channel: linux }
           - { platform: WebGL, channel: html5 }
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: Builds
+          path: ./
       - name: Deploy to Itch.io
         uses: josephbmanley/butler-publish-itchio-action@master
         env:
@@ -121,7 +132,7 @@ jobs:
           CHANNEL: ${{ matrix.os.channel }}
           ITCH_GAME: ${{ secrets.ITCH_GAME }}
           ITCH_USER: ${{ secrets.ITCH_USER }}
-          PACKAGE: build/${{ matrix.os.platform }}
+          PACKAGE: ${{ matrix.os.platform }}.zip
   deploy-pages:
     needs: build
     permissions: write-all
