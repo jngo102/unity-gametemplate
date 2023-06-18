@@ -23,19 +23,15 @@ jobs:
         unityVersion:
           - 2022.3.2f1
     steps:
-      # Checkout
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          lfs: true # Cache
+          lfs: true
       - uses: actions/cache@v3
         with:
           path: Library
-          key: Library-${{ matrix.os.platform }}-${{ matrix.unityVersion }}
-          restore-keys: |
-            Library-${{ matrix.os.platform }}-
-            Library-
-      # Test
+          key: Library-${{ matrix.os.platform }}
+          restore-keys: Library-
       - name: Run tests
         uses: game-ci/unity-test-runner@v2
         env:
@@ -54,8 +50,8 @@ jobs:
         with:
           name: github-pages
           path: build/WebGL
-      # Upload to Itch
-      - uses: josephbmanley/butler-publish-itchio-action@master
+      - name: Deploy to Itch.io
+        uses: josephbmanley/butler-publish-itchio-action@master
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           CHANNEL: ${{ matrix.os.channel }}
