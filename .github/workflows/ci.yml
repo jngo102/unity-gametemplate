@@ -1,4 +1,4 @@
-name: Build Project and Publish to itch.io
+name: Build Project and Deploy
 on:
   push:
     branches: [dev, main]
@@ -8,18 +8,18 @@ env:
   VERSION: 0.0.$GITHUB_RUN_NUMBER
 jobs:
   build:
-    name: Build Project for ${{ matrix.os.platform }} and Deploy to Itch.io
+    name: Build Project for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os:
-          [
-            { platform: WebGL, channel: html5 },
-            { platform: StandaloneWindows64, channel: windows },
-            { platform: StandaloneOSX, channel: osx },
-            { platform: StandaloneLinux64, channel: linux },
-          ]
+        projectPath:
+          - .
+        targetPlatform:
+          - WebGL
+          - StandaloneWindows64
+          - StandaloneOSX
+          - StandaloneLinux64
         unityVersion:
           - 2022.3.2f1
     steps:
@@ -30,9 +30,13 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: Library
-          key: Library-${{ matrix.os.platform }}
-          restore-keys: Library-
+          key: Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-${{ hashFiles(matrix.projectPath) }}
+          restore-keys: |
+            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-
+            Library-${{ matrix.projectPath }}-
+            Library-
       - name: Run tests
+        id: run-tests
         uses: game-ci/unity-test-runner@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -43,13 +47,73 @@ jobs:
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
-          targetPlatform: ${{ matrix.os.platform }}
+          targetPlatform: ${{ matrix.targetPlatform }}
           unityVersion: ${{ matrix.unityVersion }}
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path: build
       - name: Upload Pages artifact
         uses: actions/upload-artifact@v3
         with:
           name: github-pages
           path: build/WebGL
+  create-release:
+    needs: build
+    runs-on: ubuntu-latest
+    outputs:
+      UPLOAD_URL: ${{ steps.create-release.outputs.upload_url }}
+    steps:
+      - name: Create Release
+        id: create-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.VERSION }}
+          release_name: Release v${{ env.VERSION }}
+          draft: false
+          prerelease: false
+  upload-assets:
+    needs: create-release
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        targetPlatform:
+          - StandaloneWindows64
+          - StandaloneOSX
+          - StandaloneLinux64
+          - WebGL
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: artifacts
+          path: ./
+      - name: Zip builds
+        run: zip -r ${{ matrix.targetPlatform }}.zip build/${{ matrix.targetPlatform }}/*
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.UPLOAD_URL }}
+          asset_path: ${{ matrix.targetPlatform }}.zip
+          asset_name: ${{ secrets.ITCH_GAME }}-${{ matrix.targetPlatform }}.zip
+          asset_content_type: application/zip
+  deploy-itch:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - { platform: StandaloneWindows64, channel: windows }
+          - { platform: StandaloneOSX, channel: macos }
+          - { platform: StandaloneLinux64, channel: linux }
+          - { platform: WebGL, channel: html5 }
+    steps:
       - name: Deploy to Itch.io
         uses: josephbmanley/butler-publish-itchio-action@master
         env:
@@ -58,18 +122,11 @@ jobs:
           ITCH_GAME: ${{ secrets.ITCH_GAME }}
           ITCH_USER: ${{ secrets.ITCH_USER }}
           PACKAGE: build/${{ matrix.os.platform }}
-      - name: Create release
-        uses: ncipollo/release-action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          generateReleaseNotes: true
-          tag: ${{ env.VERSION }}
-          artifacts: build/*
   deploy-pages:
     needs: build
     permissions: write-all
     runs-on: ubuntu-latest
-    environment: 
+    environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
@@ -82,5 +139,5 @@ jobs:
           path: github-pages
       - name: Upload Pages artifact
         uses: JamesIves/github-pages-deploy-action@v4
-        with: 
+        with:
           folder: github-pages
