@@ -174,11 +174,11 @@ jobs:
         id: unzip-webgl
         run: |
           cd Builds
-          unzip WebGL.zip
+          unzip WebGL.zip -d WebGL
           rm WebGL.zip
          
       - name: Upload Pages artifact
         id: upload-pages-artifact
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: WebGL/
+          folder: WebGL
