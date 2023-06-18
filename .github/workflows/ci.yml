@@ -54,7 +54,6 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           unityVersion: ${{ matrix.unityVersion }}
       - name: Zip builds
-        if: matrix.targetPlatform != 'WebGL'
         run: zip -r ${{ matrix.targetPlatform }}.zip build/${{ matrix.targetPlatform }}/*
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
