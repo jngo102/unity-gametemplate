@@ -8,13 +8,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Terrain
+  - Enemy
+  - Player Attack
+  - Enemy Attack
   - 
   - 
   - 
@@ -38,6 +38,27 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1241590201
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Foreground
+    uniqueID: 1456013593
+    locked: 0
+  - name: HUD
+    uniqueID: 3318740145
+    locked: 0
+  - name: Inventory
+    uniqueID: 3241193583
+    locked: 0
+  - name: Menu
+    uniqueID: 357943717
+    locked: 0
+  - name: Fader
+    uniqueID: 2612637011
+    locked: 0
+  - name: Main Menu
+    uniqueID: 74835297
     locked: 0

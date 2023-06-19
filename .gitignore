@@ -76,6 +76,4 @@ crashlytics-build.properties
 /[Cc]odeCoverage/
 
 # Project specific
-/[Aa]ssets/[Aa]rt*
-/[Aa]ssets/[Aa]udio*
 /Build
