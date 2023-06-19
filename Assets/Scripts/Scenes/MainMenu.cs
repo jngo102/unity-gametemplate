@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +7,10 @@ public class MainMenu : MonoBehaviour {
 
     private void Start() {
         startButton.onClick.AddListener(() => GameManager.Instance.ChangeScene("SampleScene"));
-        quitButton.onClick.AddListener(GameManager.QuitGame);
+        if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Other) {
+            quitButton.gameObject.SetActive(false);
+        } else {
+            quitButton.onClick.AddListener(GameManager.QuitGame);
+        }
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using SceneManager = UnityEngine.SceneManagement.SceneManager;
@@ -21,10 +20,12 @@ public class UIManager : Singleton<UIManager> {
         }
     }
     private void OnEnable() {
+        if (InputManager.Instance.Cancel == null) return;
         InputManager.Instance.Cancel.performed += TogglePauseMenu;
     }
 
     private void OnDisable() {
+        if (InputManager.Instance.Cancel == null) return;
         InputManager.Instance.Cancel.performed -= TogglePauseMenu;
     }
 
@@ -36,7 +37,7 @@ public class UIManager : Singleton<UIManager> {
     }
 
     public void ShowPauseMenu(bool show) {
-        pauseMenu?.SetActive(show);
+        pauseMenu.SetActive(show);
         if (show) {
             GameManager.PauseGame();
         } else {
