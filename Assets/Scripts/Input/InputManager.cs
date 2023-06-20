@@ -2,11 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : Singleton<InputManager> {
+public class InputManager : Singleton<InputManager>, IDataPersistence {
     [SerializeField] private float inputBufferTime = 0.15f;
 
-    private PlayerInputActions inputActions;
-    
+    public PlayerInputActions InputActions { get; private set; }
+
     public BufferedInputAction Jump;
 
     [NonSerialized] public InputAction Move;
@@ -17,20 +17,29 @@ public class InputManager : Singleton<InputManager> {
     }
 
     private void OnEnable() {
-        inputActions.Enable();
+        InputActions?.Enable();
     }
 
     private void OnDisable() {
-        inputActions.Disable();
+        InputActions?.Disable();
     }
 
     private void SetupInputActions() {
-        inputActions = new PlayerInputActions();
-        
-        Jump = new BufferedInputAction(inputActions.Player.Jump, inputBufferTime);
+        InputActions ??= new PlayerInputActions();
 
-        Move = inputActions.Player.Move;
+        Jump = new BufferedInputAction(InputActions.Player.Jump, inputBufferTime);
 
-        Cancel = inputActions.UI.Cancel;
+        Move = InputActions.Player.Move;
+
+        Cancel = InputActions.UI.Cancel;
+    }
+
+    public void LoadData(SaveData saveData) {
+        InputActions.Player.Get().asset.LoadFromJson(saveData.InputAsset);
+        Debug.Log("Load data");
+    }
+
+    public void SaveData(SaveData saveData) {
+        saveData.InputAsset = InputActions.Player.Get().asset.ToJson();
     }
 }

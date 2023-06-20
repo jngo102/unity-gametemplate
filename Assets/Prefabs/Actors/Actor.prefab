@@ -198,6 +198,7 @@ MonoBehaviour:
   currentHealth: 5
   maxHealth: 5
   invincibilityTime: 0.5
+  facer: {fileID: 2445615154815612272}
 --- !u!114 &2445615154815612272
 MonoBehaviour:
   m_ObjectHideFlags: 0

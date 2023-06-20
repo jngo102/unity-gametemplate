@@ -53,7 +53,7 @@ public class SaveDataManager : Singleton<SaveDataManager> {
 
     private List<IDataPersistence> GetPersistentDataObjects() {
         var dataObjects = FindObjectsOfType<MonoBehaviour>(true).OfType<IDataPersistence>();
-        return new List<IDataPersistence>(dataObjects);
+        return dataObjects.ToList();
     }
 
     public Dictionary<string, SaveData> GetAllProfilesSaveData() {

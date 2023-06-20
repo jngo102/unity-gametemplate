@@ -5,7 +5,7 @@ using SceneManager = UnityEngine.SceneManagement.SceneManager;
 public class GameManager : Singleton<GameManager> {
     public delegate void OnSceneChange(string sceneName);
     public event OnSceneChange SceneChanged;
-    
+
     protected override void OnAwake() {
     }
 

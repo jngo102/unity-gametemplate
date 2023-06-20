@@ -32,7 +32,7 @@ public class UIManager : Singleton<UIManager> {
     private void TogglePauseMenu(InputAction.CallbackContext _) {
         if (!SceneData.IsGameplayScene(SceneManager.GetActiveScene().name) ||
             pauseMenu == null) return;
-        
+
         ShowPauseMenu(!pauseMenu.activeSelf);
     }
 

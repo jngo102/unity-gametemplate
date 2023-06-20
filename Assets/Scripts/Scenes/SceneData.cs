@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 
-public static class SceneData
-{
+public static class SceneData {
     private static List<string> NonGameplayScenes = new() {
         "MainMenu",
     };

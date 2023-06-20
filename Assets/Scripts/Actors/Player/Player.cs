@@ -128,10 +128,10 @@ public class Player : MonoBehaviour, ISpawnable {
     }
 
     private void GetComponents() {
-        body ??= GetComponent<Rigidbody2D>();
-        grounder ??= GetComponent<Grounder>();
-        jumper ??= GetComponent<Jumper>();
-        runner ??= GetComponent<Runner>();
+        body = GetComponent<Rigidbody2D>();
+        grounder = GetComponent<Grounder>();
+        jumper = GetComponent<Jumper>();
+        runner = GetComponent<Runner>();
     }
 
     private void InitializeTrackedValues() {
@@ -144,7 +144,7 @@ public class Player : MonoBehaviour, ISpawnable {
         }
     }
 
-    private void OnLand(Jumper _) {
+    private void OnLand() {
         if (inputManager.Jump.IsBuffered()) {
             Jump();
         }

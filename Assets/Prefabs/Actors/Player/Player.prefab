@@ -185,3 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CoyoteTime: 0.1
+  body: {fileID: 0}
+  grounder: {fileID: -1526399760865855704}
+  jumper: {fileID: -6767361534299147108}
+  runner: {fileID: 7572073317603801933}

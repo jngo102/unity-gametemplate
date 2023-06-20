@@ -7,7 +7,7 @@ public class Facer : MonoBehaviour {
             Flip();
         }
     }
-    
+
     public void Flip() {
         var localScale = transform.localScale;
         localScale.x *= -1;

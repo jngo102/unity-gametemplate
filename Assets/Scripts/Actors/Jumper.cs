@@ -7,9 +7,9 @@ public class Jumper : MonoBehaviour {
     [SerializeField] private float jumpHeight = 2;
     [SerializeField] private float risingGravityScale = 2;
 
-    public delegate void JumpEvent(Jumper jumper);
+    public delegate void JumpEvent();
     public event JumpEvent Jumped;
-    public delegate void LandEvent(Jumper jumper);
+    public delegate void LandEvent();
     public event LandEvent Landed;
 
     private Rigidbody2D body;
@@ -49,11 +49,11 @@ public class Jumper : MonoBehaviour {
     public void Jump() {
         if (grounder.IsGrounded()) {
             body.velocity = new Vector2(body.velocity.x, jumpForce);
-            Jumped?.Invoke(this);
+            Jumped?.Invoke();
         }
     }
 
     public void Land() {
-        Landed?.Invoke(this);
+        Landed?.Invoke();
     }
 }

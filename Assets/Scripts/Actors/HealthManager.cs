@@ -8,9 +8,6 @@ public class HealthManager : MonoBehaviour {
         private set {
             currentHealth = Mathf.Clamp(value, 0, MaxHealth);
             HealthChanged?.Invoke(CurrentHealth, MaxHealth);
-            if (currentHealth <= 0) {
-                Die?.Invoke();
-            }
         }
     }
 
@@ -29,14 +26,15 @@ public class HealthManager : MonoBehaviour {
     public delegate void OnHealthChange(float currentHealth, float maxHealth);
     public event OnHealthChange HealthChanged;
 
-    public delegate void OnDeath();
-    public event OnDeath Die;
-
+    public delegate void OnHarm(float damageAmount, Damager damageSource);
+    public event OnHarm Harmed;
+    
     private Facer facer;
     private float currentInvincibilityTime;
 
     private void Awake() {
         facer = GetComponent<Facer>();
+        
         currentInvincibilityTime = invincibilityTime + 1;
     }
 
@@ -48,12 +46,13 @@ public class HealthManager : MonoBehaviour {
         }
     }
 
-    public void Hurt(float damageAmount, Damager damager) {
+    public void Hurt(float damageAmount, Damager damageSource) {
         if (!CanHurt) return;
-        if (damager != null) {
-            facer.FaceObject(damager.transform);
+        if (damageSource != null) {
+            facer.FaceObject(damageSource.transform);
         }
         CurrentHealth -= Mathf.Clamp(damageAmount, 0, CurrentHealth);
+        Harmed?.Invoke(damageAmount, damageSource);
         CanHurt = false;
         currentInvincibilityTime = 0;
     }
