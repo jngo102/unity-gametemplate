@@ -34,7 +34,7 @@ public class RebindUI : MonoBehaviour {
         inputAction.Disable();
         keyText.text = "Listening...";
         rebindOperation = inputAction.PerformInteractiveRebinding(bindingIndex)
-            .OnMatchWaitForAnother(0.25f)
+            .OnMatchWaitForAnother(0.1f)
             .OnComplete(RebindComplete)
             .Start();
     }

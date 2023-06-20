@@ -1,4 +1,7 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,11 +38,12 @@ public class InputManager : Singleton<InputManager>, IDataPersistence {
     }
 
     public void LoadData(SaveData saveData) {
-        InputActions.Player.Get().asset.LoadFromJson(saveData.InputAsset);
-        Debug.Log("Load data");
+        if (string.IsNullOrEmpty(saveData.Bindings)) return;
+
+        InputActions.asset.LoadBindingOverridesFromJson(saveData.Bindings);
     }
 
     public void SaveData(SaveData saveData) {
-        saveData.InputAsset = InputActions.Player.Get().asset.ToJson();
+        saveData.Bindings = InputActions.asset.SaveBindingOverridesAsJson();
     }
 }

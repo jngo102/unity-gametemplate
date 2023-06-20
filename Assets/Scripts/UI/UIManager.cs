@@ -25,7 +25,7 @@ public class UIManager : Singleton<UIManager> {
     }
 
     private void OnDisable() {
-        if (InputManager.Instance.Cancel == null) return;
+        if (InputManager.Instance == null || InputManager.Instance.Cancel == null) return;
         InputManager.Instance.Cancel.performed -= TogglePauseMenu;
     }
 

@@ -18,6 +18,10 @@ public class SaveDataManager : Singleton<SaveDataManager> {
         LoadGame();
     }
 
+    private void OnDestroy() {
+        SaveGame();
+    }
+
     public void NewGame() {
         saveData = new SaveData();
     }
@@ -45,10 +49,6 @@ public class SaveDataManager : Singleton<SaveDataManager> {
 
     public void DeleteProfile(string profileId) {
         fileManager.Delete(profileId);
-    }
-
-    private void OnApplicationQuit() {
-        SaveGame();
     }
 
     private List<IDataPersistence> GetPersistentDataObjects() {

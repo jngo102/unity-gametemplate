@@ -1,11 +1,12 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public class SaveFileManager {
-    private string dataDirPath = "";
-    private string dataFileName = "";
+    private readonly string dataDirPath = "";
+    private readonly string dataFileName = "";
 
     public SaveFileManager(string dataDirPath, string dataFileName) {
         this.dataDirPath = dataDirPath;
@@ -19,14 +20,13 @@ public class SaveFileManager {
             try {
                 var loadedJson = "";
                 using (var stream = new FileStream(fullPath, FileMode.Open)) {
-                    using (var reader = new StreamReader(stream)) {
-                        loadedJson = reader.ReadToEnd();
-                    }
+                    using var reader = new StreamReader(stream);
+                    loadedJson = reader.ReadToEnd();
                 }
 
-                loadedData = JsonUtility.FromJson<SaveData>(loadedJson);
+                loadedData = JsonConvert.DeserializeObject<SaveData>(loadedJson);
             } catch (Exception e) {
-                Debug.LogError($"Error occurred while trying ot load data from file: {fullPath}\n{e}");
+                Debug.LogError($"Error occurred while trying to load data from file: {fullPath}\n{e}");
                 throw;
             }
         }
@@ -38,7 +38,7 @@ public class SaveFileManager {
         var fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
         try {
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
-            var dataJson = JsonUtility.ToJson(data, true);
+            var dataJson = JsonConvert.SerializeObject(data, Formatting.Indented);
             using var stream = new FileStream(fullPath, FileMode.Create);
             using var writer = new StreamWriter(stream);
             writer.Write(dataJson);
