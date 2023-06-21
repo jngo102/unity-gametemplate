@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Manages whether an actor is grounded.
+/// </summary>
 [RequireComponent(typeof(Collider2D))]
 public class Grounder : MonoBehaviour {
     [SerializeField] private int numGroundCheckRays = 3;

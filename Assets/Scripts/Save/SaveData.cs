@@ -1,10 +1,16 @@
-using Newtonsoft.Json.Linq;
 using System;
 
+/// <summary>
+/// Data structure containing all objects with persistent data.
+/// </summary>
 [Serializable]
 public class SaveData {
-    public string Bindings;
+    /// <summary>
+    /// Input binding overrides that the player has made.
+    /// </summary>
+    public string BindingOverrides;
+
     public SaveData() {
-        Bindings = "";
+        BindingOverrides = "";
     }
 }

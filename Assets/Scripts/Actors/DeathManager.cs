@@ -1,44 +1,64 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Facer))]
+/// <summary>
+/// Handles an actor's death.
+/// </summary>
 [RequireComponent(typeof(HealthManager))]
 public class DeathManager : MonoBehaviour {
+    /// <summary>
+    /// The corpse object to create once the actor has died.
+    /// </summary>
     [SerializeField] private GameObject corpsePrefab;
 
-    private Facer facer;
     private HealthManager healthManager;
 
     public delegate void OnDeath();
+    /// <summary>
+    /// Raised when the actor has died.
+    /// </summary>
     public event OnDeath Died;
 
+    /// <summary>
+    /// Whether the actor is dead.
+    /// </summary>
     public bool IsDead { get; private set; }
 
+    /// <inheritdoc />
     private void Awake() {
-        facer = GetComponent<Facer>();
         healthManager = GetComponent<HealthManager>();
+        // Check whether the actor should be dead every time it takes damage.
         healthManager.Harmed += CheckDead;
     }
 
-    private void CheckDead(float currentHealth, Damager damageSource) {
-        if (currentHealth <= 0) {
+    /// <summary>
+    /// Check whether the actor's health has reached zero.
+    /// </summary>
+    /// <param name="damageAmount">The amount of damage taken.</param>
+    /// <param name="damageSource">The source of the damage.</param>
+    private void CheckDead(float damageAmount, Damager damageSource) {
+        if (healthManager.CurrentHealth <= 0) {
             Died?.Invoke();
             Die(damageSource);
         }
     }
 
+    /// <summary>
+    /// Called when the actor dies.
+    /// </summary>
+    /// <param name="damageSource">The source of the damager that killed the actor.</param>
     private void Die(Damager damageSource) {
         IsDead = true;
-        facer.FaceObject(damageSource.transform);
         if (corpsePrefab != null) {
             var corpse = Instantiate(corpsePrefab, transform.position, Quaternion.identity);
-            corpse.transform.localScale =
-                new Vector3(Mathf.Sign(transform.localScale.x) * corpse.transform.localScale.x,
-                    corpse.transform.localScale.y, corpse.transform.localScale.z);
+            corpse.GetComponent<Facer>().FaceObject(damageSource.transform);
         }
 
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Bring the actor back to life and fully heal it.
+    /// </summary>
     public void Revive() {
         IsDead = false;
         healthManager.FullHeal();

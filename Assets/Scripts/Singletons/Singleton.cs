@@ -1,19 +1,33 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
+/// <summary>
+/// The base singleton class.
+/// </summary>
 public abstract class Singleton : MonoBehaviour {
+    /// <summary>
+    /// Whether the game is quitting.
+    /// </summary>
     public static bool Quitting { get; private set; }
 
+    /// <inheritdoc />
     private void OnApplicationQuit() {
         Quitting = true;
     }
 }
 
+/// <summary>
+/// Extended singleton class.
+/// </summary>
+/// <typeparam name="T">The type of the singleton.</typeparam>
 public abstract class Singleton<T> : Singleton where T : MonoBehaviour {
     [CanBeNull] private static T _instance;
     [NotNull] private static readonly object Lock = new();
     [SerializeField] private bool _persistent = true;
 
+    /// <summary>
+    /// The singleton instance.
+    /// </summary>
     [NotNull]
     public static T Instance {
         get {
@@ -41,10 +55,14 @@ public abstract class Singleton<T> : Singleton where T : MonoBehaviour {
         }
     }
 
+    /// <inheritdoc />
     private void Awake() {
         if (_persistent) DontDestroyOnLoad(gameObject);
         OnAwake();
     }
 
+    /// <summary>
+    /// Virtual method that is called in <see="Awake" />
+    /// </summary>
     protected virtual void OnAwake() { }
 }

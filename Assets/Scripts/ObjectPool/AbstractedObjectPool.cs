@@ -2,9 +2,24 @@ using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
+/// <summary>
+/// A wrapper around Unity's ObjectPool class.
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBehaviour, ISpawnable {
+    /// <summary>
+    /// The object to spawn from the pool.
+    /// </summary>
     private T prefab;
+
+    /// <summary>
+    /// The object pool instance that this class is a wrapper for.
+    /// </summary>
     private ObjectPool<T> pool;
+    
+    /// <summary>
+    /// The object pool instance.
+    /// </summary>
     private ObjectPool<T> Pool {
         get {
             if (pool == null) {
@@ -16,27 +31,50 @@ public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBeha
         set => pool = value;
     }
 
+    /// <summary>
+    /// Initialize the object pool.
+    /// </summary>
+    /// <param name="prefab">The prefab to spawn.</param>
+    /// <param name="initialSize">The initial size of the object pool.</param>
+    /// <param name="maxSize">The maximum number of objects that may be in the pool.</param>
+    /// <param name="collectionChecks">Whether to perform collection checks.</param>
     protected void InitPool(T prefab, int initialSize = 10, int maxSize = 20, bool collectionChecks = false) {
         this.prefab = prefab;
         Pool = new ObjectPool<T>(OnCreate, OnSpawn, OnDespawn, OnDestroy, collectionChecks, initialSize, maxSize);
     }
 
     #region Overrides
+    /// <summary>
+    /// Callback for when an object is created.
+    /// </summary>
+    /// <returns>The newly created object.</returns>
     protected virtual T OnCreate() {
         prefab.OnCreate();
         return Instantiate(prefab);
     }
 
+    /// <summary>
+    /// Callback for when an object is spawned from the pool.
+    /// </summary>
+    /// <param name="obj">The object that is being spawned.</param>
     protected virtual void OnSpawn(T obj) {
         obj.gameObject.SetActive(true);
         obj.OnSpawn();
     }
 
+    /// <summary>
+    /// Callback for when an object is returned to the pool.
+    /// </summary>
+    /// <param name="obj">The object that is being despawned.</param>
     protected virtual void OnDespawn(T obj) {
         obj.gameObject.SetActive(false);
         obj.OnDespawn();
     }
 
+    /// <summary>
+    /// Callback for when an object is destroyed.
+    /// </summary>
+    /// <param name="obj">The object that is being destroyed.</param>
     protected virtual void OnDestroy(T obj) {
         obj.OnDestroy();
         Destroy(obj);
@@ -44,7 +82,16 @@ public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBeha
     #endregion
 
     #region Getters
+    /// <summary>
+    /// Spawn an object.
+    /// </summary>
+    /// <returns>The spawned object retrieved from the pool.</returns>
     public T Spawn() => Pool.Get();
+
+    /// <summary>
+    /// Despawn an object.
+    /// </summary>
+    /// <param name="obj">The object to despawn.</param>
     public void Despawn(T obj) => Pool.Release(obj);
     #endregion
 }

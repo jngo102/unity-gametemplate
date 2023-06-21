@@ -4,8 +4,18 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+/// <summary>
+/// Manages the actual saving and loading of data to and from disk.
+/// </summary>
 public class SaveFileManager {
+    /// <summary>
+    /// The name of the directory to store data to and load data from.
+    /// </summary>
     private readonly string dataDirPath = "";
+
+    /// <summary>
+    /// The name of the file to store data to and load data from.
+    /// </summary>
     private readonly string dataFileName = "";
 
     public SaveFileManager(string dataDirPath, string dataFileName) {
@@ -13,6 +23,11 @@ public class SaveFileManager {
         this.dataFileName = dataFileName;
     }
 
+    /// <summary>
+    /// Load data from a profile from disk.
+    /// </summary>
+    /// <param name="profileId">The ID of the profile to load data from.</param>
+    /// <returns>The loaded data instance.</returns>
     public SaveData Load(string profileId) {
         var fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
         SaveData loadedData = null;
@@ -34,6 +49,11 @@ public class SaveFileManager {
         return loadedData;
     }
 
+    /// <summary>
+    /// Save data to a profile to disk.
+    /// </summary>
+    /// <param name="data">The data to save to.</param>
+    /// <param name="profileId">The ID of the profile to save data to.</param>
     public void Save(SaveData data, string profileId) {
         var fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
         try {
@@ -48,6 +68,10 @@ public class SaveFileManager {
         }
     }
 
+    /// <summary>
+    /// Delete a profile from disk.
+    /// </summary>
+    /// <param name="profileId">The ID of the profile to delete.</param>
     public void Delete(string profileId) {
         if (profileId == null) return;
 
@@ -63,6 +87,10 @@ public class SaveFileManager {
         }
     }
 
+    /// <summary>
+    /// Load all profiles in the disk.
+    /// </summary>
+    /// <returns>A dictionary mapping a profile's ID to its save data.</returns>
     public Dictionary<string, SaveData> LoadProfiles() {
         var profileDict = new Dictionary<string, SaveData>();
         var dirInfos = new DirectoryInfo(dataDirPath).EnumerateDirectories();

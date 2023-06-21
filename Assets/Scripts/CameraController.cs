@@ -8,6 +8,9 @@ public class CameraController : MonoBehaviour {
         FollowTarget();
     }
 
+    /// <summary>
+    /// Follow the specified target.
+    /// </summary>
     private void FollowTarget() {
         if (Target == null) return;
         var targetPos = new Vector3(Target.transform.position.x, Target.transform.position.y, transform.position.z);
