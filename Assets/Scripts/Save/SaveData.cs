@@ -9,7 +9,7 @@ public class SaveData {
     /// Input binding overrides that the player has made.
     /// </summary>
     public string BindingOverrides;
-
+    
     public SaveData() {
         BindingOverrides = "";
     }

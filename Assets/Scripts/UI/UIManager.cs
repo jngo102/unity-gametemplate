@@ -1,7 +1,5 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
 /// <summary>
@@ -9,89 +7,97 @@ using SceneManager = UnityEngine.SceneManagement.SceneManager;
 /// </summary>
 public class UIManager : Singleton<UIManager> {
     /// <summary>
-    /// The fader object.
+    /// The canvas to parent user interfaces to.
     /// </summary>
-    [SerializeField] private Animator fader;
+    [SerializeField] private Canvas canvas;
 
     /// <summary>
-    /// The pause menu object.
+    /// All the user interface that are managed by the ui manager.
     /// </summary>
-    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private BaseUI[] uis;
 
     /// <inheritdoc />
     protected override void OnAwake() {
-        SetupPauseMenu();
-    }
-
-    /// <inheritdoc />
-    private void OnEnable() {
-        if (InputManager.Instance.Cancel == null) return;
-        InputManager.Instance.Cancel.performed += TogglePauseMenu;
-    }
-
-    /// <inheritdoc />
-    private void OnDisable() {
-        if (InputManager.Instance == null || InputManager.Instance.Cancel == null) return;
-        InputManager.Instance.Cancel.performed -= TogglePauseMenu;
+        SceneManager.activeSceneChanged += OnSceneChange;
     }
 
     /// <summary>
-    /// Assign callbacks to pause menu buttons.
+    /// Callback for when a scene changes.
     /// </summary>
-    private void SetupPauseMenu() {
-        if (pauseMenu == null) {
-            return;
+    /// <param name="prevScene">The previous scene that was changed from.</param>
+    /// <param name="nextScene">The next scene that has been changed to.</param>
+    private void OnSceneChange(Scene prevScene, Scene nextScene) {
+        if (SceneData.IsGameplayScene(nextScene.name)) {
+            CloseUI<PauseMenu>();
+        } else {
+            DestroyUI<PauseMenu>();
         }
+    }
 
-        foreach (var button in pauseMenu.GetComponentsInChildren<Button>(true)) {
-            if (button.name.Contains("Resume")) {
-                button.onClick.AddListener(() => ShowPauseMenu(false));
-            } else if (button.name.Contains("Quit")) {
-                button.onClick.AddListener(() => GameManager.Instance.ChangeScene("MainMenu"));
+    /// <summary>
+    /// Open a user interface.
+    /// </summary>
+    /// <typeparam name="T">The type of user interface to open.</typeparam>
+    /// <returns>The user interface that was opened.</returns>
+    public T OpenUI<T>() where T : BaseUI {
+        var ui = GetUI<T>();
+        if (ui == null) return null;
+        ui.Open();
+        return ui;
+    }
+
+    /// <summary>
+    /// Close a user interface.
+    /// </summary>
+    /// <typeparam name="T">The type of user interface to close.</typeparam>
+    /// <returns>Whether the user interace was successfully closed.</returns>
+    public bool CloseUI<T>() where T : BaseUI {
+        var ui = GetUI<T>();
+        if (ui == null) return false;
+        ui.Close();
+        return true;
+    }
+
+    /// <summary>
+    /// Get a user interface.
+    /// </summary>
+    /// <typeparam name="T">The type of user interface to get.</typeparam>
+    /// <returns>The user interface of type T.</returns>
+    public T GetUI<T>() where T : BaseUI {
+        foreach (Transform child in canvas.transform) {
+            if (child.TryGetComponent<T>(out var uiComponent)) {
+                return uiComponent;
             }
         }
+
+        return InstantiateUI<T>();
     }
 
     /// <summary>
-    /// Toggle the pause menu; used in context of a performed input.
+    /// Instantiate a user interface.
     /// </summary>
-    private void TogglePauseMenu(InputAction.CallbackContext _) {
-        if (!SceneData.IsGameplayScene(SceneManager.GetActiveScene().name) ||
-            pauseMenu == null) return;
-
-        ShowPauseMenu(!pauseMenu.activeSelf);
-    }
-
-    /// <summary>
-    /// Show or hide the pause menu.
-    /// </summary>
-    /// <param name="show">Whether to show the pause menu.</param>
-    public void ShowPauseMenu(bool show) {
-        pauseMenu.SetActive(show);
-        if (show) {
-            GameManager.PauseGame();
-        } else {
-            GameManager.ResumeGame();
+    /// <typeparam name="T">The type of user interface to instantiate.</typeparam>
+    /// <returns>The user interface of type T, or null if not found.</returns>
+    public T InstantiateUI<T>() where T : BaseUI {
+        foreach (var ui in uis) {
+            if (ui is T) {
+                var uiInstance = Instantiate(ui, canvas.transform);
+                return (T)uiInstance;
+            }
         }
+
+        return null;
     }
 
     /// <summary>
-    /// Show the fader.
+    /// Destroy a user interface.
     /// </summary>
-    public IEnumerator FadeIn() {
-        if (fader == null) yield break;
-        fader.gameObject.SetActive(true);
-        fader.Play("Fade In");
-        yield return new WaitUntil(() => fader.IsFinished());
-    }
-
-    /// <summary>
-    /// Hide the fader.
-    /// </summary>
-    public IEnumerator FadeOut() {
-        if (fader == null) yield break;
-        fader.Play("Fade Out");
-        yield return new WaitUntil(() => fader.IsFinished());
-        fader.gameObject.SetActive(false);
+    /// <typeparam name="T">The type of user interface to destroy.</typeparam>
+    public void DestroyUI<T>() where T : BaseUI {
+        foreach (Transform child in canvas.transform) {
+            if (child.TryGetComponent<T>(out var uiComponent)) {
+                Destroy(child.gameObject);
+            }
+        }
     }
 }

@@ -33,7 +33,7 @@ public class SaveDataManager : Singleton<SaveDataManager> {
     private string selectedProfileId = "0";
 
     /// <inheritdoc />
-    private void Awake() {
+    protected override void OnAwake() {
         fileManager = new SaveFileManager(Application.persistentDataPath, fileName);
         persistentDataObjects = GetPersistentDataObjects();
         LoadGame();

@@ -14,7 +14,6 @@ public class GameManager : Singleton<GameManager> {
     /// </summary>
     /// <param name="sceneName">The name of the scene to change to.</param>
     public void ChangeScene(string sceneName) {
-        UIManager.Instance.ShowPauseMenu(false);
         StartCoroutine(ChangeSceneRoutine(sceneName));
         SceneChanged?.Invoke(sceneName);
     }
@@ -25,9 +24,10 @@ public class GameManager : Singleton<GameManager> {
     /// <param name="sceneName">The name of the scene to change to.</param>
     /// <returns></returns>
     public IEnumerator ChangeSceneRoutine(string sceneName) {
-        yield return StartCoroutine(UIManager.Instance.FadeIn());
+        var fader = UIManager.Instance.GetUI<Fader>();
+        yield return fader.FadeIn();
         yield return SceneManager.LoadSceneAsync(sceneName);
-        yield return StartCoroutine(UIManager.Instance.FadeOut());
+        yield return fader.FadeOut();
     }
 
     /// <summary>

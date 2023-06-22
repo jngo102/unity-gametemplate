@@ -3064,7 +3064,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1732616099443413405, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: m_Name
-      value: Evo Credit
+      value: Evonik Credit
       objectReference: {fileID: 0}
     - target: {fileID: 3136666041825165847, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3090,6 +3090,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -67.96333
       objectReference: {fileID: 0}
+    - target: {fileID: 4268141416685232512, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3fb7d44fc979e274aa5cc9dcb97ff9eb, type: 3}
     - target: {fileID: 4735519460867724871, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -3108,11 +3112,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5400425575766268599, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: m_text
-      value: Evo
+      value: Evonik
       objectReference: {fileID: 0}
     - target: {fileID: 7536362318796342390, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: link
-      value: 
+      value: https://linktr.ee/evonik_k
       objectReference: {fileID: 0}
     - target: {fileID: 7536362318796342390, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: roleText
@@ -3565,6 +3569,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -67.96333
       objectReference: {fileID: 0}
+    - target: {fileID: 4268141416685232512, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 54f1fd23f1530f3468b48470778a6307, type: 3}
     - target: {fileID: 4735519460867724871, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

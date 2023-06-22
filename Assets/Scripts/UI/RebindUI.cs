@@ -65,6 +65,7 @@ public class RebindUI : MonoBehaviour {
         keyText.text = "Listening...";
         inputAction.PerformInteractiveRebinding(bindingIndex)
             .OnMatchWaitForAnother(0.1f)
+            .WithCancelingThrough("<Keyboard>/escape")
             .OnCancel(RebindCancel)
             .OnComplete(RebindComplete)
             .Start();

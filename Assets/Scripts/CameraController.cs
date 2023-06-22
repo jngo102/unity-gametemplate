@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// A camera that follows a target.
+/// </summary>
 public class CameraController : MonoBehaviour {
     public static Transform Target { get; set; }
     [SerializeField] private float smoothing = 5;
