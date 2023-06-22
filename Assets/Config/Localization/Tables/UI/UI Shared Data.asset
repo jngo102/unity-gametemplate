@@ -31,6 +31,18 @@ MonoBehaviour:
     m_Key: Quit
     m_Metadata:
       m_Items: []
+  - m_Id: 67332074975232
+    m_Key: QuitConfirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67332104335360
+    m_Key: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67332104335361
+    m_Key: No
+    m_Metadata:
+      m_Items: []
   - m_Id: 5326890414080
     m_Key: Back
     m_Metadata:

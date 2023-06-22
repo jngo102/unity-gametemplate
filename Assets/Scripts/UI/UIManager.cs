@@ -24,9 +24,9 @@ public class UIManager : Singleton<UIManager> {
     /// <summary>
     /// Callback for when a scene changes.
     /// </summary>
-    /// <param name="prevScene">The previous scene that was changed from.</param>
+    /// <param name="lastScene">The previous scene that was changed from.</param>
     /// <param name="nextScene">The next scene that has been changed to.</param>
-    private void OnSceneChange(Scene prevScene, Scene nextScene) {
+    private void OnSceneChange(Scene lastScene, Scene nextScene) {
         if (SceneData.IsGameplayScene(nextScene.name)) {
             CloseUI<PauseMenu>();
         } else {

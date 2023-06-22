@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
 /// <summary>
@@ -7,6 +8,9 @@ using SceneManager = UnityEngine.SceneManagement.SceneManager;
 /// </summary>
 public class GameManager : Singleton<GameManager> {
     public delegate void OnSceneChange(string sceneName);
+    /// <summary>
+    /// Raised when the current scene is changed.
+    /// </summary>
     public event OnSceneChange SceneChanged;
 
     /// <summary>

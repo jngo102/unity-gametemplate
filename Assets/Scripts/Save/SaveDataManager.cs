@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
 /// <summary>
 /// Singleton that manages saving and loading data from persistent data objects.
@@ -35,13 +37,20 @@ public class SaveDataManager : Singleton<SaveDataManager> {
     /// <inheritdoc />
     protected override void OnAwake() {
         fileManager = new SaveFileManager(Application.persistentDataPath, fileName);
-        persistentDataObjects = GetPersistentDataObjects();
         LoadGame();
+        SceneManager.activeSceneChanged += OnSceneChange;
     }
 
     /// <inheritdoc />
     private void OnDestroy() {
         SaveGame();
+    }
+
+    /// <summary>
+    /// Reload data on scene change.
+    /// </summary>
+    private void OnSceneChange(Scene lastScene, Scene nextScene) {
+        LoadGame();
     }
 
     /// <summary>
@@ -62,6 +71,7 @@ public class SaveDataManager : Singleton<SaveDataManager> {
             NewGame();
         }
 
+        persistentDataObjects = GetPersistentDataObjects();
         foreach (var persistentDataObject in persistentDataObjects) {
             persistentDataObject.LoadData(saveData);
         }
@@ -71,6 +81,7 @@ public class SaveDataManager : Singleton<SaveDataManager> {
     /// Get all persistent data objects and save their data to disk.
     /// </summary>
     public void SaveGame() {
+        persistentDataObjects = GetPersistentDataObjects();
         foreach (var persistentDataObject in persistentDataObjects) {
             persistentDataObject.SaveData(saveData);
         }

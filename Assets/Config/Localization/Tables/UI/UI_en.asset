@@ -86,6 +86,18 @@ MonoBehaviour:
     m_Localized: Resume
     m_Metadata:
       m_Items: []
+  - m_Id: 67332074975232
+    m_Localized: Are you sure you want to quit?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67332104335360
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67332104335361
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

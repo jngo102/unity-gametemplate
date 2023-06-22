@@ -51,7 +51,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2510809542660
-    m_Localized: Sfx
+    m_Localized: SFX
     m_Metadata:
       m_Items: []
   - m_Id: 2510809542661
@@ -84,6 +84,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 10088323035136
     m_Localized: Fortsetzen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67332074975232
+    m_Localized: "Sind Sie sicher, dass Sie aufh\xF6ren wollen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67332104335360
+    m_Localized: Ja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67332104335361
+    m_Localized: NEIN
     m_Metadata:
       m_Items: []
   references:

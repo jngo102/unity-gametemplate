@@ -67,7 +67,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2510809542664
-    m_Localized: Bien
+    m_Localized: Derecho
     m_Metadata:
       m_Items: []
   - m_Id: 2510809542665
@@ -84,6 +84,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 10088323035136
     m_Localized: Reanudar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67332074975232
+    m_Localized: "\xBFSeguro que quieres salir?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67332104335360
+    m_Localized: "S\xED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67332104335361
+    m_Localized: No
     m_Metadata:
       m_Items: []
   references:

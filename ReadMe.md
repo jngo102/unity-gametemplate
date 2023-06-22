@@ -24,9 +24,9 @@
 
 ## Team
 - Art: [evonik](https://linktr.ee/evonik)
-- Music: [Maldurin]()
+- Music: [Maldurin]
 - Programming: [jngo102](https://linktr.ee/jngo102)
-- Programming: [juritoba]()
-- SFX: [sounddesigncharles]()
+- Programming: [juritoba]
+- SFX: [sounddesigncharles]
 
 Template for jngo's Unity games.

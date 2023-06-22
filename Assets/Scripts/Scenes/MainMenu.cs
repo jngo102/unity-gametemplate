@@ -36,8 +36,6 @@ public class MainMenu : MonoBehaviour {
         startButton.onClick.AddListener(() => GameManager.Instance.ChangeScene("SampleScene"));
         if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Other) {
             quitButton.gameObject.SetActive(false);
-        } else {
-            quitButton.onClick.AddListener(GameManager.QuitGame);
         }
 
         // Initially add home page to stack
@@ -50,10 +48,10 @@ public class MainMenu : MonoBehaviour {
     }
 
     /// <summary>
-    /// Show a menu, hiding the current one.
+    /// Open a menu, hiding the current one.
     /// </summary>
     /// <param name="menu">The menu to show.</param>
-    public void ShowMenu(RectTransform menu) {
+    public void OpenMenu(RectTransform menu) {
         var topMenu = menuStack.Peek();
         if (menu != homePage) {
             backButton.gameObject.SetActive(true);
@@ -77,4 +75,10 @@ public class MainMenu : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Quit the game from the main menu.
+    /// </summary>
+    public void QuitGame() {
+        GameManager.QuitGame();
+    }
 }

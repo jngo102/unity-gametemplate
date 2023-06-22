@@ -86,6 +86,19 @@ MonoBehaviour:
     m_Localized: "\u0420\u0435\u0437\u044E\u043C\u0435"
     m_Metadata:
       m_Items: []
+  - m_Id: 67332074975232
+    m_Localized: "\u0412\u044B \u0443\u0432\u0435\u0440\u0435\u043D\u044B, \u0447\u0442\u043E
+      \u0445\u043E\u0442\u0438\u0442\u0435 \u0432\u044B\u0439\u0442\u0438?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67332104335360
+    m_Localized: "\u0414\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67332104335361
+    m_Localized: "\u041D\u0435\u0442"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

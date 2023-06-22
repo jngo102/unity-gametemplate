@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /// <summary>
 /// Controller for the pause menu user interface.
 /// </summary>
-public class PauseMenu : BaseUI
-{
+public class PauseMenu : BaseUI {
+    [SerializeField] private VerticalLayoutGroup menuButtons;
+    [SerializeField] private VerticalLayoutGroup quitConfirmation;
+
     /// <inheritdoc />   
     private void Awake() {
         InputManager.Instance.Cancel.performed += OnCancel;
@@ -21,6 +24,7 @@ public class PauseMenu : BaseUI
     /// </summary>
     /// <param name="context"></param>
     private void OnCancel(InputAction.CallbackContext context) {
+        CloseQuitConfirmation();
         Toggle();
     }
 
@@ -37,9 +41,26 @@ public class PauseMenu : BaseUI
     }
 
     /// <summary>
+    /// Ask whether the player actually wants to quit the game.
+    /// </summary>
+    public void AskForQuitConfirmation() {
+        menuButtons.gameObject.SetActive(false);
+        quitConfirmation.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// Close the quit confirmation popup.
+    /// </summary>
+    public void CloseQuitConfirmation() {
+        quitConfirmation.gameObject.SetActive(false);
+        menuButtons.gameObject.SetActive(true);
+    }
+
+    /// <summary>
     /// Quit to the main menu scene.
     /// </summary>
     public void QuitToMainMenu() {
+        CloseQuitConfirmation();
         Close();
         GameManager.Instance.ChangeScene("MainMenu");
     }

@@ -9,8 +9,14 @@ public class SaveData {
     /// Input binding overrides that the player has made.
     /// </summary>
     public string BindingOverrides;
+
+    /// <summary>
+    /// The game's default language.
+    /// </summary>
+    public string Language;
     
     public SaveData() {
         BindingOverrides = "";
+        Language = "en";
     }
 }
