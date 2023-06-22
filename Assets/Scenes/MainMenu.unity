@@ -308,6 +308,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -67.96333
       objectReference: {fileID: 0}
+    - target: {fileID: 4301690483197657071, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510809542659
+      objectReference: {fileID: 0}
     - target: {fileID: 4735519460867724871, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -425,6 +429,10 @@ PrefabInstance:
     - target: {fileID: 1214972446116633220, guid: 3ba5fae9816ab364aa4b8bb870a14e02, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -64
+      objectReference: {fileID: 0}
+    - target: {fileID: 2275334211442044283, guid: 3ba5fae9816ab364aa4b8bb870a14e02, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510809542662
       objectReference: {fileID: 0}
     - target: {fileID: 3573708455423772641, guid: 3ba5fae9816ab364aa4b8bb870a14e02, type: 3}
       propertyPath: actionName
@@ -592,6 +600,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -64
       objectReference: {fileID: 0}
+    - target: {fileID: 2275334211442044283, guid: 3ba5fae9816ab364aa4b8bb870a14e02, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510809542665
+      objectReference: {fileID: 0}
     - target: {fileID: 3573708455423772641, guid: 3ba5fae9816ab364aa4b8bb870a14e02, type: 3}
       propertyPath: actionName
       value: Jump
@@ -722,6 +734,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1568845043}
     m_Modifications:
+    - target: {fileID: 616783660241912282, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 9241270759424
+      objectReference: {fileID: 0}
     - target: {fileID: 3688851754672557934, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
       propertyPath: m_text
       value: Language
@@ -848,6 +864,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1568845043}
     m_Modifications:
+    - target: {fileID: 616783660241912282, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510809542656
+      objectReference: {fileID: 0}
     - target: {fileID: 3688851754672557934, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
       propertyPath: m_text
       value: Bindings
@@ -986,6 +1006,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 696379765}
     m_Modifications:
+    - target: {fileID: 616783660241912282, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510805348352
+      objectReference: {fileID: 0}
     - target: {fileID: 3688851754672557934, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
       propertyPath: m_text
       value: Settings
@@ -1151,6 +1175,10 @@ PrefabInstance:
     - target: {fileID: 1214972446116633220, guid: 3ba5fae9816ab364aa4b8bb870a14e02, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -64
+      objectReference: {fileID: 0}
+    - target: {fileID: 2275334211442044283, guid: 3ba5fae9816ab364aa4b8bb870a14e02, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510809542663
       objectReference: {fileID: 0}
     - target: {fileID: 3573708455423772641, guid: 3ba5fae9816ab364aa4b8bb870a14e02, type: 3}
       propertyPath: actionName
@@ -1401,6 +1429,10 @@ PrefabInstance:
     - target: {fileID: 3136666041825165847, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -67.96333
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301690483197657071, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510809542658
       objectReference: {fileID: 0}
     - target: {fileID: 4735519460867724871, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1708,6 +1740,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -67.96333
       objectReference: {fileID: 0}
+    - target: {fileID: 4301690483197657071, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510809542660
+      objectReference: {fileID: 0}
     - target: {fileID: 4735519460867724871, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1968,6 +2004,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -64
       objectReference: {fileID: 0}
+    - target: {fileID: 2275334211442044283, guid: 3ba5fae9816ab364aa4b8bb870a14e02, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510809542664
+      objectReference: {fileID: 0}
     - target: {fileID: 3573708455423772641, guid: 3ba5fae9816ab364aa4b8bb870a14e02, type: 3}
       propertyPath: actionName
       value: Move
@@ -2226,6 +2266,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 696379765}
     m_Modifications:
+    - target: {fileID: 616783660241912282, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510805348354
+      objectReference: {fileID: 0}
     - target: {fileID: 3688851754672557934, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
       propertyPath: m_text
       value: Quit
@@ -2433,6 +2477,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -64
       objectReference: {fileID: 0}
+    - target: {fileID: 2275334211442044283, guid: 3ba5fae9816ab364aa4b8bb870a14e02, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510809542661
+      objectReference: {fileID: 0}
     - target: {fileID: 3573708455423772641, guid: 3ba5fae9816ab364aa4b8bb870a14e02, type: 3}
       propertyPath: actionName
       value: Move
@@ -2571,6 +2619,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 696379765}
     m_Modifications:
+    - target: {fileID: 616783660241912282, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510771793920
+      objectReference: {fileID: 0}
     - target: {fileID: 3688851754672557934, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
       propertyPath: m_text
       value: Start
@@ -2844,6 +2896,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 696379765}
     m_Modifications:
+    - target: {fileID: 616783660241912282, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510805348353
+      objectReference: {fileID: 0}
     - target: {fileID: 3688851754672557934, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
       propertyPath: m_text
       value: Credits
@@ -3094,6 +3150,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 3fb7d44fc979e274aa5cc9dcb97ff9eb, type: 3}
+    - target: {fileID: 4301690483197657071, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510809542657
+      objectReference: {fileID: 0}
     - target: {fileID: 4735519460867724871, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -3184,6 +3244,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1300490179}
     m_Modifications:
+    - target: {fileID: 616783660241912282, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 5326890414080
+      objectReference: {fileID: 0}
     - target: {fileID: 3688851754672557934, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
       propertyPath: m_text
       value: Back
@@ -3573,6 +3637,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 54f1fd23f1530f3468b48470778a6307, type: 3}
+    - target: {fileID: 4301690483197657071, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2510809542658
+      objectReference: {fileID: 0}
     - target: {fileID: 4735519460867724871, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -3595,7 +3663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7536362318796342390, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: link
-      value: https://jngo102.itch.io
+      value: https://linktr.ee/jngo102
       objectReference: {fileID: 0}
     - target: {fileID: 7536362318796342390, guid: 462b0c50bb1addd45830ba29574b9bd6, type: 3}
       propertyPath: roleText
