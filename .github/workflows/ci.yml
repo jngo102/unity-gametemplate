@@ -182,4 +182,4 @@ jobs:
         id: upload-pages-artifact
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: Builds/WebGL
+          folder: Builds/${{ secrets.ITCH_GAME }}
