@@ -38,10 +38,8 @@ jobs:
 
       - name: Install Unity Explorer dependency
         run: |
-          curl https://github.com/sinai-dev/UnityExplorer/releases/download/4.9.0/UnityExplorer.Editor.zip -o UnityExplorer.Editor.zip
+          curl -OL https://github.com/sinai-dev/UnityExplorer/releases/download/4.9.0/UnityExplorer.Editor.zip
           unzip UnityExplorer.Editor.zip -d UnityExplorer.Editor
-          cd UnityExplorer.Editor/Runtime
-          mv UnityExplorer.STANDALONE.Mono.dll UnityExplorer.Standalone.Mono.dll
 
       # - name: Cache library
       #   id: cache-library
