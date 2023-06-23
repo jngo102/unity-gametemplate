@@ -40,11 +40,13 @@ jobs:
         run: |
           curl -OL https://github.com/sinai-dev/UnityExplorer/releases/download/4.9.0/UnityExplorer.Editor.zip
           unzip UnityExplorer.Editor.zip -d UnityExplorer.Editor
+          rm UnityExplorer.Editor.zip
 
       - name: Cache library
         id: cache-library
         uses: actions/cache@v3
         with:
+          allowDirtyBuild: true
           path: Library
           key: Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-${{ hashFiles(matrix.projectPath) }}
           restore-keys: |
