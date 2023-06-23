@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: Dialogue_zh-Hans
+  m_Name: Dialogue_zh
   m_EditorClassIdentifier: 
   m_LocaleId:
-    m_Code: zh-Hans
+    m_Code: zh
   m_SharedData: {fileID: 11400000, guid: 0d906ac6dda4b934dac50877500fdd71, type: 2}
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 389141835776
+  - m_Id: 271344807936
     m_Localized: "\u6D4B\u8BD5"
     m_Metadata:
       m_Items: []

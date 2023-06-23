@@ -5,7 +5,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Component for the game's main menu screen.
 /// </summary>
-public class MainMenu : MonoBehaviour {
+public class MainMenu : MonoBehaviour, IDataPersistence {
     /// <summary>
     /// The main home page of the main menu.
     /// </summary>
@@ -31,9 +31,13 @@ public class MainMenu : MonoBehaviour {
     /// </summary>
     private readonly Stack<RectTransform> menuStack = new();
 
+    /// <summary>
+    /// The last scene that the player saved in.
+    /// </summary>
+    private string lastScene;
+
     /// <inheritdoc />
     private void Start() {
-        startButton.onClick.AddListener(() => GameManager.Instance.ChangeScene("SampleScene"));
         if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Other) {
             quitButton.gameObject.SetActive(false);
         }
@@ -80,5 +84,22 @@ public class MainMenu : MonoBehaviour {
     /// </summary>
     public void QuitGame() {
         GameManager.QuitGame();
+    }
+
+    /// <summary>
+    /// Load the last scene that the player saved in.
+    /// </summary>
+    public void LoadLastScene() {
+        GameManager.Instance.ChangeScene(lastScene);
+    }
+
+    /// <inheritdoc />
+    public void LoadData(SaveData saveData) {
+        lastScene = saveData.LastScene;
+    }
+
+    /// <inheritdoc />
+    public void SaveData(SaveData saveData) {
+        
     }
 }

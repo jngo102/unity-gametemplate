@@ -7,19 +7,12 @@ using SceneManager = UnityEngine.SceneManagement.SceneManager;
 /// Singleton that manages the game state.
 /// </summary>
 public class GameManager : Singleton<GameManager> {
-    public delegate void OnSceneChange(string sceneName);
-    /// <summary>
-    /// Raised when the current scene is changed.
-    /// </summary>
-    public event OnSceneChange SceneChanged;
-
     /// <summary>
     /// Change scenes with a fade transition.
     /// </summary>
     /// <param name="sceneName">The name of the scene to change to.</param>
     public void ChangeScene(string sceneName) {
         StartCoroutine(ChangeSceneRoutine(sceneName));
-        SceneChanged?.Invoke(sceneName);
     }
 
     /// <summary>
@@ -30,7 +23,9 @@ public class GameManager : Singleton<GameManager> {
     public IEnumerator ChangeSceneRoutine(string sceneName) {
         var fader = UIManager.Instance.GetUI<Fader>();
         yield return fader.FadeIn();
+        SaveDataManager.Instance.SaveGame();
         yield return SceneManager.LoadSceneAsync(sceneName);
+        SaveDataManager.Instance.LoadGame();
         yield return fader.FadeOut();
     }
 

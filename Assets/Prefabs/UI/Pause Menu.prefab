@@ -205,7 +205,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 616783660241912282, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
-      value: 10088323035136
+      value: 388969869325
       objectReference: {fileID: 0}
     - target: {fileID: 3688851754672557934, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
       propertyPath: m_text
@@ -544,7 +544,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 616783660241912282, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
-      value: 2510805348354
+      value: 388969869314
       objectReference: {fileID: 0}
     - target: {fileID: 3688851754672557934, guid: e75526bb0ccad2342a1ae2722c1875a5, type: 3}
       propertyPath: m_text

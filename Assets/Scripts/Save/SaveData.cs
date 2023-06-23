@@ -1,4 +1,7 @@
 using System;
+using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 /// <summary>
 /// Data structure containing all objects with persistent data.
@@ -15,8 +18,14 @@ public class SaveData {
     /// </summary>
     public string Language;
     
+    /// <summary>
+    /// The last scene that the player saved at.
+    /// </summary>
+    public string LastScene;
+    
     public SaveData() {
         BindingOverrides = "";
         Language = "en";
+        LastScene = "SampleScene";
     }
 }

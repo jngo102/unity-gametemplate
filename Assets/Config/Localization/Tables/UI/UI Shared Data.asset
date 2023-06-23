@@ -15,94 +15,94 @@ MonoBehaviour:
   m_TableCollectionName: UI
   m_TableCollectionNameGuidString: 5f2ad33cc221b2246a2ce226959792bf
   m_Entries:
-  - m_Id: 2510771793920
+  - m_Id: 388944703488
     m_Key: Start
     m_Metadata:
       m_Items: []
-  - m_Id: 2510805348352
+  - m_Id: 388969869312
     m_Key: Settings
     m_Metadata:
       m_Items: []
-  - m_Id: 2510805348353
+  - m_Id: 388969869313
     m_Key: Credits
     m_Metadata:
       m_Items: []
-  - m_Id: 2510805348354
+  - m_Id: 388969869314
     m_Key: Quit
     m_Metadata:
       m_Items: []
-  - m_Id: 67332074975232
+  - m_Id: 388969869315
     m_Key: QuitConfirm
     m_Metadata:
       m_Items: []
-  - m_Id: 67332104335360
+  - m_Id: 388969869316
     m_Key: Yes
     m_Metadata:
       m_Items: []
-  - m_Id: 67332104335361
+  - m_Id: 388969869317
     m_Key: No
     m_Metadata:
       m_Items: []
-  - m_Id: 5326890414080
+  - m_Id: 388969869318
     m_Key: Back
     m_Metadata:
       m_Items: []
-  - m_Id: 9241270759424
+  - m_Id: 388969869319
     m_Key: Language
     m_Metadata:
       m_Items: []
-  - m_Id: 2510809542656
+  - m_Id: 388969869320
     m_Key: Bindings
     m_Metadata:
       m_Items: []
-  - m_Id: 2510809542657
+  - m_Id: 388969869321
     m_Key: Art
     m_Metadata:
       m_Items: []
-  - m_Id: 2510809542658
+  - m_Id: 388969869322
     m_Key: Programming
     m_Metadata:
       m_Items: []
-  - m_Id: 2510809542659
+  - m_Id: 388969869323
     m_Key: Music
     m_Metadata:
       m_Items: []
-  - m_Id: 2510809542660
+  - m_Id: 388969869324
     m_Key: SFX
     m_Metadata:
       m_Items: []
-  - m_Id: 10088323035136
+  - m_Id: 388969869325
     m_Key: Resume
     m_Metadata:
       m_Items: []
-  - m_Id: 2510809542661
+  - m_Id: 388969869326
     m_Key: Up
     m_Metadata:
       m_Items: []
-  - m_Id: 2510809542662
+  - m_Id: 388969869327
     m_Key: Down
     m_Metadata:
       m_Items: []
-  - m_Id: 2510809542663
+  - m_Id: 388969869328
     m_Key: Left
     m_Metadata:
       m_Items: []
-  - m_Id: 2510809542664
+  - m_Id: 388969869329
     m_Key: Right
     m_Metadata:
       m_Items: []
-  - m_Id: 2510809542665
+  - m_Id: 388969869330
     m_Key: Jump
     m_Metadata:
       m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 7132550032954228848
+    rid: 7132550038702522517
   references:
     version: 2
     RefIds:
-    - rid: 7132550032954228848
+    - rid: 7132550038702522517
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1687447055043
+        m_CustomEpoch: 1687474632591

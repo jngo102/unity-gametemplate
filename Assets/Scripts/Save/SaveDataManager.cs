@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
 /// <summary>
 /// Singleton that manages saving and loading data from persistent data objects.
@@ -20,11 +18,6 @@ public class SaveDataManager : Singleton<SaveDataManager> {
     private SaveData saveData;
 
     /// <summary>
-    /// All the persistent data objects found on singleton initialization.
-    /// </summary>
-    private List<IDataPersistence> persistentDataObjects;
-
-    /// <summary>
     /// Handles the actual saving and loading of data to and from disk.
     /// </summary>
     private SaveFileManager fileManager;
@@ -38,19 +31,11 @@ public class SaveDataManager : Singleton<SaveDataManager> {
     protected override void OnAwake() {
         fileManager = new SaveFileManager(Application.persistentDataPath, fileName);
         LoadGame();
-        SceneManager.activeSceneChanged += OnSceneChange;
     }
 
     /// <inheritdoc />
-    private void OnDestroy() {
+    private void OnApplicationQuit() {
         SaveGame();
-    }
-
-    /// <summary>
-    /// Reload data on scene change.
-    /// </summary>
-    private void OnSceneChange(Scene lastScene, Scene nextScene) {
-        LoadGame();
     }
 
     /// <summary>
@@ -71,7 +56,7 @@ public class SaveDataManager : Singleton<SaveDataManager> {
             NewGame();
         }
 
-        persistentDataObjects = GetPersistentDataObjects();
+        var persistentDataObjects = GetPersistentDataObjects();
         foreach (var persistentDataObject in persistentDataObjects) {
             persistentDataObject.LoadData(saveData);
         }
@@ -81,7 +66,7 @@ public class SaveDataManager : Singleton<SaveDataManager> {
     /// Get all persistent data objects and save their data to disk.
     /// </summary>
     public void SaveGame() {
-        persistentDataObjects = GetPersistentDataObjects();
+        var persistentDataObjects = GetPersistentDataObjects();
         foreach (var persistentDataObject in persistentDataObjects) {
             persistentDataObject.SaveData(saveData);
         }
