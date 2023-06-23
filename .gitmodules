@@ -1,0 +1,6 @@
+[submodule "unity-gametemplate-assets"]
+	path = unity-gametemplate-assets
+	url = https://github.com/jngo102/unity-gametemplate-assets.git
+[submodule "Assets/Art"]
+	path = Assets/Art
+	url = https://github.com/jngo102/unity-gametemplate-assets.git

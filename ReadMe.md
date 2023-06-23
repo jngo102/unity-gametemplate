@@ -23,7 +23,7 @@
 </div>
 
 ## Team
-- Art: [evonik](https://linktr.ee/evonik)
+- Art: [evonik](https://linktr.ee/evonik_k)
 - Music: [Maldurin]
 - Programming: [jngo102](https://linktr.ee/jngo102)
 - Programming: [juritoba]
