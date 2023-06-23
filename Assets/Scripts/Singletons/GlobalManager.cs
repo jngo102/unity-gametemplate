@@ -7,31 +7,23 @@ public class GlobalManager : MonoBehaviour {
     private const string SingletonsDirName = "Singletons";
 
     /// <summary>
-    /// Create instances of all singletons.
+    /// Initialze is run on game start.
     /// </summary>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Initialize() {
         InstantiateSingletons();
-        GetSingletons();
     }
 
     /// <summary>
     /// Create instances of all singletons.
     /// </summary>
     private static void InstantiateSingletons() {
-        Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/Input Manager"));
-        Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/Game Manager"));
-        Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/UI Manager"));
-        Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/Save Manager"));
-    }
-
-    /// <summary>
-    /// Get all singletons.
-    /// </summary>
-    private static void GetSingletons() {
-        var inputManager = InputManager.Instance;
-        var gameManager = GameManager.Instance;
-        var uiManager = UIManager.Instance;
-        var saveManager = SaveDataManager.Instance;
+        Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/InputManager"));
+        Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/GameManager"));
+        Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/UIManager"));
+        Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/SaveDataManager"));
+#if UNITY_EDITOR
+        Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/UnityExplorer"));
+#endif
     }
 }

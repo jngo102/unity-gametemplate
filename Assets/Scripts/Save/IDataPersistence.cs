@@ -7,7 +7,7 @@ public interface IDataPersistence {
     /// </summary>
     /// <param name="saveData">The save data instance to load from.</param>
     public void LoadData(SaveData saveData);
-    
+
     /// <summary>
     /// Save data to a save data instance.
     /// </summary>

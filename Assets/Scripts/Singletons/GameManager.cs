@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
 /// <summary>

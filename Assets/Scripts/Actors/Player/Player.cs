@@ -23,12 +23,6 @@ public class Player : MonoBehaviour, ISpawnable {
     private Runner runner;
     #endregion
 
-    #region Singletons
-    private GameManager gameManager;
-    private InputManager inputManager;
-    private UIManager uiManager;
-    #endregion
-
     #region Tracked Values
     private float coyoteTimer;
     private Vector2 inputVector;
@@ -39,7 +33,6 @@ public class Player : MonoBehaviour, ISpawnable {
     private void Awake() {
         GetComponents();
         AssignPlayer();
-        AssignSingletons();
         InitializeTrackedValues();
         SubscribeEvents();
     }
@@ -120,15 +113,6 @@ public class Player : MonoBehaviour, ISpawnable {
     }
 
     /// <summary>
-    /// Assign singletons to the script's local variables.
-    /// </summary>
-    private void AssignSingletons() {
-        gameManager = GameManager.Instance;
-        inputManager = InputManager.Instance;
-        uiManager = UIManager.Instance;
-    }
-
-    /// <summary>
     /// Check whether the player is grounded, accounting for coyote time.
     /// </summary>
     private void CheckGrounded() {
@@ -137,7 +121,7 @@ public class Player : MonoBehaviour, ISpawnable {
             jumper.StopGravity = true;
         }
 
-        if (!inputManager.Jump.InputAction.IsPressed())
+        if (!InputManager.Instance.Jump.InputAction.IsPressed())
             jumper.CancelJump();
     }
 
@@ -152,9 +136,9 @@ public class Player : MonoBehaviour, ISpawnable {
     /// Disable only the player's base inputs.
     /// </summary>
     private void DisableBaseInputs() {
-        inputManager.Jump.InputAction.performed -= OnJump;
-        inputManager.Move.performed -= OnMoveStart;
-        inputManager.Move.canceled -= OnMoveStop;
+        InputManager.Instance.Jump.InputAction.performed -= OnJump;
+        InputManager.Instance.Move.performed -= OnMoveStart;
+        InputManager.Instance.Move.canceled -= OnMoveStop;
     }
 
     /// <summary>
@@ -168,9 +152,9 @@ public class Player : MonoBehaviour, ISpawnable {
     /// Enable only the player's base inputs.
     /// </summary>
     private void EnableBaseInputs() {
-        inputManager.Jump.InputAction.performed += OnJump;
-        inputManager.Move.performed += OnMoveStart;
-        inputManager.Move.canceled += OnMoveStop;
+        InputManager.Instance.Jump.InputAction.performed += OnJump;
+        InputManager.Instance.Move.performed += OnMoveStart;
+        InputManager.Instance.Move.canceled += OnMoveStop;
     }
 
     /// <summary>
@@ -203,7 +187,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// Callback for when the player lands.
     /// </summary>
     private void OnLand() {
-        if (inputManager.Jump.IsBuffered()) {
+        if (InputManager.Instance.Jump.IsBuffered()) {
             Jump();
         }
     }

@@ -16,7 +16,7 @@ public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBeha
     /// The object pool instance that this class is a wrapper for.
     /// </summary>
     private ObjectPool<T> pool;
-    
+
     /// <summary>
     /// The object pool instance.
     /// </summary>

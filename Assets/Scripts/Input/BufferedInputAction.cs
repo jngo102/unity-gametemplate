@@ -9,12 +9,12 @@ public class BufferedInputAction {
     /// The wrapped input action instance.
     /// </summary>
     public InputAction InputAction;
-    
+
     /// <summary>
     /// The time since the last input was made.
     /// </summary>
     private float timeOfLastInput;
-    
+
     /// <summary>
     /// The length of time before the buffer expires.
     /// </summary>

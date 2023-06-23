@@ -10,7 +10,7 @@ public class Jumper : MonoBehaviour {
     /// The gravity scale of the actor's rigid body when falling.
     /// </summary>
     [SerializeField] private float fallingGravityScale = 5;
-    
+
     /// <summary>
     /// The maximum height that the actor may jump.
     /// </summary>
@@ -27,7 +27,7 @@ public class Jumper : MonoBehaviour {
     /// Raised when the actor jumps.
     /// </summary>
     public event JumpEvent Jumped;
-    
+
     public delegate void LandEvent();
 
     /// <summary>
@@ -89,7 +89,7 @@ public class Jumper : MonoBehaviour {
             Jumped?.Invoke();
         }
     }
-    
+
     /// <summary>
     /// Perform a landing.
     /// </summary>

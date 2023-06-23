@@ -100,6 +100,6 @@ public class MainMenu : MonoBehaviour, IDataPersistence {
 
     /// <inheritdoc />
     public void SaveData(SaveData saveData) {
-        
+
     }
 }

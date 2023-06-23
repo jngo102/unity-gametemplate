@@ -11,7 +11,7 @@ public class RebindUI : MonoBehaviour {
     /// The name of the action.
     /// </summary>
     [SerializeField] private string actionName;
-    
+
     /// <summary>
     /// Whether the input action is composite.
     /// </summary>
@@ -50,7 +50,7 @@ public class RebindUI : MonoBehaviour {
         } else {
             bindingIndex = inputAction.bindings.IndexOf(binding => !binding.isComposite);
         }
-        
+
         keyLabel.text = isComposite ? compositeName : actionName;
         keyText.text = InputControlPath.ToHumanReadableString(
             inputAction.bindings[bindingIndex].effectivePath,

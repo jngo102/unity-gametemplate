@@ -1,12 +1,11 @@
 using UnityEngine;
 
-public class Credit : MonoBehaviour
-{
+public class Credit : MonoBehaviour {
     /// <summary>
     /// The link that will be opened when clicking on the credited person's profile.
     /// </summary>
     [SerializeField] private string link;
-    
+
     /// <summary>
     /// Open the link to the credited person's profile.
     /// </summary>

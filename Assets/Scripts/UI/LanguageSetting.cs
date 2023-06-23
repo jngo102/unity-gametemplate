@@ -1,7 +1,7 @@
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
-using TMPro;
-using System.Linq;
 
 /// <summary>
 /// Controller for the language dropdown setting.

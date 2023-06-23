@@ -6,6 +6,11 @@ using UnityEngine;
 /// </summary>
 public abstract class Singleton : MonoBehaviour {
     /// <summary>
+    /// The immediate parent directory of all the singleton prefabs in the Resources folder.
+    /// </summary>
+    protected const string SingletonsDirName = "Singletons";
+
+    /// <summary>
     /// Whether the game is quitting.
     /// </summary>
     public static bool Quitting { get; private set; }
@@ -49,8 +54,8 @@ public abstract class Singleton<T> : Singleton where T : MonoBehaviour {
                     return _instance = instances[0];
                 }
 
-                Debug.Log($"[{typeof(T)}] An instance is needed in the scene and no existing instances were found, so a new instance will be created.");
-                return _instance = new GameObject($"{typeof(T)}").AddComponent<T>();
+                Debug.Log($"[{typeof(T)}] An instance is needed in the scene and no existing instances were found, so a new instance will be created at {SingletonsDirName}/{typeof(T).FullName}");
+                return _instance = Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/{typeof(T).FullName}")).GetComponent<T>();
             }
         }
     }
@@ -62,7 +67,7 @@ public abstract class Singleton<T> : Singleton where T : MonoBehaviour {
     }
 
     /// <summary>
-    /// Virtual method that is called in <see="Awake" />
+    /// Virtual method that is called in Awake.
     /// </summary>
     protected virtual void OnAwake() { }
 }

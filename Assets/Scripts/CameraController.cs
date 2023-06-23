@@ -3,9 +3,17 @@ using UnityEngine;
 /// <summary>
 /// A camera that follows a target.
 /// </summary>
+[RequireComponent(typeof(Camera))]
+[RequireComponent(typeof(Shaker))]
 public class CameraController : MonoBehaviour {
     public static Transform Target { get; set; }
     [SerializeField] private float smoothing = 5;
+
+    private Shaker shaker;
+
+    private void Awake() {
+        shaker = GetComponent<Shaker>();
+    }
 
     private void Update() {
         FollowTarget();

@@ -5,8 +5,7 @@ using UnityEngine;
 /// Controller for the fader user interface.
 /// </summary>
 [RequireComponent(typeof(Animator))]
-public class Fader : BaseUI
-{
+public class Fader : BaseUI {
     private Animator animator;
 
     /// <inheritdoc />

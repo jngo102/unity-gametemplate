@@ -41,7 +41,7 @@ public class HealthManager : MonoBehaviour {
     /// The amount of time that the actor is invincible for after taking damage.
     /// </summary>
     [SerializeField] private float invincibilityTime = 0.5f;
-    
+
     /// <summary>
     /// Whether the actor can be hurt.
     /// </summary>
@@ -55,19 +55,19 @@ public class HealthManager : MonoBehaviour {
     public event OnHealthChange HealthChanged;
 
     public delegate void OnHarm(float damageAmount, Damager damageSource);
-    
+
     /// <summary>
     /// Raised when the actor takes damage.
     /// </summary>
     public event OnHarm Harmed;
-    
+
     private Facer facer;
     private float currentInvincibilityTime;
 
     /// <inheritdoc />
     private void Awake() {
         facer = GetComponent<Facer>();
-        
+
         currentInvincibilityTime = invincibilityTime + 1;
     }
 
