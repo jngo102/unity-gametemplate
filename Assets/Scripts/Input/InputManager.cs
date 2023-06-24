@@ -37,13 +37,13 @@ public class InputManager : Singleton<InputManager>, IDataPersistence {
     }
 
     /// <inheritdoc />
-    private void OnEnable() {
-        InputActions?.Enable();
+    private void OnDisable() {
+        Disable();
     }
 
     /// <inheritdoc />
-    private void OnDisable() {
-        InputActions?.Disable();
+    private void OnEnable() {
+        Enable();
     }
 
     /// <summary>
@@ -69,5 +69,19 @@ public class InputManager : Singleton<InputManager>, IDataPersistence {
     /// <inheritdoc />
     public void SaveData(SaveData saveData) {
         saveData.BindingOverrides = InputActions.asset.SaveBindingOverridesAsJson();
+    }
+
+    /// <summary>
+    /// Disable all input.
+    /// </summary>
+    public void Disable() {
+        InputActions?.Disable();
+    }
+
+    /// <summary>
+    /// Enable all input.
+    /// </summary>
+    public void Enable() {
+        InputActions?.Enable();
     }
 }

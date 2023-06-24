@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistent: 1
+  playerPrefab: {fileID: -8796077143675543402, guid: cf23be22ffb51d74f94be2cdbb3e9502, type: 3}

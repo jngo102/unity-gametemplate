@@ -16,13 +16,13 @@ public class SaveData {
     public string Language;
 
     /// <summary>
-    /// The last scene that the player saved at.
+    /// The scene of the save spot that the player last saved at.
     /// </summary>
-    public string LastScene;
+    public string SaveScene;
 
     public SaveData() {
         BindingOverrides = "";
         Language = "en";
-        LastScene = "SampleScene";
+        SaveScene = "Level1";
     }
 }

@@ -32,9 +32,9 @@ public class MainMenu : MonoBehaviour, IDataPersistence {
     private readonly Stack<RectTransform> menuStack = new();
 
     /// <summary>
-    /// The last scene that the player saved in.
+    /// The last scene that the player saved at.
     /// </summary>
-    private string lastScene;
+    private string lastSaveScene;
 
     /// <inheritdoc />
     private void Start() {
@@ -89,13 +89,13 @@ public class MainMenu : MonoBehaviour, IDataPersistence {
     /// <summary>
     /// Load the last scene that the player saved in.
     /// </summary>
-    public void LoadLastScene() {
-        GameManager.Instance.ChangeScene(lastScene);
+    public void LoadLastSaveSpot() {
+        GameManager.Instance.LoadSaveSpot(lastSaveScene);
     }
 
     /// <inheritdoc />
     public void LoadData(SaveData saveData) {
-        lastScene = saveData.LastScene;
+        lastSaveScene = saveData.SaveScene;
     }
 
     /// <inheritdoc />

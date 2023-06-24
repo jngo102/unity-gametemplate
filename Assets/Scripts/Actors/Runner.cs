@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -6,6 +7,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Facer))]
 public class Runner : MonoBehaviour {
+    public delegate void OnAutoRunFinish(Runner runner);
+    public event OnAutoRunFinish AutoRunFinished;
+
     /// <summary>
     /// The speed at which the actor runs.
     /// </summary>
@@ -31,5 +35,40 @@ public class Runner : MonoBehaviour {
         if (scaleX < 0 && velocityX > 0 || scaleX > 0 && velocityX < 0) {
             facer.Flip();
         }
+    }
+
+    /// <summary>
+    /// Stop running.
+    /// </summary>
+    public void StopRun() {
+        body.velocity = new Vector2(0, body.velocity.y);
+    }
+
+    /// <summary>
+    /// Run to a target x position.
+    /// </summary>
+    /// <param name="targetX">The x position to run to.</param>
+    public void RunTo(float targetX) {
+        IEnumerator DoRunTo() {
+            var distance = targetX - transform.position.x;
+            var direction = Mathf.Sign(distance);
+            Run(direction);
+
+            if (distance < 0) {
+                yield return new WaitUntil(() => {
+                    Debug.Log("X: " + transform.position.x + " Target: " + targetX);
+                    return transform.position.x <= targetX;
+                });
+            } else if (distance > 0) {
+                yield return new WaitUntil(() => {
+                    Debug.Log("X: " + transform.position.x + " Target: " + targetX);
+                    return transform.position.x >= targetX;
+                });
+            }
+
+            AutoRunFinished?.Invoke(this);
+        }
+
+        StartCoroutine(DoRunTo());
     }
 }

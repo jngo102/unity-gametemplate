@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,7 +38,7 @@ public class SaveFileManager {
                     loadedJson = reader.ReadToEnd();
                 }
 
-                loadedData = JsonConvert.DeserializeObject<SaveData>(loadedJson);
+                loadedData = JsonUtility.FromJson<SaveData>(loadedJson);
             } catch (Exception e) {
                 Debug.LogError($"Error occurred while trying to load data from file: {fullPath}\n{e}");
                 throw;
@@ -58,7 +57,7 @@ public class SaveFileManager {
         var fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
         try {
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
-            var dataJson = JsonConvert.SerializeObject(data, Formatting.Indented);
+            var dataJson = JsonUtility.ToJson(data, true);
             using var stream = new FileStream(fullPath, FileMode.Create);
             using var writer = new StreamWriter(stream);
             writer.Write(dataJson);

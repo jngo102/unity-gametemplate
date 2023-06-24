@@ -46,6 +46,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// <inheritdoc />
     private void FixedUpdate() {
         Move();
+        HandleCoyoteTime();
     }
 
     /// <inheritdoc />
@@ -75,6 +76,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// <param name="context">The input action callback context.</param>
     private void OnMoveStart(InputAction.CallbackContext context) {
         inputVector = context.ReadValue<Vector2>();
+        runner.Run(inputVector.x);
     }
 
     /// <summary>
@@ -82,7 +84,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// </summary>
     /// <param name="context">The input action callback context.</param>
     private void OnMoveStop(InputAction.CallbackContext context) {
-        inputVector = Vector2.zero;
+        runner.StopRun();
     }
 
     /// <inheritdoc />
@@ -128,7 +130,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// <summary>
     /// Disable all player inputs.
     /// </summary>
-    private void DisableAllInputs() {
+    public void DisableAllInputs() {
         DisableBaseInputs();
     }
 
@@ -144,7 +146,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// <summary>
     /// Enable all player inputs.
     /// </summary>
-    private void EnableAllInputs() {
+    public void EnableAllInputs() {
         EnableBaseInputs();
     }
 
@@ -193,11 +195,17 @@ public class Player : MonoBehaviour, ISpawnable {
     }
 
     /// <summary>
+    /// Handle the player's coyote time.
+    /// </summary>
+    private void HandleCoyoteTime() {
+        jumper.StopGravity = coyoteTimer <= CoyoteTime;
+    }
+
+    /// <summary>
     /// Move the player.
     /// </summary>
     private void Move() {
-        runner.Run(inputVector.x);
-        jumper.StopGravity = coyoteTimer <= CoyoteTime;
+        
     }
 
     /// <summary>

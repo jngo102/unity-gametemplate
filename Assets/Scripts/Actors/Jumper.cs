@@ -91,6 +91,20 @@ public class Jumper : MonoBehaviour {
     }
 
     /// <summary>
+    /// Jump to a position.
+    /// </summary>
+    /// <param name="targetPosition">The position to jump to.</param>
+    public void JumpTo(Vector3 targetPosition, float jumpTime) {
+        var oldJumpForce = jumpForce;
+        var diff = targetPosition - transform.position;
+        var jumpX = diff.x / jumpTime;
+        var jumpY = (diff.y - 0.5f * Physics2D.gravity.y * Mathf.Pow(jumpTime, 2)) / jumpTime;
+        body.velocity = new Vector2(jumpX, 0);
+        Jump();
+        jumpForce = oldJumpForce;
+    }
+
+    /// <summary>
     /// Perform a landing.
     /// </summary>
     public void Land() {

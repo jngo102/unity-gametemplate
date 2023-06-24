@@ -35,8 +35,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           lfs: true
+          submodules: true
 
       - name: Install Unity Explorer dependency
+        id: install-unity-explorer
         run: |
           curl -OL https://github.com/sinai-dev/UnityExplorer/releases/download/4.9.0/UnityExplorer.Editor.zip
           unzip UnityExplorer.Editor.zip -d UnityExplorer.Editor
@@ -53,13 +55,13 @@ jobs:
             Library-${{ matrix.projectPath }}-
             Library-
 
-      # - name: Run tests
-      #   id: run-tests
-      #   uses: game-ci/unity-test-runner@v2
-      #   env:
-      #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-      #   with:
-      #     githubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run tests
+        id: run-tests
+        uses: game-ci/unity-test-runner@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build project
         id: build-project
@@ -141,8 +143,6 @@ jobs:
       - name: Checkout
         id: checkout-repo
         uses: actions/checkout@v3
-        with:
-          submodules: true
 
       - name: Download artifact
         id: download-builds

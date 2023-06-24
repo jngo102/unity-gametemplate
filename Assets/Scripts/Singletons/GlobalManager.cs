@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Global manager that initializes all singletons.
+/// </summary>
 public class GlobalManager : MonoBehaviour {
     /// <summary>
     /// The immediate parent directory of all the singleton prefabs.
