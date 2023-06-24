@@ -1,14 +1,15 @@
 using UnityEngine;
 
 /// <summary>
-/// Component for shaking a game object.
+/// Behaviour for shaking a game object.
 /// </summary>
 public class Shaker : MonoBehaviour {
     private Vector3 originalPosition;
-    private float shakeAmplitude = 0.25f;
-    private float shakeDuration = 0.5f;
+    private float shakeAmplitude;
+    private float shakeDuration;
     private float shakeTime;
     private bool shaking;
+    private float currentAmplitude;
 
     /// <inheritdoc />
     private void Awake() {
@@ -20,8 +21,9 @@ public class Shaker : MonoBehaviour {
         if (!shaking) {
             UpdateOriginalPosition();
         } else {
-            transform.localPosition = originalPosition + Random.onUnitSphere * shakeAmplitude;
+            transform.localPosition = originalPosition + Random.onUnitSphere * currentAmplitude;
             shakeTime += Time.deltaTime;
+            currentAmplitude -= shakeAmplitude * Time.deltaTime / shakeDuration;
 
             if (shakeTime >= shakeDuration) {
                 StopShake();
@@ -37,7 +39,7 @@ public class Shaker : MonoBehaviour {
     public void StartShake(float amplitude, float duration) {
         shakeTime = 0;
         shaking = true;
-        shakeAmplitude = amplitude;
+        currentAmplitude = shakeAmplitude = amplitude;
         shakeDuration = duration;
     }
 

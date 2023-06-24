@@ -21,6 +21,16 @@ public class Jumper : MonoBehaviour {
     /// </summary>
     [SerializeField] private float risingGravityScale = 2;
 
+    /// <summary>
+    /// The rate at which the actor falls during a jump.
+    /// </summary>
+    private float FallingAcceleration => Physics2D.gravity.y * body.mass * fallingGravityScale;
+
+    /// <summary>
+    /// The rate at which the actor rises during a jump.
+    /// </summary>
+    private float RisingAcceleration => Physics2D.gravity.y * body.mass * risingGravityScale;
+
     public delegate void JumpEvent();
 
     /// <summary>
@@ -53,7 +63,7 @@ public class Jumper : MonoBehaviour {
         body = GetComponent<Rigidbody2D>();
         grounder = GetComponent<Grounder>();
 
-        jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * risingGravityScale * body.mass));
+        jumpForce = Mathf.Sqrt(-2 * jumpHeight * RisingAcceleration);
     }
 
     /// <inheritdoc />
@@ -81,7 +91,7 @@ public class Jumper : MonoBehaviour {
     }
 
     /// <summary>
-    /// Perform a jump.
+    /// Perform a vertical jump.
     /// </summary>
     public void Jump() {
         if (grounder.IsGrounded()) {
@@ -89,19 +99,52 @@ public class Jumper : MonoBehaviour {
             Jumped?.Invoke();
         }
     }
+    
+    /// <summary>
+    /// Jump with a specific force.
+    /// </summary>
+    /// <param name="force">The force to jump with.</param>
+    public void JumpWith(Vector2 force) {
+        var originalJumpForce = jumpForce;
+        jumpForce = force.y;
+        body.velocity = new Vector2(force.x, 0);
+        Jump();
+        jumpForce = originalJumpForce;
+    }
 
     /// <summary>
-    /// Jump to a position.
+    /// Jump vertically for a certain duration.
+    /// </summary>
+    /// <param name="time">The length of time to jump for.</param>
+    public void JumpFor(float time) {
+        var originalJumpForce = jumpForce;
+        var riseTime = Mathf.Sqrt(-2 / RisingAcceleration);
+        var fallTime = time - riseTime;
+        Debug.Log($"Rise time: {riseTime}\tfall time: {fallTime}");
+        jumpForce = -0.5f * (riseTime * RisingAcceleration + fallTime * FallingAcceleration);
+        Debug.Log($"Jump force {jumpForce} for time {time}");
+        Jump();
+        jumpForce = originalJumpForce;
+    }
+
+    /// <summary>
+    /// Jump to a specific position.
     /// </summary>
     /// <param name="targetPosition">The position to jump to.</param>
-    public void JumpTo(Vector3 targetPosition, float jumpTime) {
-        var oldJumpForce = jumpForce;
+    /// <param name="jumpTime">The duration of the jump.</param>
+    /// <param name="jumpHeight">The height of the jump at its apex.</param>
+    public void JumpTo(Vector3 targetPosition, float jumpTime, float jumpHeight) {
+        var originalJumpForce = jumpForce;
         var diff = targetPosition - transform.position;
         var jumpX = diff.x / jumpTime;
-        var jumpY = (diff.y - 0.5f * Physics2D.gravity.y * Mathf.Pow(jumpTime, 2)) / jumpTime;
+        var riseTime = Mathf.Sqrt(-2 * jumpHeight / RisingAcceleration);
+        var fallTime = jumpTime - riseTime;
+        Debug.Log($"Rise time: {riseTime}\tfall time: {fallTime}");
+        jumpForce = Mathf.Sqrt(-2 * jumpHeight * (RisingAcceleration * riseTime + FallingAcceleration * fallTime));
+        Debug.Log("Jump force: " + jumpForce);
         body.velocity = new Vector2(jumpX, 0);
         Jump();
-        jumpForce = oldJumpForce;
+        jumpForce = originalJumpForce;
     }
 
     /// <summary>

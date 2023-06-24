@@ -8,6 +8,9 @@ using UnityEngine;
 [RequireComponent(typeof(Facer))]
 public class Runner : MonoBehaviour {
     public delegate void OnAutoRunFinish(Runner runner);
+    /// <summary>
+    /// Raised when the actor has finished running to a horizontal position.
+    /// </summary>
     public event OnAutoRunFinish AutoRunFinished;
 
     /// <summary>
@@ -55,15 +58,9 @@ public class Runner : MonoBehaviour {
             Run(direction);
 
             if (distance < 0) {
-                yield return new WaitUntil(() => {
-                    Debug.Log("X: " + transform.position.x + " Target: " + targetX);
-                    return transform.position.x <= targetX;
-                });
+                yield return new WaitUntil(() => transform.position.x <= targetX);
             } else if (distance > 0) {
-                yield return new WaitUntil(() => {
-                    Debug.Log("X: " + transform.position.x + " Target: " + targetX);
-                    return transform.position.x >= targetX;
-                });
+                yield return new WaitUntil(() => transform.position.x >= targetX);
             }
 
             AutoRunFinished?.Invoke(this);

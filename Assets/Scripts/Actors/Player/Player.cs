@@ -123,8 +123,9 @@ public class Player : MonoBehaviour, ISpawnable {
             jumper.StopGravity = true;
         }
 
-        if (!InputManager.Instance.Jump.InputAction.IsPressed())
+        if (InputManager.Instance.IsEnabled && !InputManager.Instance.Jump.InputAction.IsPressed()) {
             jumper.CancelJump();
+        }
     }
 
     /// <summary>
@@ -189,7 +190,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// Callback for when the player lands.
     /// </summary>
     private void OnLand() {
-        if (InputManager.Instance.Jump.IsBuffered()) {
+        if (InputManager.Instance.IsEnabled && InputManager.Instance.Jump.IsBuffered()) {
             Jump();
         }
     }

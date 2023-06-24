@@ -96,15 +96,10 @@ public class GameManager : Singleton<GameManager> {
         var triggerCollider = sceneTransitionTrigger.GetComponent<Collider2D>();
         var triggerWidth = triggerCollider.bounds.size.x;
         var playerRunner = playerComponent.GetComponent<Runner>();
-        Debug.Log("Trigger X: " + triggerTransform.position.x);
-        Debug.Log("Trigger width: " + triggerWidth);
-        Debug.Log("Trigger Scale X: " + triggerTransform.localScale.x);
         var targetX = triggerTransform.position.x + triggerWidth * triggerTransform.localScale.x;
         triggerCollider.enabled = false;
-        Debug.Log("Running to: " + targetX);
         playerRunner.RunTo(targetX);
         playerRunner.AutoRunFinished += runner => {
-            Debug.Log("Auto run finished");
             runner.StopRun();
             InputManager.Instance.Enable();
             triggerCollider.enabled = true;

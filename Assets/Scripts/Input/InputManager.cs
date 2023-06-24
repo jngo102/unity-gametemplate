@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Singleton that manages the game's inputs.
+/// Singleton that manages global inputs.
 /// </summary>
 public class InputManager : Singleton<InputManager>, IDataPersistence {
     /// <summary>
@@ -30,6 +30,11 @@ public class InputManager : Singleton<InputManager>, IDataPersistence {
     /// The input action for canceling an action.
     /// </summary>
     [NonSerialized] public InputAction Cancel;
+
+    /// <summary>
+    /// Whether the input manager is enabled.
+    /// </summary>
+    public bool IsEnabled => InputActions.asset.enabled;
 
     /// <inheritdoc />
     protected override void OnAwake() {
