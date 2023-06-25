@@ -37,7 +37,7 @@ public class MainMenu : MonoBehaviour, IDataPersistence {
     private string lastSaveScene;
 
     private void Start() {
-        if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Other) quitButton.gameObject.SetActive(false);
+        if (Application.platform == RuntimePlatform.WebGLPlayer) quitButton.gameObject.SetActive(false);
 
         // Initially add home page to stack
         menuStack.Push(homePage);

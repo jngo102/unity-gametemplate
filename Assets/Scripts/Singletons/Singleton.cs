@@ -44,8 +44,7 @@ public abstract class Singleton<T> : Singleton where T : MonoBehaviour {
             }
 
             lock (Lock) {
-                if (!_instance) throw new NullReferenceException($"[{typeof(T)}] Instance is null.");
-
+                if (_instance) return _instance;
                 var instances = FindObjectsOfType<T>(true);
                 var count = instances.Length;
                 if (count > 0) {

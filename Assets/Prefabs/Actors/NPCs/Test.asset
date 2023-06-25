@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea5b62f473c58ee45802bb94d8edff33, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: 
-  Pages:
+  pages:
   - m_TableReference:
       m_TableCollectionName: GUID:0d906ac6dda4b934dac50877500fdd71
     m_TableEntryReference:
