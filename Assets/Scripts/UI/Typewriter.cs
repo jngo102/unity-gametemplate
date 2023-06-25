@@ -21,6 +21,11 @@ public class Typewriter : MonoBehaviour {
     /// </summary>
     private int textIndex;
 
+    /// <summary>
+    /// Whether the typewriter is currently printing out text.
+    /// </summary>
+    public bool IsPrinting { get; private set; }
+
     /// <inheritdoc />
     private void Awake() {
         textObject = GetComponent<TextMeshProUGUI>();
@@ -28,7 +33,10 @@ public class Typewriter : MonoBehaviour {
 
     /// <inheritdoc />
     private void Update() {
-        if (textIndex >= Text.Length) return;
+        if (Text == null || (Text != null && textIndex >= Text.Length) || !IsPrinting) {
+            return;
+        }
+        
         printTimer += Time.deltaTime;
         if (printTimer >= printInterval) {
             printTimer = 0;
@@ -42,6 +50,7 @@ public class Typewriter : MonoBehaviour {
     /// </summary>
     /// <param name="text">The text to type out.</param>
     public void Type(string text) {
+        IsPrinting = true;
         printTimer = 0;
         textIndex = 0;
         textObject.text = "";
@@ -54,5 +63,13 @@ public class Typewriter : MonoBehaviour {
     public void Skip() {
         textIndex = Text.Length;
         textObject.text = Text;
+        StopTyping();
+    }
+
+    /// <summary>
+    /// Stop printing out text.
+    /// </summary>
+    private void StopTyping() {
+        IsPrinting = false;
     }
 }

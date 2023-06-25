@@ -13,9 +13,6 @@ GameObject:
   - component: {fileID: 2093335413686154242}
   - component: {fileID: 1421472586669458591}
   - component: {fileID: 6250897020865306346}
-  - component: {fileID: 1864047265273086001}
-  - component: {fileID: 2445615154815612272}
-  - component: {fileID: 1321764843515787683}
   m_Layer: 0
   m_Name: Actor
   m_TagString: Untagged
@@ -183,43 +180,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1864047265273086001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4567700162001116544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa0bc9af7c0c454aa72ef75f5f3fe3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHealth: 5
-  maxHealth: 5
-  invincibilityTime: 0.5
---- !u!114 &2445615154815612272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4567700162001116544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bbbcee9425367c4fafa8c292a7d261f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1321764843515787683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4567700162001116544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f033a327a22731e48b09e1da86058c57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  corpsePrefab: {fileID: 0}

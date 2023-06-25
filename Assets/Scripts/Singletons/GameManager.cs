@@ -11,7 +11,7 @@ public class GameManager : Singleton<GameManager> {
     /// The player prefab.
     /// </summary>
     [SerializeField] private Player playerPrefab;
-    
+
     /// <summary>
     /// Change scenes with a fade transition.
     /// </summary>

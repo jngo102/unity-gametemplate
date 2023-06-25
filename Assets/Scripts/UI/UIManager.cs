@@ -12,9 +12,9 @@ public class UIManager : Singleton<UIManager> {
     [SerializeField] private Canvas canvas;
 
     /// <summary>
-    /// All the user interface that are managed by the ui manager.
+    /// All the user interface prefabs that are managed by the ui manager.
     /// </summary>
-    [SerializeField] private BaseUI[] uis;
+    [SerializeField] private BaseUI[] uiPrefabs;
 
     /// <inheritdoc />
     protected override void OnAwake() {
@@ -79,7 +79,7 @@ public class UIManager : Singleton<UIManager> {
     /// <typeparam name="T">The type of user interface to instantiate.</typeparam>
     /// <returns>The user interface of type T, or null if not found.</returns>
     public T InstantiateUI<T>() where T : BaseUI {
-        foreach (var ui in uis) {
+        foreach (var ui in uiPrefabs) {
             if (ui is T) {
                 var uiInstance = Instantiate(ui, canvas.transform);
                 return (T)uiInstance;

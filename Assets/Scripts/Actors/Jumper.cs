@@ -99,7 +99,7 @@ public class Jumper : MonoBehaviour {
             Jumped?.Invoke();
         }
     }
-    
+
     /// <summary>
     /// Jump with a specific force.
     /// </summary>
@@ -108,21 +108,6 @@ public class Jumper : MonoBehaviour {
         var originalJumpForce = jumpForce;
         jumpForce = force.y;
         body.velocity = new Vector2(force.x, 0);
-        Jump();
-        jumpForce = originalJumpForce;
-    }
-
-    /// <summary>
-    /// Jump vertically for a certain duration.
-    /// </summary>
-    /// <param name="time">The length of time to jump for.</param>
-    public void JumpFor(float time) {
-        var originalJumpForce = jumpForce;
-        var riseTime = Mathf.Sqrt(-2 / RisingAcceleration);
-        var fallTime = time - riseTime;
-        Debug.Log($"Rise time: {riseTime}\tfall time: {fallTime}");
-        jumpForce = -0.5f * (riseTime * RisingAcceleration + fallTime * FallingAcceleration);
-        Debug.Log($"Jump force {jumpForce} for time {time}");
         Jump();
         jumpForce = originalJumpForce;
     }
@@ -139,9 +124,7 @@ public class Jumper : MonoBehaviour {
         var jumpX = diff.x / jumpTime;
         var riseTime = Mathf.Sqrt(-2 * jumpHeight / RisingAcceleration);
         var fallTime = jumpTime - riseTime;
-        Debug.Log($"Rise time: {riseTime}\tfall time: {fallTime}");
         jumpForce = Mathf.Sqrt(-2 * jumpHeight * (RisingAcceleration * riseTime + FallingAcceleration * fallTime));
-        Debug.Log("Jump force: " + jumpForce);
         body.velocity = new Vector2(jumpX, 0);
         Jump();
         jumpForce = originalJumpForce;

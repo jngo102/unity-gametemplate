@@ -6,6 +6,6 @@ public class LevelManager : MonoBehaviour, IDataPersistence {
     }
 
     public void SaveData(SaveData saveData) {
-        
+
     }
 }

@@ -1,8 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class SceneTransitionTrigger : MonoBehaviour
-{
+public class SceneTransitionTrigger : MonoBehaviour {
     /// <summary>
     /// The name of the scene that this transitions to.
     /// </summary>

@@ -111,7 +111,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// Assign the player as the camera controller's current target.
     /// </summary>
     private void AssignPlayer() {
-        CameraController.Target = transform;
+        FindObjectOfType<CameraController>(true).Target = transform;
     }
 
     /// <summary>
@@ -196,6 +196,14 @@ public class Player : MonoBehaviour, ISpawnable {
     }
 
     /// <summary>
+    /// Stop all movement of the player.
+    /// </summary>
+    public void StopMovement() {
+        jumper.CancelJump();
+        runner.StopRun();
+    }
+
+    /// <summary>
     /// Handle the player's coyote time.
     /// </summary>
     private void HandleCoyoteTime() {
@@ -206,7 +214,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// Move the player.
     /// </summary>
     private void Move() {
-        
+
     }
 
     /// <summary>

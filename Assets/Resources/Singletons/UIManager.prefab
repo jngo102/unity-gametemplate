@@ -151,10 +151,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _persistent: 1
   canvas: {fileID: 1780016336855935456}
-  uis:
-  - {fileID: 7702182860323956965, guid: 5726fa8e0d893804f91f43ac54eaa556, type: 3}
+  uiPrefabs:
   - {fileID: 3908844843041743735, guid: 1305ae64c6cce4748813f1d4419c7c92, type: 3}
   - {fileID: 147620973503254199, guid: c6bf24fc2b627e04b8d8ff32aebff8f8, type: 3}
+  - {fileID: 7702182860323956965, guid: 5726fa8e0d893804f91f43ac54eaa556, type: 3}
 --- !u!1 &2446432805314404923
 GameObject:
   m_ObjectHideFlags: 0
