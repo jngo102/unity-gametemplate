@@ -1,16 +1,16 @@
 using UnityEngine;
 
 /// <summary>
-/// Global manager that initializes all singletons.
+///     Global manager that initializes all singletons.
 /// </summary>
 public class GlobalManager : MonoBehaviour {
     /// <summary>
-    /// The immediate parent directory of all the singleton prefabs.
+    ///     The immediate parent directory of all the singleton prefabs.
     /// </summary>
     private const string SingletonsDirName = "Singletons";
 
     /// <summary>
-    /// Initialize is run on game start.
+    ///     Initialize is run on game start.
     /// </summary>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Initialize() {
@@ -18,7 +18,7 @@ public class GlobalManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Create instances of all singletons.
+    ///     Create instances of all singletons.
     /// </summary>
     private static void InstantiateSingletons() {
         Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/GameManager"));

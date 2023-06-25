@@ -1,22 +1,21 @@
 using UnityEngine;
 
 /// <summary>
-/// Deals with facing an actor towards a target and flipping their scale.
+///     Deals with facing an actor towards a target and flipping their scale.
 /// </summary>
 public class Facer : MonoBehaviour {
     /// <summary>
-    /// Face a target object.
+    ///     Face a target object.
     /// </summary>
     /// <param name="target">The target to face.</param>
     public void FaceObject(Transform target) {
-        if (target.position.x > transform.position.x && transform.localScale.x < 0 ||
-            target.position.x < transform.position.x && transform.localScale.x > 0) {
+        if ((target.position.x > transform.position.x && transform.localScale.x < 0) ||
+            (target.position.x < transform.position.x && transform.localScale.x > 0))
             Flip();
-        }
     }
 
     /// <summary>
-    /// Flip the actor's horizontal scale.
+    ///     Flip the actor's horizontal scale.
     /// </summary>
     public void Flip() {
         var selfTransform = transform;

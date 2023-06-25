@@ -3,16 +3,16 @@ using JetBrains.Annotations;
 using UnityEngine;
 
 /// <summary>
-/// The base singleton class.
+///     The base singleton class.
 /// </summary>
 public abstract class Singleton : MonoBehaviour {
     /// <summary>
-    /// The immediate parent directory of all the singleton prefabs in the Resources folder.
+    ///     The immediate parent directory of all the singleton prefabs in the Resources folder.
     /// </summary>
     protected const string SingletonsDirName = "Singletons";
 
     /// <summary>
-    /// Whether the game is quitting.
+    ///     Whether the game is quitting.
     /// </summary>
     protected static bool Quitting { get; private set; }
 
@@ -22,7 +22,7 @@ public abstract class Singleton : MonoBehaviour {
 }
 
 /// <summary>
-/// Extended singleton class.
+///     Extended singleton class.
 /// </summary>
 /// <typeparam name="T">The type of the singleton.</typeparam>
 public abstract class Singleton<T> : Singleton where T : MonoBehaviour {
@@ -31,7 +31,7 @@ public abstract class Singleton<T> : Singleton where T : MonoBehaviour {
     [SerializeField] private bool persistent = true;
 
     /// <summary>
-    /// The singleton instance.
+    ///     The singleton instance.
     /// </summary>
     [NotNull]
     public static T Instance {
@@ -44,9 +44,7 @@ public abstract class Singleton<T> : Singleton where T : MonoBehaviour {
             }
 
             lock (Lock) {
-                if (!_instance) {
-                    throw new NullReferenceException($"[{typeof(T)}] Instance is null.");
-                }
+                if (!_instance) throw new NullReferenceException($"[{typeof(T)}] Instance is null.");
 
                 var instances = FindObjectsOfType<T>(true);
                 var count = instances.Length;
@@ -72,7 +70,7 @@ public abstract class Singleton<T> : Singleton where T : MonoBehaviour {
     }
 
     /// <summary>
-    /// Virtual method that is called in Awake.
+    ///     Virtual method that is called in Awake.
     /// </summary>
     protected virtual void OnAwake() { }
 }

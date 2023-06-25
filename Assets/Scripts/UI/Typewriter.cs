@@ -2,27 +2,27 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// A typewriter effect for a TextMeshProUGUI.
+///     A typewriter effect for a TextMeshProUGUI.
 /// </summary>
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class Typewriter : MonoBehaviour {
     [SerializeField] private float printInterval = 0.1f;
-    public string Text { get; set; }
-
-    private TextMeshProUGUI textObject;
 
     /// <summary>
-    /// A timer that tracks whether the next character should be printed.
+    ///     A timer that tracks whether the next character should be printed.
     /// </summary>
     private float printTimer;
 
     /// <summary>
-    /// The current index of the text that has been printed.
+    ///     The current index of the text that has been printed.
     /// </summary>
     private int textIndex;
 
+    private TextMeshProUGUI textObject;
+    public string Text { get; set; }
+
     /// <summary>
-    /// Whether the typewriter is currently printing out text.
+    ///     Whether the typewriter is currently printing out text.
     /// </summary>
     public bool IsPrinting { get; private set; }
 
@@ -31,9 +31,7 @@ public class Typewriter : MonoBehaviour {
     }
 
     private void Update() {
-        if (Text == null || !IsPrinting) {
-            return;
-        }
+        if (Text == null || !IsPrinting) return;
 
         printTimer += Time.deltaTime;
         if (printTimer >= printInterval) {
@@ -42,13 +40,11 @@ public class Typewriter : MonoBehaviour {
             textObject.text = Text[..textIndex];
         }
 
-        if (textIndex >= Text.Length) {
-            StopTyping();
-        }
+        if (textIndex >= Text.Length) StopTyping();
     }
 
     /// <summary>
-    /// Type out the given text.
+    ///     Type out the given text.
     /// </summary>
     /// <param name="text">The text to type out.</param>
     public void Type(string text) {
@@ -60,7 +56,7 @@ public class Typewriter : MonoBehaviour {
     }
 
     /// <summary>
-    /// Skip the typewriter effect and print out the entire text.
+    ///     Skip the typewriter effect and print out the entire text.
     /// </summary>
     public void Skip() {
         textIndex = Text.Length;
@@ -69,7 +65,7 @@ public class Typewriter : MonoBehaviour {
     }
 
     /// <summary>
-    /// Stop printing out text.
+    ///     Stop printing out text.
     /// </summary>
     private void StopTyping() {
         IsPrinting = false;

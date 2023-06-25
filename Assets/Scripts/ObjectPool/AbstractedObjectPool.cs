@@ -3,28 +3,27 @@ using UnityEngine;
 using UnityEngine.Pool;
 
 /// <summary>
-/// A wrapper around Unity's ObjectPool class.
+///     A wrapper around Unity's ObjectPool class.
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBehaviour, ISpawnable {
     /// <summary>
-    /// The object to spawn from the pool.
-    /// </summary>
-    private T spawnedPrefab;
-
-    /// <summary>
-    /// The object pool instance that this class is a wrapper for.
+    ///     The object pool instance that this class is a wrapper for.
     /// </summary>
     private ObjectPool<T> pool;
 
     /// <summary>
-    /// The object pool instance.
+    ///     The object to spawn from the pool.
+    /// </summary>
+    private T spawnedPrefab;
+
+    /// <summary>
+    ///     The object pool instance.
     /// </summary>
     private ObjectPool<T> Pool {
         get {
-            if (pool == null) {
+            if (pool == null)
                 throw new InvalidOperationException("You need to call InitPool before using the object pool.");
-            }
 
             return pool;
         }
@@ -32,7 +31,7 @@ public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBeha
     }
 
     /// <summary>
-    /// Initialize the object pool.
+    ///     Initialize the object pool.
     /// </summary>
     /// <param name="prefab">The prefab to spawn.</param>
     /// <param name="initialSize">The initial size of the object pool.</param>
@@ -44,8 +43,9 @@ public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBeha
     }
 
     #region Overrides
+
     /// <summary>
-    /// Callback for when an object is created.
+    ///     Callback for when an object is created.
     /// </summary>
     /// <returns>The newly created object.</returns>
     protected virtual T OnCreate() {
@@ -54,7 +54,7 @@ public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBeha
     }
 
     /// <summary>
-    /// Callback for when an object is spawned from the pool.
+    ///     Callback for when an object is spawned from the pool.
     /// </summary>
     /// <param name="obj">The object that is being spawned.</param>
     protected virtual void OnSpawn(T obj) {
@@ -63,7 +63,7 @@ public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBeha
     }
 
     /// <summary>
-    /// Callback for when an object is returned to the pool.
+    ///     Callback for when an object is returned to the pool.
     /// </summary>
     /// <param name="obj">The object that is being despawned.</param>
     protected virtual void OnDespawn(T obj) {
@@ -72,26 +72,33 @@ public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBeha
     }
 
     /// <summary>
-    /// Callback for when an object is destroyed.
+    ///     Callback for when an object is destroyed.
     /// </summary>
     /// <param name="obj">The object that is being destroyed.</param>
     protected virtual void OnDelete(T obj) {
         obj.OnDelete();
         Destroy(obj);
     }
+
     #endregion
 
     #region Getters
-    /// <summary>
-    /// Spawn an object.
-    /// </summary>
-    /// <returns>The spawned object retrieved from the pool.</returns>
-    public T Spawn() => Pool.Get();
 
     /// <summary>
-    /// Despawn an object.
+    ///     Spawn an object.
+    /// </summary>
+    /// <returns>The spawned object retrieved from the pool.</returns>
+    public T Spawn() {
+        return Pool.Get();
+    }
+
+    /// <summary>
+    ///     Despawn an object.
     /// </summary>
     /// <param name="obj">The object to despawn.</param>
-    public void Despawn(T obj) => Pool.Release(obj);
+    public void Despawn(T obj) {
+        Pool.Release(obj);
+    }
+
     #endregion
 }

@@ -3,31 +3,31 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Singleton that manages global inputs.
+///     Singleton that manages global inputs.
 /// </summary>
 public class PlayerInputManager : MonoBehaviour {
     /// <summary>
-    /// The duration that an input may be buffered for.
+    ///     The duration that an input may be buffered for.
     /// </summary>
     [SerializeField] private float inputBufferTime = 0.15f;
 
     /// <summary>
-    /// The player input actions instance.
-    /// </summary>
-    public PlayerInputActions InputActions { get; private set; }
-
-    /// <summary>
-    /// The buffered input action for jumping.
+    ///     The buffered input action for jumping.
     /// </summary>
     public BufferedInputAction Jump;
 
     /// <summary>
-    /// The input action for moving.
+    ///     The input action for moving.
     /// </summary>
     [NonSerialized] public InputAction Move;
 
     /// <summary>
-    /// Whether the input manager is enabled.
+    ///     The player input actions instance.
+    /// </summary>
+    public PlayerInputActions InputActions { get; private set; }
+
+    /// <summary>
+    ///     Whether the input manager is enabled.
     /// </summary>
     public bool IsEnabled => InputActions.asset.enabled;
 
@@ -35,16 +35,16 @@ public class PlayerInputManager : MonoBehaviour {
         SetupInputActions();
     }
 
-    private void OnDisable() {
-        Disable();
-    }
-
     private void OnEnable() {
         Enable();
     }
 
+    private void OnDisable() {
+        Disable();
+    }
+
     /// <summary>
-    /// Initialize input actions.
+    ///     Initialize input actions.
     /// </summary>
     private void SetupInputActions() {
         InputActions ??= new PlayerInputActions();
@@ -57,14 +57,14 @@ public class PlayerInputManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Disable all input.
+    ///     Disable all input.
     /// </summary>
     public void Disable() {
         InputActions.Disable();
     }
 
     /// <summary>
-    /// Enable all input.
+    ///     Enable all input.
     /// </summary>
     public void Enable() {
         InputActions.Enable();

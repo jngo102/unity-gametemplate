@@ -4,51 +4,52 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Handles the rebinding of a single input action.
+///     Handles the rebinding of a single input action.
 /// </summary>
 public class RebindUI : MonoBehaviour {
     /// <summary>
-    /// The name of the action.
+    ///     The name of the action.
     /// </summary>
     [SerializeField] private string actionName;
 
     /// <summary>
-    /// Whether the input action is composite.
+    ///     Whether the input action is composite.
     /// </summary>
     [SerializeField] private bool isComposite;
 
     /// <summary>
-    /// The name of the composite input action.
+    ///     The name of the composite input action.
     /// </summary>
     [SerializeField] private string compositeName;
 
     /// <summary>
-    /// The text that displays the name of the action.
+    ///     The text that displays the name of the action.
     /// </summary>
     [SerializeField] private TextMeshProUGUI keyLabel;
 
     /// <summary>
-    /// The text that displays the bound key.
+    ///     The text that displays the bound key.
     /// </summary>
     [SerializeField] private TextMeshProUGUI keyText;
 
     /// <summary>
-    /// The index of the input action in the action map's bindings.
+    ///     The index of the input action in the action map's bindings.
     /// </summary>
     private int bindingIndex = -1;
 
     /// <summary>
-    /// The input action that is managed by this UI.
+    ///     The input action that is managed by this UI.
     /// </summary>
     private InputAction inputAction;
 
     private void Start() {
-        inputAction = UIManager.Instance.ReferencePlayerActions.Player.Get().actions.First(action => action.name == actionName);
-        if (isComposite) {
-            bindingIndex = inputAction.bindings.IndexOf(binding => binding.isPartOfComposite && binding.name == compositeName.ToLower());
-        } else {
+        inputAction = UIManager.Instance.ReferencePlayerActions.Player.Get().actions
+            .First(action => action.name == actionName);
+        if (isComposite)
+            bindingIndex = inputAction.bindings.IndexOf(binding =>
+                binding.isPartOfComposite && binding.name == compositeName.ToLower());
+        else
             bindingIndex = inputAction.bindings.IndexOf(binding => !binding.isComposite);
-        }
 
         keyLabel.text = isComposite ? compositeName : actionName;
         keyText.text = InputControlPath.ToHumanReadableString(
@@ -57,7 +58,7 @@ public class RebindUI : MonoBehaviour {
     }
 
     /// <summary>
-    /// Begin the rebinding process.
+    ///     Begin the rebinding process.
     /// </summary>
     public void StartRebind() {
         inputAction.Disable();
@@ -71,7 +72,7 @@ public class RebindUI : MonoBehaviour {
     }
 
     /// <summary>
-    /// Callback for when the rebinding process is canceled.
+    ///     Callback for when the rebinding process is canceled.
     /// </summary>
     /// <param name="operation">The rebinding operation object passed into the callback.</param>
     private void RebindCancel(InputActionRebindingExtensions.RebindingOperation operation) {
@@ -83,7 +84,7 @@ public class RebindUI : MonoBehaviour {
     }
 
     /// <summary>
-    /// Callback for when the rebinding process is complete.
+    ///     Callback for when the rebinding process is complete.
     /// </summary>
     /// <param name="operation">The rebinding operation object passed into the callback.</param>
     private void RebindComplete(InputActionRebindingExtensions.RebindingOperation operation) {

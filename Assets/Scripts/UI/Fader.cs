@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Controller for the fader user interface.
+///     Controller for the fader user interface.
 /// </summary>
 [RequireComponent(typeof(Animator))]
 public class Fader : BaseUI {
@@ -23,7 +23,7 @@ public class Fader : BaseUI {
     }
 
     /// <summary>
-    /// Fade in to a black screen.
+    ///     Fade in to a black screen.
     /// </summary>
     public IEnumerator FadeIn() {
         base.Open();
@@ -32,7 +32,7 @@ public class Fader : BaseUI {
     }
 
     /// <summary>
-    /// Fade out from a black screen.
+    ///     Fade out from a black screen.
     /// </summary>
     /// <returns></returns>
     public IEnumerator FadeOut() {

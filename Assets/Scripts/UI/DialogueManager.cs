@@ -2,11 +2,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Manages dialogue from NPCs.
+///     Manages dialogue from NPCs.
 /// </summary>
 public class DialogueManager : BaseUI {
     /// <summary>
-    /// The displayed dialogue typewriter.
+    ///     The displayed dialogue typewriter.
     /// </summary>
     [SerializeField] private Typewriter typer;
 
@@ -14,7 +14,7 @@ public class DialogueManager : BaseUI {
     private int currentPage;
 
     /// <summary>
-    /// The currently displayed, translated dialogue text.
+    ///     The currently displayed, translated dialogue text.
     /// </summary>
     private string CurrentText => currentDialogue.pages[currentPage].GetLocalizedString();
 
@@ -22,32 +22,24 @@ public class DialogueManager : BaseUI {
     public override void Open() {
         base.Open();
 
-        foreach (var playerInputManager in FindObjectsOfType<PlayerInputManager>(true)) {
-            playerInputManager.Disable();
-        }
+        foreach (var playerInputManager in FindObjectsOfType<PlayerInputManager>(true)) playerInputManager.Disable();
 
-        if (UIManager.Instance) {
-            UIManager.Instance.Actions.Submit.performed += OnSubmit;
-        }
+        if (UIManager.Instance) UIManager.Instance.Actions.Submit.performed += OnSubmit;
     }
 
     /// <inheritdoc />
     public override void Close() {
         currentDialogue = null;
 
-        if (UIManager.Instance) {
-            UIManager.Instance.Actions.Submit.performed -= OnSubmit;
-        }
+        if (UIManager.Instance) UIManager.Instance.Actions.Submit.performed -= OnSubmit;
 
-        foreach (var playerInputManager in FindObjectsOfType<PlayerInputManager>(true)) {
-            playerInputManager.Enable();
-        }
+        foreach (var playerInputManager in FindObjectsOfType<PlayerInputManager>(true)) playerInputManager.Enable();
 
         base.Close();
     }
 
     /// <summary>
-    /// Start a dialogue.
+    ///     Start a dialogue.
     /// </summary>
     /// <param name="dialogue">The dialogue data object.</param>
     public void StartDialogue(Dialogue dialogue) {
@@ -57,7 +49,7 @@ public class DialogueManager : BaseUI {
     }
 
     /// <summary>
-    /// Advance the dialogue to the next page.
+    ///     Advance the dialogue to the next page.
     /// </summary>
     private void NextPage() {
         currentPage++;
@@ -70,15 +62,14 @@ public class DialogueManager : BaseUI {
     }
 
     /// <summary>
-    /// Callback to skip the typewriting effect with dialogue.
+    ///     Callback to skip the typewriting effect with dialogue.
     /// </summary>
     /// <param name="context">The input action callback context.</param>
     private void OnSubmit(InputAction.CallbackContext context) {
         if (!context.ReadValueAsButton()) return;
-        if (typer.IsPrinting) {
+        if (typer.IsPrinting)
             typer.Skip();
-        } else {
+        else
             NextPage();
-        }
     }
 }

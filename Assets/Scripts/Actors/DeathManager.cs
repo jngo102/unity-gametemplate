@@ -1,25 +1,21 @@
 using UnityEngine;
 
 /// <summary>
-/// Handles an actor's death.
+///     Handles an actor's death.
 /// </summary>
 [RequireComponent(typeof(HealthManager))]
 public class DeathManager : MonoBehaviour {
+    public delegate void OnDeath();
+
     /// <summary>
-    /// The corpse object to create once the actor has died.
+    ///     The corpse object to create once the actor has died.
     /// </summary>
     [SerializeField] private GameObject corpsePrefab;
 
     private HealthManager healthManager;
 
-    public delegate void OnDeath();
     /// <summary>
-    /// Raised when the actor has died.
-    /// </summary>
-    public event OnDeath Died;
-
-    /// <summary>
-    /// Whether the actor is dead.
+    ///     Whether the actor is dead.
     /// </summary>
     public bool IsDead { get; private set; }
 
@@ -30,7 +26,12 @@ public class DeathManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Check whether the actor's health has reached zero.
+    ///     Raised when the actor has died.
+    /// </summary>
+    public event OnDeath Died;
+
+    /// <summary>
+    ///     Check whether the actor's health has reached zero.
     /// </summary>
     /// <param name="damageAmount">The amount of damage taken.</param>
     /// <param name="damageSource">The source of the damage.</param>
@@ -42,7 +43,7 @@ public class DeathManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Called when the actor dies.
+    ///     Called when the actor dies.
     /// </summary>
     /// <param name="damageSource">The source of the damager that killed the actor.</param>
     private void Die(Damager damageSource) {
@@ -56,7 +57,7 @@ public class DeathManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Bring the actor back to life and fully heal it.
+    ///     Bring the actor back to life and fully heal it.
     /// </summary>
     public void Revive() {
         IsDead = false;

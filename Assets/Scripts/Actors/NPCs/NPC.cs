@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class NPC : Interactable {
     /// <summary>
-    /// The dialogue object used when interacting with this NPC.
+    ///     The dialogue object used when interacting with this NPC.
     /// </summary>
     [SerializeField] private Dialogue dialogue;
 

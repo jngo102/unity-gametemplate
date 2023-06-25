@@ -1,17 +1,35 @@
 using UnityEngine;
 
 /// <summary>
-/// Handles the actor's state of health.
+///     Handles the actor's state of health.
 /// </summary>
 [RequireComponent(typeof(Facer))]
 public class HealthManager : MonoBehaviour {
+    public delegate void OnHarm(float damageAmount, Damager damageSource);
+
+    public delegate void OnHealthChange(float currentHealth, float maxHealth);
+
     /// <summary>
-    /// The actor's current health.
+    ///     The actor's current health.
     /// </summary>
     [SerializeField] private float currentHealth = 5;
 
     /// <summary>
-    /// The actor's current health.
+    ///     The maximum amount of health that the actor can have.
+    /// </summary>
+    [SerializeField] private float maxHealth = 5;
+
+    /// <summary>
+    ///     The amount of time that the actor is invincible for after taking damage.
+    /// </summary>
+    [SerializeField] private float invincibilityTime = 0.5f;
+
+    private float currentInvincibilityTime;
+
+    private Facer facer;
+
+    /// <summary>
+    ///     The actor's current health.
     /// </summary>
     public float CurrentHealth {
         get => currentHealth;
@@ -22,12 +40,7 @@ public class HealthManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// The maximum amount of health that the actor can have.
-    /// </summary>
-    [SerializeField] private float maxHealth = 5;
-
-    /// <summary>
-    /// The maximum amount of health that the actor can have.
+    ///     The maximum amount of health that the actor can have.
     /// </summary>
     public float MaxHealth {
         get => maxHealth;
@@ -38,31 +51,9 @@ public class HealthManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// The amount of time that the actor is invincible for after taking damage.
-    /// </summary>
-    [SerializeField] private float invincibilityTime = 0.5f;
-
-    /// <summary>
-    /// Whether the actor can be hurt.
+    ///     Whether the actor can be hurt.
     /// </summary>
     public bool CanHurt { get; set; } = true;
-
-    public delegate void OnHealthChange(float currentHealth, float maxHealth);
-
-    /// <summary>
-    /// Raised when the actor's health changes.
-    /// </summary>
-    public event OnHealthChange HealthChanged;
-
-    public delegate void OnHarm(float damageAmount, Damager damageSource);
-
-    /// <summary>
-    /// Raised when the actor takes damage.
-    /// </summary>
-    public event OnHarm Harmed;
-
-    private Facer facer;
-    private float currentInvincibilityTime;
 
     private void Awake() {
         facer = GetComponent<Facer>();
@@ -71,23 +62,30 @@ public class HealthManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (currentInvincibilityTime < invincibilityTime) {
+        if (currentInvincibilityTime < invincibilityTime)
             currentInvincibilityTime = Mathf.Clamp(currentInvincibilityTime + Time.deltaTime, 0, invincibilityTime + 1);
-        } else {
+        else
             CanHurt = true;
-        }
     }
 
     /// <summary>
-    /// Damage and take health away from the actor.
+    ///     Raised when the actor's health changes.
+    /// </summary>
+    public event OnHealthChange HealthChanged;
+
+    /// <summary>
+    ///     Raised when the actor takes damage.
+    /// </summary>
+    public event OnHarm Harmed;
+
+    /// <summary>
+    ///     Damage and take health away from the actor.
     /// </summary>
     /// <param name="damageAmount">The amount of damage inflicted.</param>
     /// <param name="damageSource">The source of the damage.</param>
     public void Hurt(float damageAmount, Damager damageSource) {
         if (!CanHurt) return;
-        if (damageSource != null) {
-            facer.FaceObject(damageSource.transform);
-        }
+        if (damageSource != null) facer.FaceObject(damageSource.transform);
         CurrentHealth -= Mathf.Clamp(damageAmount, 0, CurrentHealth);
         Harmed?.Invoke(damageAmount, damageSource);
         CanHurt = false;
@@ -95,7 +93,7 @@ public class HealthManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Heal the actor.
+    ///     Heal the actor.
     /// </summary>
     /// <param name="healAmount">The amount of health to heal for.</param>
     public void Heal(float healAmount) {
@@ -103,14 +101,14 @@ public class HealthManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Fully heal the actor.
+    ///     Fully heal the actor.
     /// </summary>
     public void FullHeal() {
         Heal(MaxHealth - CurrentHealth);
     }
 
     /// <summary>
-    /// Instantly take away all of the actor's health.
+    ///     Instantly take away all of the actor's health.
     /// </summary>
     public void InstantKill() {
         Hurt(CurrentHealth, null);

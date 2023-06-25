@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Manages whether an actor is grounded.
+///     Manages whether an actor is grounded.
 /// </summary>
 [RequireComponent(typeof(Collider2D))]
 public class Grounder : MonoBehaviour {
@@ -11,7 +11,7 @@ public class Grounder : MonoBehaviour {
     private new Collider2D collider;
 
     /// <summary>
-    /// Whether the actor was on the ground in the previous frame.
+    ///     Whether the actor was on the ground in the previous frame.
     /// </summary>
     public bool WasGrounded { get; private set; }
 
@@ -24,7 +24,7 @@ public class Grounder : MonoBehaviour {
     }
 
     /// <summary>
-    /// Check whether the actor is on the ground.
+    ///     Check whether the actor is on the ground.
     /// </summary>
     /// <returns>Whether the actor is on the ground.</returns>
     public bool IsGrounded() {
@@ -38,9 +38,7 @@ public class Grounder : MonoBehaviour {
 #endif
             var hit = Physics2D.Raycast(rayOrigin, Vector2.down, groundCheckRayLength,
                 LayerMask.GetMask("Terrain"));
-            if (hit) {
-                return true;
-            }
+            if (hit) return true;
         }
 
         return false;

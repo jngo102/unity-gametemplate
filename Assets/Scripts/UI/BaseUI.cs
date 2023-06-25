@@ -1,29 +1,30 @@
 using UnityEngine;
 
 /// <summary>
-/// Base class for all user interfaces in the game.
+///     Base class for all user interfaces in the game.
 /// </summary>
 public abstract class BaseUI : MonoBehaviour {
+    public delegate void OnClose(BaseUI ui);
+
+    public delegate void OnOpen(BaseUI ui);
+
     /// <summary>
-    /// Whether the user interface is open.
+    ///     Whether the user interface is open.
     /// </summary>
     public bool IsOpen { get; private set; }
 
-    public delegate void OnOpen(BaseUI ui);
     /// <summary>
-    /// Raised when the user interface is opened.
+    ///     Raised when the user interface is opened.
     /// </summary>
     public event OnOpen Opened;
 
-    public delegate void OnClose(BaseUI ui);
-
     /// <summary>
-    /// Raised when the user interface is closed.
+    ///     Raised when the user interface is closed.
     /// </summary>
     public event OnClose Closed;
 
     /// <summary>
-    /// Open the user interface.
+    ///     Open the user interface.
     /// </summary>
     public virtual void Open() {
         IsOpen = true;
@@ -32,7 +33,7 @@ public abstract class BaseUI : MonoBehaviour {
     }
 
     /// <summary>
-    /// Close the user interface.
+    ///     Close the user interface.
     /// </summary>
     public virtual void Close() {
         IsOpen = false;
@@ -41,13 +42,12 @@ public abstract class BaseUI : MonoBehaviour {
     }
 
     /// <summary>
-    /// Toggle the user interface on or off.
+    ///     Toggle the user interface on or off.
     /// </summary>
     public virtual void Toggle() {
-        if (IsOpen) {
+        if (IsOpen)
             Close();
-        } else {
+        else
             Open();
-        }
     }
 }
