@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// An interactable actor.
@@ -18,6 +19,7 @@ public abstract class Interactable : MonoBehaviour {
     /// <inheritdoc />
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
+            other.GetComponent<PlayerInputManager>().Move.performed += OnInteract;
             if (autoInteract) {
                 Interact();
             } else {
@@ -29,7 +31,18 @@ public abstract class Interactable : MonoBehaviour {
     /// <inheritdoc />
     private void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")) {
+            other.GetComponent<PlayerInputManager>().Move.performed -= OnInteract;
             CanInteract = false;
+        }
+    }
+
+    /// <summary>
+    /// Callback for when the player manually interacts with this NPC.
+    /// </summary>
+    /// <param name="context">The input action callback context.</param>
+    private void OnInteract(InputAction.CallbackContext context) {
+        if (CanInteract && !autoInteract && Mathf.Abs(context.ReadValue<Vector2>().y) > 0) {
+            Interact();
         }
     }
 

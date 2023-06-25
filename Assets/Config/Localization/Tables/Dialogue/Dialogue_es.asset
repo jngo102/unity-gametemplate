@@ -18,8 +18,18 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 271344807936
-    m_Localized: prueba
+  - m_Id: 891804126359552
+    m_Localized: "Esta es la p\xE1gina 1."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 891804164108288
+    m_Localized: "Ahora estamos en la p\xE1gina 2. Esta es una cadena extra larga
+      que permitir\xE1 probar la funcionalidad de omisi\xF3n en el administrador
+      de di\xE1logo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 891804164108289
+    m_Localized: "Finalmente, aqu\xED est\xE1 la p\xE1gina 3, la p\xE1gina final."
     m_Metadata:
       m_Items: []
   references:

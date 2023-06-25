@@ -18,8 +18,18 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 271344807936
-    m_Localized: "pr\xFCfen"
+  - m_Id: 891804126359552
+    m_Localized: Dies ist Seite 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 891804164108288
+    m_Localized: "Jetzt sind wir auf Seite 2. Dies ist eine extra lange Zeichenfolge,
+      mit der die Testen der Skip -Funktionalit\xE4t im Dialogmanager getestet werden
+      k\xF6nnen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 891804164108289
+    m_Localized: "Schlie\xDFlich ist hier Seite 3, die letzte Seite."
     m_Metadata:
       m_Items: []
   references:

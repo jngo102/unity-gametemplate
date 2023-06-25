@@ -18,83 +18,83 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 388944703488
+  - m_Id: 388969869324
+    m_Localized: Sfx
+    m_Metadata:
+      m_Items: []
+  - m_Id: 890718038855680
     m_Localized: Start
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869312
+  - m_Id: 890718089187328
     m_Localized: Einstellungen
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869313
+  - m_Id: 890718089187329
     m_Localized: Credits
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869314
+  - m_Id: 890718089187330
     m_Localized: "Aufh\xF6ren"
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869315
+  - m_Id: 890718093381632
     m_Localized: "Sind Sie sicher, dass Sie aufh\xF6ren wollen?"
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869316
+  - m_Id: 890718093381633
     m_Localized: Ja
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869317
+  - m_Id: 890718093381634
     m_Localized: NEIN
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869318
+  - m_Id: 890718093381635
     m_Localized: "Zur\xFCck"
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869319
+  - m_Id: 890718093381636
     m_Localized: Sprache
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869320
+  - m_Id: 890718093381637
     m_Localized: Bindungen
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869321
+  - m_Id: 890718093381638
     m_Localized: Kunst
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869322
+  - m_Id: 890718093381639
     m_Localized: Programmierung
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869323
+  - m_Id: 890718093381640
     m_Localized: Musik
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869324
-    m_Localized: SFX
-    m_Metadata:
-      m_Items: []
-  - m_Id: 388969869325
+  - m_Id: 890718093381641
     m_Localized: Fortsetzen
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869326
+  - m_Id: 890718093381642
     m_Localized: Hoch
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869327
+  - m_Id: 890718093381643
     m_Localized: Runter
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869328
+  - m_Id: 890718093381644
     m_Localized: Links
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869329
+  - m_Id: 890718093381645
     m_Localized: Rechts
     m_Metadata:
       m_Items: []
-  - m_Id: 388969869330
+  - m_Id: 890718093381646
     m_Localized: Springen
     m_Metadata:
       m_Items: []

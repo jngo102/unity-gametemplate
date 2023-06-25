@@ -13,6 +13,30 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   Pages:
-  - This is page 1.
-  - Now we're on page 2.
-  - Finally, herer's page 3.
+  - m_TableReference:
+      m_TableCollectionName: GUID:0d906ac6dda4b934dac50877500fdd71
+    m_TableEntryReference:
+      m_KeyId: 891804126359552
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  - m_TableReference:
+      m_TableCollectionName: GUID:0d906ac6dda4b934dac50877500fdd71
+    m_TableEntryReference:
+      m_KeyId: 891804164108288
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  - m_TableReference:
+      m_TableCollectionName: GUID:0d906ac6dda4b934dac50877500fdd71
+    m_TableEntryReference:
+      m_KeyId: 891804164108289
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []

@@ -21,7 +21,6 @@ public class GlobalManager : MonoBehaviour {
     /// Create instances of all singletons.
     /// </summary>
     private static void InstantiateSingletons() {
-        Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/InputManager"));
         Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/GameManager"));
         Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/UIManager"));
         Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/SaveDataManager"));

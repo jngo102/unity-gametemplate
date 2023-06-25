@@ -11,14 +11,14 @@ public class PauseMenu : BaseUI {
 
     /// <inheritdoc />   
     private void Awake() {
-        if (InputManager.Instance == null) return;
-        InputManager.Instance.Cancel.performed += OnCancel;
+        if (!UIManager.Instance) return;
+        UIManager.Instance.Actions.Cancel.performed += OnCancel;
     }
 
     /// <inheritdoc />
     private void OnDestroy() {
-        if (InputManager.Instance == null) return;
-        InputManager.Instance.Cancel.performed -= OnCancel;
+        if (!UIManager.Instance) return;
+        UIManager.Instance.Actions.Cancel.performed -= OnCancel;
     }
 
     /// <summary>

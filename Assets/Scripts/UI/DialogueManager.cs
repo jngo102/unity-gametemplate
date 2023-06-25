@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,25 +7,48 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class DialogueManager : BaseUI {
     /// <summary>
+    [SerializeField] private Typewriter typer;
     /// The displayed dialogue typewriter.
     /// </summary>
-    [SerializeField] private Typewriter typer;
+
+    /// <summary>
+    /// The text object containing the current dialogue.
+    /// </summary>
+    [SerializeField] private TextMeshProUGUI text;
 
     private Dialogue currentDialogue;
     private int currentPage;
 
+    /// <summary>
+    /// The currently displayed, translated dialogue text.
+    /// </summary>
+    private string CurrentText => currentDialogue.Pages[currentPage].GetLocalizedString();
+
     /// <inheritdoc />
     public override void Open() {
         base.Open();
-        if (InputManager.Instance == null) return;
-        InputManager.Instance.Jump.InputAction.performed += OnSkip;
+
+        foreach (var playerInputManager in FindObjectsOfType<PlayerInputManager>(true)) {
+            playerInputManager.Disable();
+        }
+
+        if (UIManager.Instance) {
+            UIManager.Instance.Actions.Submit.performed += OnSubmit;
+        }
     }
 
     /// <inheritdoc />
     public override void Close() {
-        if (InputManager.Instance == null) return;
-        InputManager.Instance.Jump.InputAction.performed -= OnSkip;
         currentDialogue = null;
+
+        if (UIManager.Instance) {
+            UIManager.Instance.Actions.Submit.performed -= OnSubmit;
+        }
+
+        foreach (var playerInputManager in FindObjectsOfType<PlayerInputManager>(true)) {
+            playerInputManager.Enable();
+        }
+
         base.Close();
     }
 
@@ -33,13 +57,9 @@ public class DialogueManager : BaseUI {
     /// </summary>
     /// <param name="dialogue">The dialogue data object.</param>
     public void StartDialogue(Dialogue dialogue) {
-        foreach (var player in FindObjectsOfType<Player>(true)) {
-            player.DisableAllInputs();
-            player.StopMovement();
-        }
         currentDialogue = dialogue;
         currentPage = 0;
-        typer.Type(currentDialogue.Pages[currentPage]);
+        typer.Type(CurrentText);
     }
 
     /// <summary>
@@ -49,20 +69,18 @@ public class DialogueManager : BaseUI {
         currentPage++;
         if (currentPage >= currentDialogue.Pages.Length) {
             Close();
-            foreach (var player in FindObjectsOfType<Player>(true)) {
-                player.EnableAllInputs();
-            }
             return;
         }
-        
-        typer.Type(currentDialogue.Pages[currentPage]);
+
+        typer.Type(CurrentText);
     }
 
     /// <summary>
     /// Callback to skip the typewriting effect with dialogue.
     /// </summary>
     /// <param name="context">The input action callback context.</param>
-    private void OnSkip(InputAction.CallbackContext context) {
+    private void OnSubmit(InputAction.CallbackContext context) {
+        if (!context.ReadValueAsButton()) return;
         if (typer.IsPrinting) {
             typer.Skip();
         } else {

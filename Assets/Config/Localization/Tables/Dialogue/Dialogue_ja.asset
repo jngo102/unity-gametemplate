@@ -18,8 +18,16 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 271344807936
-    m_Localized: "\u30C6\u30B9\u30C8"
+  - m_Id: 891804126359552
+    m_Localized: "\u3053\u308C\u306F1\u30DA\u30FC\u30B8\u3067\u3059\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 891804164108288
+    m_Localized: "2\u30DA\u30FC\u30B8\u306B\u3042\u308A\u307E\u3059\u3002\u3053\u308C\u306F\u3001\u30C0\u30A4\u30A2\u30ED\u30B0\u30DE\u30CD\u30FC\u30B8\u30E3\u30FC\u306E\u30B9\u30AD\u30C3\u30D7\u6A5F\u80FD\u306E\u30C6\u30B9\u30C8\u3092\u53EF\u80FD\u306B\u3059\u308B\u975E\u5E38\u306B\u9577\u3044\u6587\u5B57\u5217\u3067\u3059\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 891804164108289
+    m_Localized: "\u6700\u5F8C\u306B\u3001\u6700\u5F8C\u306E\u30DA\u30FC\u30B8\u3067\u3042\u308B\u30DA\u30FC\u30B83\u3067\u3059\u3002"
     m_Metadata:
       m_Items: []
   references:

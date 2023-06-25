@@ -10,16 +10,25 @@ public class Grounder : MonoBehaviour {
 
     private new Collider2D collider;
 
+    /// <summary>
+    /// Whether the actor was on the ground in the previous frame.
+    /// </summary>
     public bool WasGrounded { get; private set; }
 
+    /// <inheritdoc />
     private void Awake() {
         collider = GetComponent<Collider2D>();
     }
 
+    /// <inheritdoc />
     private void Update() {
         WasGrounded = IsGrounded();
     }
 
+    /// <summary>
+    /// Check whether the actor is on the ground.
+    /// </summary>
+    /// <returns>Whether the actor is on the ground.</returns>
     public bool IsGrounded() {
         for (var rayIdx = 0; rayIdx < numGroundCheckRays; rayIdx++) {
             var rayOrigin =

@@ -18,8 +18,17 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 271344807936
-    m_Localized: test
+  - m_Id: 891804126359552
+    m_Localized: This is page 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 891804164108288
+    m_Localized: Now we're on page 2. This is an extra long string that will allow
+      testing of the skip functionality in the dialogue manager.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 891804164108289
+    m_Localized: Finally, here's page 3, the final page.
     m_Metadata:
       m_Items: []
   references:

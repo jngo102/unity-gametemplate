@@ -90,7 +90,8 @@ public class GameManager : Singleton<GameManager> {
         }
 
         var playerComponent = Instantiate(playerPrefab.gameObject, sceneTransitionTrigger.transform.position, Quaternion.identity).GetComponent<Player>();
-        InputManager.Instance.Disable();
+        var playerInputManager = playerComponent.GetComponent<PlayerInputManager>();
+        playerInputManager.Disable();
         var triggerTransform = sceneTransitionTrigger.transform;
         playerComponent.transform.localScale = new Vector3(Mathf.Sign(triggerTransform.localScale.x) * playerComponent.transform.localScale.x, playerComponent.transform.localScale.y, playerComponent.transform.localScale.z);
         var triggerCollider = sceneTransitionTrigger.GetComponent<Collider2D>();
@@ -101,7 +102,7 @@ public class GameManager : Singleton<GameManager> {
         playerRunner.RunTo(targetX);
         playerRunner.AutoRunFinished += runner => {
             runner.StopRun();
-            InputManager.Instance.Enable();
+            playerInputManager.Enable();
             triggerCollider.enabled = true;
         };
     }

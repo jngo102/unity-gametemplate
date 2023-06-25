@@ -33,15 +33,19 @@ public class Typewriter : MonoBehaviour {
 
     /// <inheritdoc />
     private void Update() {
-        if (Text == null || (Text != null && textIndex >= Text.Length) || !IsPrinting) {
+        if (Text == null || !IsPrinting) {
             return;
         }
-        
+
         printTimer += Time.deltaTime;
         if (printTimer >= printInterval) {
             printTimer = 0;
             textIndex++;
             textObject.text = Text[..textIndex];
+        }
+
+        if (textIndex >= Text.Length) {
+            StopTyping();
         }
     }
 

@@ -44,7 +44,7 @@ public class RebindUI : MonoBehaviour {
 
     /// <inheritdoc />
     private void Start() {
-        inputAction = InputManager.Instance.InputActions.Player.Get().actions.First(action => action.name == actionName);
+        inputAction = UIManager.Instance.ReferencePlayerActions.Player.Get().actions.First(action => action.name == actionName);
         if (isComposite) {
             bindingIndex = inputAction.bindings.IndexOf(binding => binding.isPartOfComposite && binding.name == compositeName.ToLower());
         } else {

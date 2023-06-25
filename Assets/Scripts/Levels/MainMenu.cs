@@ -48,7 +48,7 @@ public class MainMenu : MonoBehaviour, IDataPersistence {
 
     /// <inheritdoc />
     private void OnEnable() {
-        InputManager.Instance.Cancel.performed += _ => Back();
+        UIManager.Instance.Actions.Cancel.performed += _ => Back();
     }
 
     /// <summary>

@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Jumper))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Runner))]
+[RequireComponent(typeof(PlayerInputManager))]
 public class Player : MonoBehaviour, ISpawnable {
     #region Exposed Values
     /// <summary>
@@ -27,6 +28,8 @@ public class Player : MonoBehaviour, ISpawnable {
     private float coyoteTimer;
     private Vector2 inputVector;
     #endregion
+
+    public PlayerInputManager InputManager { get; private set; }
 
     #region Unity Functions
     /// <inheritdoc />
@@ -61,13 +64,19 @@ public class Player : MonoBehaviour, ISpawnable {
     #endregion
 
     /// <summary>
-    /// Callback for when the player jumps.
+    /// Callback for when the player starts a jump.
     /// </summary>
     /// <param name="context">The input action callback context.</param>
-    private void OnJump(InputAction.CallbackContext context) {
-        if (context.ReadValueAsButton()) {
-            Jump();
-        }
+    private void OnJumpStart(InputAction.CallbackContext context) {
+        Jump();
+    }
+
+    /// <summary>
+    /// Callback for when the player ends a jump.
+    /// </summary>
+    /// <param name="context">The input action callback context.</param>
+    private void OnJumpStop(InputAction.CallbackContext context) {
+        jumper.CancelJump();
     }
 
     /// <summary>
@@ -123,25 +132,9 @@ public class Player : MonoBehaviour, ISpawnable {
             jumper.StopGravity = true;
         }
 
-        if (InputManager.Instance.IsEnabled && !InputManager.Instance.Jump.InputAction.IsPressed()) {
+        if (InputManager.IsEnabled && !InputManager.Jump.InputAction.IsPressed()) {
             jumper.CancelJump();
         }
-    }
-
-    /// <summary>
-    /// Disable all player inputs.
-    /// </summary>
-    public void DisableAllInputs() {
-        DisableBaseInputs();
-    }
-
-    /// <summary>
-    /// Disable only the player's base inputs.
-    /// </summary>
-    private void DisableBaseInputs() {
-        InputManager.Instance.Jump.InputAction.performed -= OnJump;
-        InputManager.Instance.Move.performed -= OnMoveStart;
-        InputManager.Instance.Move.canceled -= OnMoveStop;
     }
 
     /// <summary>
@@ -155,9 +148,27 @@ public class Player : MonoBehaviour, ISpawnable {
     /// Enable only the player's base inputs.
     /// </summary>
     private void EnableBaseInputs() {
-        InputManager.Instance.Jump.InputAction.performed += OnJump;
-        InputManager.Instance.Move.performed += OnMoveStart;
-        InputManager.Instance.Move.canceled += OnMoveStop;
+        InputManager.Jump.InputAction.performed += OnJumpStart;
+        InputManager.Jump.InputAction.canceled += OnJumpStop;
+        InputManager.Move.performed += OnMoveStart;
+        InputManager.Move.canceled += OnMoveStop;
+    }
+
+    /// <summary>
+    /// Disable all player inputs.
+    /// </summary>
+    public void DisableAllInputs() {
+        DisableBaseInputs();
+    }
+
+    /// <summary>
+    /// Disable only the player's base inputs.
+    /// </summary>
+    private void DisableBaseInputs() {
+        InputManager.Jump.InputAction.performed -= OnJumpStart;
+        InputManager.Jump.InputAction.canceled -= OnJumpStop;
+        InputManager.Move.performed -= OnMoveStart;
+        InputManager.Move.canceled -= OnMoveStop;
     }
 
     /// <summary>
@@ -168,6 +179,7 @@ public class Player : MonoBehaviour, ISpawnable {
         grounder = GetComponent<Grounder>();
         jumper = GetComponent<Jumper>();
         runner = GetComponent<Runner>();
+        InputManager = GetComponent<PlayerInputManager>();
     }
 
     /// <summary>
@@ -182,6 +194,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// </summary>
     public void Jump() {
         if (grounder.IsGrounded() || coyoteTimer <= CoyoteTime) {
+            coyoteTimer = CoyoteTime + 1;
             jumper.Jump();
         }
     }
@@ -190,7 +203,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// Callback for when the player lands.
     /// </summary>
     private void OnLand() {
-        if (InputManager.Instance.IsEnabled && InputManager.Instance.Jump.IsBuffered()) {
+        if (InputManager.IsEnabled && InputManager.Jump.IsBuffered()) {
             Jump();
         }
     }

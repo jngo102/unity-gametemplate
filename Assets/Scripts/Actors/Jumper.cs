@@ -94,10 +94,8 @@ public class Jumper : MonoBehaviour {
     /// Perform a vertical jump.
     /// </summary>
     public void Jump() {
-        if (grounder.IsGrounded()) {
-            body.velocity = new Vector2(body.velocity.x, jumpForce);
-            Jumped?.Invoke();
-        }
+        body.velocity = new Vector2(body.velocity.x, jumpForce);
+        Jumped?.Invoke();
     }
 
     /// <summary>

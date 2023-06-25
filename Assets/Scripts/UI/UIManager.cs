@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
 /// <summary>
 /// Singleton that manages all the user interfaces in the game.    
 /// </summary>
-public class UIManager : Singleton<UIManager> {
+public class UIManager : Singleton<UIManager>, IDataPersistence {
     /// <summary>
     /// The canvas to parent user interfaces to.
     /// </summary>
@@ -16,8 +17,23 @@ public class UIManager : Singleton<UIManager> {
     /// </summary>
     [SerializeField] private BaseUI[] uiPrefabs;
 
+    private UIInputActions inputActions;
+
+    /// <summary>
+    /// User interface input actions.
+    /// </summary>
+    public UIInputActions.UIActions Actions => inputActions.UI;
+
+    /// <summary>
+    /// A reference instance of player actions for input rebinding.
+    /// </summary>
+    public PlayerInputActions ReferencePlayerActions { get; set; }
+
     /// <inheritdoc />
     protected override void OnAwake() {
+        inputActions = new UIInputActions();
+        inputActions.Enable();
+        ReferencePlayerActions = new PlayerInputActions();
         SceneManager.activeSceneChanged += OnSceneChange;
     }
 
@@ -99,5 +115,17 @@ public class UIManager : Singleton<UIManager> {
                 Destroy(child.gameObject);
             }
         }
+    }
+
+    /// <inheritdoc />
+    public void LoadData(SaveData saveData) {
+        if (string.IsNullOrEmpty(saveData.BindingOverrides)) return;
+
+        ReferencePlayerActions.asset.LoadBindingOverridesFromJson(saveData.BindingOverrides);
+    }
+
+    /// <inheritdoc />
+    public void SaveData(SaveData saveData) {
+        saveData.BindingOverrides = ReferencePlayerActions.asset.SaveBindingOverridesAsJson();
     }
 }

@@ -15,8 +15,16 @@ MonoBehaviour:
   m_TableCollectionName: Dialogue
   m_TableCollectionNameGuidString: 0d906ac6dda4b934dac50877500fdd71
   m_Entries:
-  - m_Id: 271344807936
-    m_Key: test
+  - m_Id: 891804126359552
+    m_Key: TEST_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 891804164108288
+    m_Key: TEST_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 891804164108289
+    m_Key: TEST_3
     m_Metadata:
       m_Items: []
   m_Metadata:
