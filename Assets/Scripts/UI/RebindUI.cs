@@ -42,7 +42,6 @@ public class RebindUI : MonoBehaviour {
     /// </summary>
     private InputAction inputAction;
 
-    /// <inheritdoc />
     private void Start() {
         inputAction = UIManager.Instance.ReferencePlayerActions.Player.Get().actions.First(action => action.name == actionName);
         if (isComposite) {

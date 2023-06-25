@@ -20,5 +20,5 @@ public interface ISpawnable {
     /// <summary>
     /// Callback for when the object is destroyed.
     /// </summary>
-    void OnDestroy();
+    void OnDelete();
 }

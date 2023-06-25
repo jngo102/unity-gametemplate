@@ -7,7 +7,7 @@ public static class SceneData {
     /// <summary>
     /// All the scenes in the game that are not gameplay.
     /// </summary>
-    private static List<string> NonGameplayScenes = new() {
+    private static List<string> _nonGameplayScenes = new() {
         "MainMenu",
     };
 
@@ -17,6 +17,6 @@ public static class SceneData {
     /// <param name="sceneName">The name of the scene to check.</param>
     /// <returns>Whether the scene is a gameplay scene.</returns>
     public static bool IsGameplayScene(string sceneName) {
-        return !NonGameplayScenes.Contains(sceneName);
+        return !_nonGameplayScenes.Contains(sceneName);
     }
 }

@@ -19,8 +19,9 @@ public class Facer : MonoBehaviour {
     /// Flip the actor's horizontal scale.
     /// </summary>
     public void Flip() {
-        var localScale = transform.localScale;
+        var selfTransform = transform;
+        var localScale = selfTransform.localScale;
         localScale.x *= -1;
-        transform.localScale = localScale;
+        selfTransform.localScale = localScale;
     }
 }

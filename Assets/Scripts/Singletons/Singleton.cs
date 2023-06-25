@@ -1,3 +1,4 @@
+using System;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -13,9 +14,8 @@ public abstract class Singleton : MonoBehaviour {
     /// <summary>
     /// Whether the game is quitting.
     /// </summary>
-    public static bool Quitting { get; private set; }
+    protected static bool Quitting { get; private set; }
 
-    /// <inheritdoc />
     private void OnApplicationQuit() {
         Quitting = true;
     }
@@ -28,7 +28,7 @@ public abstract class Singleton : MonoBehaviour {
 public abstract class Singleton<T> : Singleton where T : MonoBehaviour {
     [CanBeNull] private static T _instance;
     [NotNull] private static readonly object Lock = new();
-    [SerializeField] private bool _persistent = true;
+    [SerializeField] private bool persistent = true;
 
     /// <summary>
     /// The singleton instance.
@@ -37,13 +37,17 @@ public abstract class Singleton<T> : Singleton where T : MonoBehaviour {
     public static T Instance {
         get {
             if (Quitting) {
-                Debug.LogWarning($"[{nameof(Singleton)}<{typeof(T)}>] Instance will not be returned because the application is quitting.");
+                Debug.LogWarning(
+                    $"[{nameof(Singleton)}<{typeof(T)}>] Instance will not be returned because the application is quitting.");
                 // ReSharper disable once AssignNullToNotNullAttribute
                 return null;
             }
 
             lock (Lock) {
-                if (_instance != null) return _instance;
+                if (!_instance) {
+                    throw new NullReferenceException($"[{typeof(T)}] Instance is null.");
+                }
+
                 var instances = FindObjectsOfType<T>(true);
                 var count = instances.Length;
                 if (count > 0) {
@@ -54,15 +58,16 @@ public abstract class Singleton<T> : Singleton where T : MonoBehaviour {
                     return _instance = instances[0];
                 }
 
-                Debug.Log($"[{typeof(T)}] An instance is needed in the scene and no existing instances were found, so a new instance will be created at {SingletonsDirName}/{typeof(T).FullName}");
-                return _instance = Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/{typeof(T).FullName}")).GetComponent<T>();
+                Debug.Log(
+                    $"[{typeof(T)}] An instance is needed in the scene and no existing instances were found, so a new instance will be created at {SingletonsDirName}/{typeof(T).FullName}");
+                return _instance = Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/{typeof(T).FullName}"))
+                    .GetComponent<T>();
             }
         }
     }
 
-    /// <inheritdoc />
     private void Awake() {
-        if (_persistent) DontDestroyOnLoad(gameObject);
+        if (persistent) DontDestroyOnLoad(gameObject);
         OnAwake();
     }
 

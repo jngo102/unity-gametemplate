@@ -26,12 +26,10 @@ public class Typewriter : MonoBehaviour {
     /// </summary>
     public bool IsPrinting { get; private set; }
 
-    /// <inheritdoc />
     private void Awake() {
         textObject = GetComponent<TextMeshProUGUI>();
     }
 
-    /// <inheritdoc />
     private void Update() {
         if (Text == null || !IsPrinting) {
             return;

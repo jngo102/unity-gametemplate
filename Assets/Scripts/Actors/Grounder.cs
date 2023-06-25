@@ -15,12 +15,10 @@ public class Grounder : MonoBehaviour {
     /// </summary>
     public bool WasGrounded { get; private set; }
 
-    /// <inheritdoc />
     private void Awake() {
         collider = GetComponent<Collider2D>();
     }
 
-    /// <inheritdoc />
     private void Update() {
         WasGrounded = IsGrounded();
     }
@@ -31,9 +29,10 @@ public class Grounder : MonoBehaviour {
     /// <returns>Whether the actor is on the ground.</returns>
     public bool IsGrounded() {
         for (var rayIdx = 0; rayIdx < numGroundCheckRays; rayIdx++) {
+            var bounds = collider.bounds;
             var rayOrigin =
-                new Vector2(collider.bounds.min.x + collider.bounds.size.x * rayIdx / (numGroundCheckRays - 1),
-                    collider.bounds.min.y);
+                new Vector2(bounds.min.x + bounds.size.x * rayIdx / (numGroundCheckRays - 1),
+                    bounds.min.y);
 #if UNITY_EDITOR
             Debug.DrawRay(rayOrigin, Vector2.down * groundCheckRayLength, Color.red);
 #endif

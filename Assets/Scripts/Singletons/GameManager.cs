@@ -16,6 +16,8 @@ public class GameManager : Singleton<GameManager> {
     /// Change scenes with a fade transition.
     /// </summary>
     /// <param name="sceneName">The name of the scene to change to.</param>
+    /// <param name="sceneTransitionType">The type of scene transition when changing scenes.</param>
+    /// <param name="entryName">The name of the scene transition trigger to enter from after the scene changes.</param>
     public void ChangeScene(string sceneName, SceneTransitionType sceneTransitionType = SceneTransitionType.Level, string entryName = null) {
         StartCoroutine(ChangeSceneRoutine(sceneName, sceneTransitionType, entryName));
     }
@@ -47,9 +49,9 @@ public class GameManager : Singleton<GameManager> {
     /// <summary>
     /// Load the player at a save spot.
     /// </summary>
-    /// <param name="saveSpotData">Data of the save spot to load at.</param>
+    /// <param name="saveScene">The saved scene to load.</param>
     public void LoadSaveSpot(string saveScene) {
-        ChangeScene(saveScene, SceneTransitionType.MainMenu, null);
+        ChangeScene(saveScene, SceneTransitionType.MainMenu);
     }
 
     /// <summary>
@@ -84,7 +86,7 @@ public class GameManager : Singleton<GameManager> {
     /// <param name="entryName">The name of the scene transition trigger to enter from.</param>
     private void StartLevel(string entryName) {
         var sceneTransitionTrigger = FindObjectsOfType<SceneTransitionTrigger>().FirstOrDefault(trigger => trigger.name == entryName);
-        if (sceneTransitionTrigger == null) {
+        if (!sceneTransitionTrigger) {
             Debug.LogError($"No scene transition trigger found in scene {SceneManager.GetActiveScene().name} with entry name {entryName}.");
             return;
         }
@@ -93,11 +95,14 @@ public class GameManager : Singleton<GameManager> {
         var playerInputManager = playerComponent.GetComponent<PlayerInputManager>();
         playerInputManager.Disable();
         var triggerTransform = sceneTransitionTrigger.transform;
-        playerComponent.transform.localScale = new Vector3(Mathf.Sign(triggerTransform.localScale.x) * playerComponent.transform.localScale.x, playerComponent.transform.localScale.y, playerComponent.transform.localScale.z);
+        var playerScale = playerComponent.transform.localScale;
+        var triggerScale = triggerTransform.localScale;
+        playerScale = new Vector3(Mathf.Sign(triggerScale.x) * playerScale.x, playerScale.y, playerScale.z);
+        playerComponent.transform.localScale = playerScale;
         var triggerCollider = sceneTransitionTrigger.GetComponent<Collider2D>();
         var triggerWidth = triggerCollider.bounds.size.x;
         var playerRunner = playerComponent.GetComponent<Runner>();
-        var targetX = triggerTransform.position.x + triggerWidth * triggerTransform.localScale.x;
+        var targetX = triggerTransform.position.x + triggerWidth * triggerScale.x;
         triggerCollider.enabled = false;
         playerRunner.RunTo(targetX);
         playerRunner.AutoRunFinished += runner => {
@@ -110,15 +115,13 @@ public class GameManager : Singleton<GameManager> {
     /// <summary>
     /// Start a gameplay level from a save spot.
     /// </summary>
-    /// <param name="sceneName">The scene that the save spot is located in.</param>
-    /// <param name="savePosition">The position that the save spot is located at.</param>
     private void StartLevel() {
         var saveSpot = FindObjectsOfType<SaveSpot>().FirstOrDefault();
-        if (saveSpot == null) {
+        if (!saveSpot) {
             Debug.LogError($"No save spot found in scene {SceneManager.GetActiveScene().name}.");
             return;
         }
 
-        var playerComponent = Instantiate(playerPrefab.gameObject, saveSpot.transform.position, Quaternion.identity).GetComponent<Player>();
+        Instantiate(playerPrefab.gameObject, saveSpot.transform.position, Quaternion.identity).GetComponent<Player>();
     }
 }

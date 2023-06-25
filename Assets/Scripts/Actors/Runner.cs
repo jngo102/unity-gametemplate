@@ -21,7 +21,6 @@ public class Runner : MonoBehaviour {
     private Rigidbody2D body;
     private Facer facer;
 
-    /// <inheritdoc />
     private void Awake() {
         body = GetComponent<Rigidbody2D>();
         facer = GetComponent<Facer>();

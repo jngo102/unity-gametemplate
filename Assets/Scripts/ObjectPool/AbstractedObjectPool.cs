@@ -10,7 +10,7 @@ public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBeha
     /// <summary>
     /// The object to spawn from the pool.
     /// </summary>
-    private T prefab;
+    private T spawnedPrefab;
 
     /// <summary>
     /// The object pool instance that this class is a wrapper for.
@@ -39,8 +39,8 @@ public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBeha
     /// <param name="maxSize">The maximum number of objects that may be in the pool.</param>
     /// <param name="collectionChecks">Whether to perform collection checks.</param>
     protected void InitPool(T prefab, int initialSize = 10, int maxSize = 20, bool collectionChecks = false) {
-        this.prefab = prefab;
-        Pool = new ObjectPool<T>(OnCreate, OnSpawn, OnDespawn, OnDestroy, collectionChecks, initialSize, maxSize);
+        spawnedPrefab = prefab;
+        Pool = new ObjectPool<T>(OnCreate, OnSpawn, OnDespawn, OnDelete, collectionChecks, initialSize, maxSize);
     }
 
     #region Overrides
@@ -49,8 +49,8 @@ public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBeha
     /// </summary>
     /// <returns>The newly created object.</returns>
     protected virtual T OnCreate() {
-        prefab.OnCreate();
-        return Instantiate(prefab);
+        spawnedPrefab.OnCreate();
+        return Instantiate(spawnedPrefab);
     }
 
     /// <summary>
@@ -75,8 +75,8 @@ public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBeha
     /// Callback for when an object is destroyed.
     /// </summary>
     /// <param name="obj">The object that is being destroyed.</param>
-    protected virtual void OnDestroy(T obj) {
-        obj.OnDestroy();
+    protected virtual void OnDelete(T obj) {
+        obj.OnDelete();
         Destroy(obj);
     }
     #endregion

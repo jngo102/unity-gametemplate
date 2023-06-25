@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,14 +6,9 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class DialogueManager : BaseUI {
     /// <summary>
-    [SerializeField] private Typewriter typer;
     /// The displayed dialogue typewriter.
     /// </summary>
-
-    /// <summary>
-    /// The text object containing the current dialogue.
-    /// </summary>
-    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Typewriter typer;
 
     private Dialogue currentDialogue;
     private int currentPage;
@@ -22,7 +16,7 @@ public class DialogueManager : BaseUI {
     /// <summary>
     /// The currently displayed, translated dialogue text.
     /// </summary>
-    private string CurrentText => currentDialogue.Pages[currentPage].GetLocalizedString();
+    private string CurrentText => currentDialogue.pages[currentPage].GetLocalizedString();
 
     /// <inheritdoc />
     public override void Open() {
@@ -67,7 +61,7 @@ public class DialogueManager : BaseUI {
     /// </summary>
     private void NextPage() {
         currentPage++;
-        if (currentPage >= currentDialogue.Pages.Length) {
+        if (currentPage >= currentDialogue.pages.Length) {
             Close();
             return;
         }

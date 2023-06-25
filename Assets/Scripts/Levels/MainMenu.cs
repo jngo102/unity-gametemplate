@@ -12,9 +12,9 @@ public class MainMenu : MonoBehaviour, IDataPersistence {
     [SerializeField] private RectTransform homePage;
 
     /// <summary>
-    /// The button that starts the game.
+    /// Warning asking the player if they really want to quit the game.
     /// </summary>
-    [SerializeField] private Button startButton;
+    [SerializeField] private RectTransform quitWarning;
 
     /// <summary>
     /// The button that quits from the game.
@@ -36,7 +36,6 @@ public class MainMenu : MonoBehaviour, IDataPersistence {
     /// </summary>
     private string lastSaveScene;
 
-    /// <inheritdoc />
     private void Start() {
         if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Other) {
             quitButton.gameObject.SetActive(false);
@@ -46,7 +45,6 @@ public class MainMenu : MonoBehaviour, IDataPersistence {
         menuStack.Push(homePage);
     }
 
-    /// <inheritdoc />
     private void OnEnable() {
         UIManager.Instance.Actions.Cancel.performed += _ => Back();
     }
@@ -57,7 +55,7 @@ public class MainMenu : MonoBehaviour, IDataPersistence {
     /// <param name="menu">The menu to show.</param>
     public void OpenMenu(RectTransform menu) {
         var topMenu = menuStack.Peek();
-        if (menu != homePage) {
+        if (menu != homePage && menu != quitWarning) {
             backButton.gameObject.SetActive(true);
         }
         topMenu.gameObject.SetActive(false);
@@ -95,7 +93,7 @@ public class MainMenu : MonoBehaviour, IDataPersistence {
 
     /// <inheritdoc />
     public void LoadData(SaveData saveData) {
-        lastSaveScene = saveData.SaveScene;
+        lastSaveScene = saveData.saveScene;
     }
 
     /// <inheritdoc />

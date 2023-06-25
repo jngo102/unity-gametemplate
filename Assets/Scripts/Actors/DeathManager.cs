@@ -23,7 +23,6 @@ public class DeathManager : MonoBehaviour {
     /// </summary>
     public bool IsDead { get; private set; }
 
-    /// <inheritdoc />
     private void Awake() {
         healthManager = GetComponent<HealthManager>();
         // Check whether the actor should be dead every time it takes damage.

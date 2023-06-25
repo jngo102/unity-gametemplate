@@ -9,13 +9,11 @@ public class PauseMenu : BaseUI {
     [SerializeField] private VerticalLayoutGroup menuButtons;
     [SerializeField] private VerticalLayoutGroup quitConfirmation;
 
-    /// <inheritdoc />   
     private void Awake() {
         if (!UIManager.Instance) return;
         UIManager.Instance.Actions.Cancel.performed += OnCancel;
     }
 
-    /// <inheritdoc />
     private void OnDestroy() {
         if (!UIManager.Instance) return;
         UIManager.Instance.Actions.Cancel.performed -= OnCancel;

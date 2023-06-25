@@ -28,7 +28,7 @@ public class SaveSpot : MonoBehaviour, IDataPersistence {
     /// <inheritdoc />
     public void SaveData(SaveData saveData) {
         if (playerInTrigger) {
-            saveData.SaveScene = gameObject.scene.name;
+            saveData.saveScene = gameObject.scene.name;
         }
 
     }
@@ -37,7 +37,7 @@ public class SaveSpot : MonoBehaviour, IDataPersistence {
     /// Save the game at the save spot.
     /// </summary>
     /// <param name="player">The player who saved at the save spot.</param>
-    public void Save(Player player) {
+    public static void Save(Player player) {
         player.GetComponent<HealthManager>().FullHeal();
         SaveDataManager.Instance.SaveGame();
     }

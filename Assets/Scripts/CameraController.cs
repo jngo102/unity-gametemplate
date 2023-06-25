@@ -11,9 +11,10 @@ public class CameraController : MonoBehaviour {
         get => target;
         set {
             target = value;
-            if (target != null) {
-                transform.position = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
-            }
+            if (target == null) return;
+            var targetPos = target.transform.position;
+            var selfTransform = transform;
+            selfTransform.position = new Vector3(targetPos.x, targetPos.y, selfTransform.position.z);
         }
     }
     [SerializeField] private float smoothing = 5;
@@ -32,8 +33,10 @@ public class CameraController : MonoBehaviour {
     /// Follow the specified target.
     /// </summary>
     private void FollowTarget() {
-        if (Target == null) return;
-        var targetPos = new Vector3(Target.transform.position.x, Target.transform.position.y, transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, targetPos, smoothing * Time.deltaTime);
+        if (!Target) return;
+        var targetPos = Target.transform.position;
+        var position = transform.position;
+        position = Vector3.Lerp(position, new Vector3(targetPos.x, targetPos.y, position.z), smoothing * Time.deltaTime);
+        transform.position = position;
     }
 }

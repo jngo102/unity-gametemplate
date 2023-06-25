@@ -10,7 +10,7 @@ public class GlobalManager : MonoBehaviour {
     private const string SingletonsDirName = "Singletons";
 
     /// <summary>
-    /// Initialze is run on game start.
+    /// Initialize is run on game start.
     /// </summary>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Initialize() {

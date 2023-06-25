@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Controller for a player.
@@ -14,7 +15,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// <summary>
     /// The duration before the player actually falls and cannot perform a jump.
     /// </summary>
-    public float CoyoteTime = 0.1f;
+    [SerializeField] private float coyoteTime = 0.1f;
     #endregion
 
     #region Components
@@ -32,32 +33,23 @@ public class Player : MonoBehaviour, ISpawnable {
     public PlayerInputManager InputManager { get; private set; }
 
     #region Unity Functions
-    /// <inheritdoc />
     private void Awake() {
         GetComponents();
         AssignPlayer();
         InitializeTrackedValues();
         SubscribeEvents();
     }
-
-    /// <inheritdoc />
+    
     private void Update() {
+        HandleCoyoteTime();
         CheckGrounded();
         UpdateTrackedValues();
     }
 
-    /// <inheritdoc />
-    private void FixedUpdate() {
-        Move();
-        HandleCoyoteTime();
-    }
-
-    /// <inheritdoc />
     private void OnEnable() {
         EnableAllInputs();
     }
 
-    /// <inheritdoc />
     private void OnDisable() {
         DisableAllInputs();
     }
@@ -112,10 +104,10 @@ public class Player : MonoBehaviour, ISpawnable {
     }
 
     /// <inheritdoc />
-    public void OnDestroy() {
+    public void OnDelete() {
 
     }
-
+    
     /// <summary>
     /// Assign the player as the camera controller's current target.
     /// </summary>
@@ -186,15 +178,15 @@ public class Player : MonoBehaviour, ISpawnable {
     /// Initialize the values that are tracked throughout the script's execution.
     /// </summary>
     private void InitializeTrackedValues() {
-        coyoteTimer = CoyoteTime + 1;
+        coyoteTimer = coyoteTime + 1;
     }
 
     /// <summary>
     /// Perform a jump.
     /// </summary>
     public void Jump() {
-        if (grounder.IsGrounded() || coyoteTimer <= CoyoteTime) {
-            coyoteTimer = CoyoteTime + 1;
+        if (grounder.IsGrounded() || coyoteTimer <= coyoteTime) {
+            coyoteTimer = coyoteTime + 1;
             jumper.Jump();
         }
     }
@@ -220,14 +212,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// Handle the player's coyote time.
     /// </summary>
     private void HandleCoyoteTime() {
-        jumper.StopGravity = coyoteTimer <= CoyoteTime;
-    }
-
-    /// <summary>
-    /// Move the player.
-    /// </summary>
-    private void Move() {
-
+        jumper.StopGravity = coyoteTimer <= coyoteTime;
     }
 
     /// <summary>
@@ -241,6 +226,6 @@ public class Player : MonoBehaviour, ISpawnable {
     /// Update values that are to be tracked.
     /// </summary>
     private void UpdateTrackedValues() {
-        coyoteTimer = Mathf.Clamp(coyoteTimer + Time.deltaTime, 0, CoyoteTime + 1);
+        coyoteTimer = Mathf.Clamp(coyoteTimer + Time.deltaTime, 0, coyoteTime + 1);
     }
 }

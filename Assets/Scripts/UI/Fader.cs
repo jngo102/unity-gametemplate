@@ -8,7 +8,6 @@ using UnityEngine;
 public class Fader : BaseUI {
     private Animator animator;
 
-    /// <inheritdoc />
     private void Awake() {
         animator = GetComponent<Animator>();
     }

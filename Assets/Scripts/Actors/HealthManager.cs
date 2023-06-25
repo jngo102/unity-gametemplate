@@ -64,14 +64,12 @@ public class HealthManager : MonoBehaviour {
     private Facer facer;
     private float currentInvincibilityTime;
 
-    /// <inheritdoc />
     private void Awake() {
         facer = GetComponent<Facer>();
 
         currentInvincibilityTime = invincibilityTime + 1;
     }
 
-    /// <inheritdoc />
     private void Update() {
         if (currentInvincibilityTime < invincibilityTime) {
             currentInvincibilityTime = Mathf.Clamp(currentInvincibilityTime + Time.deltaTime, 0, invincibilityTime + 1);

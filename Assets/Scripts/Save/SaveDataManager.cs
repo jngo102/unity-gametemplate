@@ -33,7 +33,6 @@ public class SaveDataManager : Singleton<SaveDataManager> {
         LoadGame();
     }
 
-    /// <inheritdoc />
     private void OnApplicationQuit() {
         SaveGame();
     }
@@ -86,7 +85,7 @@ public class SaveDataManager : Singleton<SaveDataManager> {
     /// Get all persistent data objects in the scene.
     /// </summary>
     /// <returns>A list of all persistent data objects.</returns>
-    private List<IDataPersistence> GetPersistentDataObjects() {
+    private static List<IDataPersistence> GetPersistentDataObjects() {
         var dataObjects = FindObjectsOfType<MonoBehaviour>(true).OfType<IDataPersistence>();
         return dataObjects.ToList();
     }

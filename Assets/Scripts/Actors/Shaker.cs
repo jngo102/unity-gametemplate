@@ -11,12 +11,10 @@ public class Shaker : MonoBehaviour {
     private bool shaking;
     private float currentAmplitude;
 
-    /// <inheritdoc />
     private void Awake() {
         UpdateOriginalPosition();
     }
 
-    /// <inheritdoc />
     private void Update() {
         if (!shaking) {
             UpdateOriginalPosition();

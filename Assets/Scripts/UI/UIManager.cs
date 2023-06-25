@@ -27,7 +27,7 @@ public class UIManager : Singleton<UIManager>, IDataPersistence {
     /// <summary>
     /// A reference instance of player actions for input rebinding.
     /// </summary>
-    public PlayerInputActions ReferencePlayerActions { get; set; }
+    public PlayerInputActions ReferencePlayerActions { get; private set; }
 
     /// <inheritdoc />
     protected override void OnAwake() {
@@ -111,7 +111,7 @@ public class UIManager : Singleton<UIManager>, IDataPersistence {
     /// <typeparam name="T">The type of user interface to destroy.</typeparam>
     public void DestroyUI<T>() where T : BaseUI {
         foreach (Transform child in canvas.transform) {
-            if (child.TryGetComponent<T>(out var uiComponent)) {
+            if (child.TryGetComponent<T>(out var _)) {
                 Destroy(child.gameObject);
             }
         }
@@ -119,13 +119,13 @@ public class UIManager : Singleton<UIManager>, IDataPersistence {
 
     /// <inheritdoc />
     public void LoadData(SaveData saveData) {
-        if (string.IsNullOrEmpty(saveData.BindingOverrides)) return;
+        if (string.IsNullOrEmpty(saveData.bindingOverrides)) return;
 
-        ReferencePlayerActions.asset.LoadBindingOverridesFromJson(saveData.BindingOverrides);
+        ReferencePlayerActions.asset.LoadBindingOverridesFromJson(saveData.bindingOverrides);
     }
 
     /// <inheritdoc />
     public void SaveData(SaveData saveData) {
-        saveData.BindingOverrides = ReferencePlayerActions.asset.SaveBindingOverridesAsJson();
+        saveData.bindingOverrides = ReferencePlayerActions.asset.SaveBindingOverridesAsJson();
     }
 }

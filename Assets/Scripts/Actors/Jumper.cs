@@ -14,7 +14,7 @@ public class Jumper : MonoBehaviour {
     /// <summary>
     /// The maximum height that the actor may jump.
     /// </summary>
-    [SerializeField] private float jumpHeight = 2;
+    [SerializeField] private float maxJumpHeight = 2;
 
     /// <summary>
     /// The gravity scale of the actor's rigid body when rising.
@@ -58,15 +58,13 @@ public class Jumper : MonoBehaviour {
     /// </summary>
     private float jumpForce;
 
-    /// <inheritdoc />
     private void Awake() {
         body = GetComponent<Rigidbody2D>();
         grounder = GetComponent<Grounder>();
 
-        jumpForce = Mathf.Sqrt(-2 * jumpHeight * RisingAcceleration);
+        jumpForce = Mathf.Sqrt(-2 * maxJumpHeight * RisingAcceleration);
     }
 
-    /// <inheritdoc />
     private void Update() {
         if (body.velocity.y <= 0 && !grounder.WasGrounded && grounder.IsGrounded()) {
             Land();
