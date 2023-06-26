@@ -79,6 +79,8 @@ public class CameraController : MonoBehaviour {
     /// </summary>
     /// <param name="smooth">Whether to smooth the zoom change.</param>
     private void FollowZoom(bool smooth = true) {
+        if (targets.Count <= 0) return;
+        
         var newZoom = Mathf.Lerp(maxZoom, minZoom, GetMaxDistance() / zoomLimit);
         camera.fieldOfView = smooth ? Mathf.Lerp(camera.fieldOfView, newZoom, Time.deltaTime) : newZoom;
     }

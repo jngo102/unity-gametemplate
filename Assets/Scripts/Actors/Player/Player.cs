@@ -5,10 +5,10 @@ using UnityEngine.InputSystem;
 ///     Controller for a player.
 /// </summary>
 [RequireComponent(typeof(Grounder))]
+[RequireComponent(typeof(Facer))]
 [RequireComponent(typeof(Jumper))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Runner))]
-// [RequireComponent(typeof(PlayerInputManager))]
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(HealthManager))]
 public class Player : MonoBehaviour, ISpawnable {
@@ -19,12 +19,32 @@ public class Player : MonoBehaviour, ISpawnable {
     /// </summary>
     [SerializeField] private float coyoteTime = 0.1f;
 
+    [SerializeField] private ParticleSystem runParticles;
+    
     #endregion
 
     /// <summary>
     ///     The input manager for this specific player instance.
     /// </summary>
     public PlayerInputHandler InputHandler { get; private set; }
+    
+    #region Components
+
+    private Rigidbody2D body;
+    private Facer facer;
+    private Grounder grounder;
+    private Jumper jumper;
+    private Runner runner;
+    private HealthManager healthManager;
+
+    #endregion
+
+    #region Tracked Values
+
+    private float coyoteTimer;
+    private Vector2 inputVector;
+
+    #endregion
     
     #region Unity Functions
 
@@ -37,6 +57,7 @@ public class Player : MonoBehaviour, ISpawnable {
 
     private void Update() {
         HandleCoyoteTime();
+        facer.CheckFlip();
         CheckGrounded();
         UpdateTrackedValues();
     }
@@ -50,6 +71,106 @@ public class Player : MonoBehaviour, ISpawnable {
     }
 
     #endregion
+    
+    /// <summary>
+    ///     Enable all player inputs.
+    /// </summary>
+    public void EnableAllInputs() {
+        EnableBaseInputs();
+    }
+
+    /// <summary>
+    ///     Enable only the player's base inputs.
+    /// </summary>
+    private void EnableBaseInputs() {
+        InputHandler.Jump.InputAction.performed += OnJumpStart;
+        InputHandler.Jump.InputAction.canceled += OnJumpStop;
+        InputHandler.Move.performed += OnMoveStart;
+        InputHandler.Move.canceled += OnMoveStop;
+    }
+
+    /// <summary>
+    ///     Disable all player inputs.
+    /// </summary>
+    public void DisableAllInputs() {
+        DisableBaseInputs();
+    }
+
+    /// <summary>
+    ///     Disable only the player's base inputs.
+    /// </summary>
+    private void DisableBaseInputs() {
+        InputHandler.Jump.InputAction.performed -= OnJumpStart;
+        InputHandler.Jump.InputAction.canceled -= OnJumpStop;
+        InputHandler.Move.performed -= OnMoveStart;
+        InputHandler.Move.canceled -= OnMoveStop;
+    }
+
+    /// <summary>
+    ///     Get all components on the player.
+    /// </summary>
+    private void GetComponents() {
+        body = GetComponent<Rigidbody2D>();
+        facer = GetComponent<Facer>();
+        grounder = GetComponent<Grounder>();
+        jumper = GetComponent<Jumper>();
+        runner = GetComponent<Runner>();
+        healthManager = GetComponent<HealthManager>();
+        InputHandler = GetComponent<PlayerInputHandler>();
+    }
+
+    /// <summary>
+    ///     Initialize the values that are tracked throughout the script's execution.
+    /// </summary>
+    private void InitializeTrackedValues() {
+        coyoteTimer = coyoteTime + 1;
+    }
+
+    /// <summary>
+    ///     Perform a jump.
+    /// </summary>
+    public void Jump() {
+        if (grounder.IsGrounded() || coyoteTimer <= coyoteTime) {
+            coyoteTimer = coyoteTime + 1;
+            jumper.Jump();
+        }
+    }
+
+    /// <summary>
+    ///     Callback for when the player lands.
+    /// </summary>
+    private void OnLand() {
+        if (InputHandler.IsEnabled && InputHandler.Jump.IsBuffered()) Jump();
+    }
+
+    /// <summary>
+    ///     Stop all movement of the player.
+    /// </summary>
+    public void StopMovement() {
+        jumper.CancelJump();
+        runner.StopRun();
+    }
+
+    /// <summary>
+    ///     Handle the player's coyote time.
+    /// </summary>
+    private void HandleCoyoteTime() {
+        jumper.StopGravity = coyoteTimer <= coyoteTime;
+    }
+
+    /// <summary>
+    ///     Subscribe to events managed within the script.
+    /// </summary>
+    private void SubscribeEvents() {
+        jumper.Landed += OnLand;
+    }
+
+    /// <summary>
+    ///     Update values that are to be tracked.
+    /// </summary>
+    private void UpdateTrackedValues() {
+        coyoteTimer = Mathf.Clamp(coyoteTimer + Time.deltaTime, 0, coyoteTime + 1);
+    }
 
     /// <inheritdoc />
     public void OnCreate() { }
@@ -116,121 +237,17 @@ public class Player : MonoBehaviour, ISpawnable {
         }
 
         if (InputHandler.IsEnabled && !InputHandler.Jump.InputAction.IsPressed()) jumper.CancelJump();
-    }
 
-    /// <summary>
-    ///     Enable all player inputs.
-    /// </summary>
-    public void EnableAllInputs() {
-        EnableBaseInputs();
-    }
-
-    /// <summary>
-    ///     Enable only the player's base inputs.
-    /// </summary>
-    private void EnableBaseInputs() {
-        InputHandler.Jump.InputAction.performed += OnJumpStart;
-        InputHandler.Jump.InputAction.canceled += OnJumpStop;
-        InputHandler.Move.performed += OnMoveStart;
-        InputHandler.Move.canceled += OnMoveStop;
-    }
-
-    /// <summary>
-    ///     Disable all player inputs.
-    /// </summary>
-    public void DisableAllInputs() {
-        DisableBaseInputs();
-    }
-
-    /// <summary>
-    ///     Disable only the player's base inputs.
-    /// </summary>
-    private void DisableBaseInputs() {
-        InputHandler.Jump.InputAction.performed -= OnJumpStart;
-        InputHandler.Jump.InputAction.canceled -= OnJumpStop;
-        InputHandler.Move.performed -= OnMoveStart;
-        InputHandler.Move.canceled -= OnMoveStop;
-    }
-
-    /// <summary>
-    ///     Get all components on the player.
-    /// </summary>
-    private void GetComponents() {
-        body = GetComponent<Rigidbody2D>();
-        grounder = GetComponent<Grounder>();
-        jumper = GetComponent<Jumper>();
-        runner = GetComponent<Runner>();
-        healthManager = GetComponent<HealthManager>();
-        InputHandler = GetComponent<PlayerInputHandler>();
-    }
-
-    /// <summary>
-    ///     Initialize the values that are tracked throughout the script's execution.
-    /// </summary>
-    private void InitializeTrackedValues() {
-        coyoteTimer = coyoteTime + 1;
-    }
-
-    /// <summary>
-    ///     Perform a jump.
-    /// </summary>
-    public void Jump() {
-        if (grounder.IsGrounded() || coyoteTimer <= coyoteTime) {
-            coyoteTimer = coyoteTime + 1;
-            jumper.Jump();
+        if (grounder.IsGrounded() && Mathf.Abs(body.velocity.x) > 0) {
+            if (!runParticles.isEmitting) {
+                Debug.Log("PLAY");
+                runParticles.Play();
+            }
+        } else {
+            if (runParticles.isEmitting) {
+                Debug.Log("STOP");
+                runParticles.Stop();
+            }
         }
     }
-
-    /// <summary>
-    ///     Callback for when the player lands.
-    /// </summary>
-    private void OnLand() {
-        if (InputHandler.IsEnabled && InputHandler.Jump.IsBuffered()) Jump();
-    }
-
-    /// <summary>
-    ///     Stop all movement of the player.
-    /// </summary>
-    public void StopMovement() {
-        jumper.CancelJump();
-        runner.StopRun();
-    }
-
-    /// <summary>
-    ///     Handle the player's coyote time.
-    /// </summary>
-    private void HandleCoyoteTime() {
-        jumper.StopGravity = coyoteTimer <= coyoteTime;
-    }
-
-    /// <summary>
-    ///     Subscribe to events managed within the script.
-    /// </summary>
-    private void SubscribeEvents() {
-        jumper.Landed += OnLand;
-    }
-
-    /// <summary>
-    ///     Update values that are to be tracked.
-    /// </summary>
-    private void UpdateTrackedValues() {
-        coyoteTimer = Mathf.Clamp(coyoteTimer + Time.deltaTime, 0, coyoteTime + 1);
-    }
-
-    #region Components
-
-    private Rigidbody2D body;
-    private Grounder grounder;
-    private Jumper jumper;
-    private Runner runner;
-    private HealthManager healthManager;
-
-    #endregion
-
-    #region Tracked Values
-
-    private float coyoteTimer;
-    private Vector2 inputVector;
-
-    #endregion
 }

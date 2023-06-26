@@ -1,9 +1,17 @@
+using System;
 using UnityEngine;
 
 /// <summary>
 ///     Deals with facing an actor towards a target and flipping their scale.
 /// </summary>
+[RequireComponent(typeof(Rigidbody2D))]
 public class Facer : MonoBehaviour {
+    private Rigidbody2D body;
+
+    private void Awake() {
+        body = GetComponent<Rigidbody2D>();
+    }
+
     /// <summary>
     ///     Face a target object.
     /// </summary>
@@ -11,6 +19,15 @@ public class Facer : MonoBehaviour {
     public void FaceObject(Transform target) {
         if ((target.position.x > transform.position.x && transform.localScale.x < 0) ||
             (target.position.x < transform.position.x && transform.localScale.x > 0))
+            Flip();
+    }
+
+    /// <summary>
+    ///     Check whether the actor should be flipped.
+    /// </summary>
+    public void CheckFlip() {
+        if ((body.velocity.x > 0 && transform.localScale.x < 0) ||
+            (body.velocity.x < 0 && transform.localScale.x > 0))
             Flip();
     }
 

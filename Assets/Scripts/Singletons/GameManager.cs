@@ -184,7 +184,6 @@ public class GameManager : Singleton<GameManager> {
     /// </summary>
     /// <param name="device">The device that will be used to control the new player.</param>
     private void AddNewPlayer(InputDevice device) {
-        Debug.Log("Adding new player " + device.description.interfaceName + " " + device.deviceId);
         var playerInput = playerInputManager.JoinPlayer(device.deviceId, -1, null, device);
         var existingPlayer = players.Values.FirstOrDefault();
         if (existingPlayer) playerInput.transform.position = existingPlayer.transform.position;
