@@ -33,7 +33,7 @@ public class HealthManager : MonoBehaviour {
     /// </summary>
     public float CurrentHealth {
         get => currentHealth;
-        private set {
+        set {
             currentHealth = Mathf.Clamp(value, 0, MaxHealth);
             HealthChanged?.Invoke(CurrentHealth, MaxHealth);
         }

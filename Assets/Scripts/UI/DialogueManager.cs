@@ -22,7 +22,7 @@ public class DialogueManager : BaseUI {
     public override void Open() {
         base.Open();
 
-        foreach (var playerInputManager in FindObjectsOfType<PlayerInputManager>(true)) playerInputManager.Disable();
+        foreach (var playerInputManager in FindObjectsOfType<PlayerInputHandler>(true)) playerInputManager.Disable();
 
         if (UIManager.Instance) UIManager.Instance.Actions.Submit.performed += OnSubmit;
     }
@@ -33,7 +33,7 @@ public class DialogueManager : BaseUI {
 
         if (UIManager.Instance) UIManager.Instance.Actions.Submit.performed -= OnSubmit;
 
-        foreach (var playerInputManager in FindObjectsOfType<PlayerInputManager>(true)) playerInputManager.Enable();
+        foreach (var playerInputManager in FindObjectsOfType<PlayerInputHandler>(true)) playerInputManager.Enable();
 
         base.Close();
     }

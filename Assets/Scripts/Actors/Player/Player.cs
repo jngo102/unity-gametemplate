@@ -8,7 +8,9 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Jumper))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Runner))]
-[RequireComponent(typeof(PlayerInputManager))]
+// [RequireComponent(typeof(PlayerInputManager))]
+[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(HealthManager))]
 public class Player : MonoBehaviour, ISpawnable {
     #region Exposed Values
 
@@ -19,13 +21,43 @@ public class Player : MonoBehaviour, ISpawnable {
 
     #endregion
 
-    public PlayerInputManager InputManager { get; private set; }
+    /// <summary>
+    ///     The input manager for this specific player instance.
+    /// </summary>
+    public PlayerInputHandler InputHandler { get; private set; }
+    
+    #region Unity Functions
+
+    private void Awake() {
+        GetComponents();
+        AssignPlayer();
+        InitializeTrackedValues();
+        SubscribeEvents();
+    }
+
+    private void Update() {
+        HandleCoyoteTime();
+        CheckGrounded();
+        UpdateTrackedValues();
+    }
+
+    private void OnEnable() {
+        EnableAllInputs();
+    }
+
+    private void OnDisable() {
+        DisableAllInputs();
+    }
+
+    #endregion
 
     /// <inheritdoc />
     public void OnCreate() { }
 
     /// <inheritdoc />
-    public void OnSpawn() { }
+    public void OnSpawn() {
+        
+    }
 
     /// <inheritdoc />
     public void OnDespawn() { }
@@ -71,6 +103,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// </summary>
     private void AssignPlayer() {
         FindObjectOfType<CameraController>(true).Target = transform;
+        DontDestroyOnLoad(this);
     }
 
     /// <summary>
@@ -82,7 +115,7 @@ public class Player : MonoBehaviour, ISpawnable {
             jumper.StopGravity = true;
         }
 
-        if (InputManager.IsEnabled && !InputManager.Jump.InputAction.IsPressed()) jumper.CancelJump();
+        if (InputHandler.IsEnabled && !InputHandler.Jump.InputAction.IsPressed()) jumper.CancelJump();
     }
 
     /// <summary>
@@ -96,10 +129,10 @@ public class Player : MonoBehaviour, ISpawnable {
     ///     Enable only the player's base inputs.
     /// </summary>
     private void EnableBaseInputs() {
-        InputManager.Jump.InputAction.performed += OnJumpStart;
-        InputManager.Jump.InputAction.canceled += OnJumpStop;
-        InputManager.Move.performed += OnMoveStart;
-        InputManager.Move.canceled += OnMoveStop;
+        InputHandler.Jump.InputAction.performed += OnJumpStart;
+        InputHandler.Jump.InputAction.canceled += OnJumpStop;
+        InputHandler.Move.performed += OnMoveStart;
+        InputHandler.Move.canceled += OnMoveStop;
     }
 
     /// <summary>
@@ -113,10 +146,10 @@ public class Player : MonoBehaviour, ISpawnable {
     ///     Disable only the player's base inputs.
     /// </summary>
     private void DisableBaseInputs() {
-        InputManager.Jump.InputAction.performed -= OnJumpStart;
-        InputManager.Jump.InputAction.canceled -= OnJumpStop;
-        InputManager.Move.performed -= OnMoveStart;
-        InputManager.Move.canceled -= OnMoveStop;
+        InputHandler.Jump.InputAction.performed -= OnJumpStart;
+        InputHandler.Jump.InputAction.canceled -= OnJumpStop;
+        InputHandler.Move.performed -= OnMoveStart;
+        InputHandler.Move.canceled -= OnMoveStop;
     }
 
     /// <summary>
@@ -127,7 +160,8 @@ public class Player : MonoBehaviour, ISpawnable {
         grounder = GetComponent<Grounder>();
         jumper = GetComponent<Jumper>();
         runner = GetComponent<Runner>();
-        InputManager = GetComponent<PlayerInputManager>();
+        healthManager = GetComponent<HealthManager>();
+        InputHandler = GetComponent<PlayerInputHandler>();
     }
 
     /// <summary>
@@ -151,7 +185,7 @@ public class Player : MonoBehaviour, ISpawnable {
     ///     Callback for when the player lands.
     /// </summary>
     private void OnLand() {
-        if (InputManager.IsEnabled && InputManager.Jump.IsBuffered()) Jump();
+        if (InputHandler.IsEnabled && InputHandler.Jump.IsBuffered()) Jump();
     }
 
     /// <summary>
@@ -189,6 +223,7 @@ public class Player : MonoBehaviour, ISpawnable {
     private Grounder grounder;
     private Jumper jumper;
     private Runner runner;
+    private HealthManager healthManager;
 
     #endregion
 
@@ -196,31 +231,6 @@ public class Player : MonoBehaviour, ISpawnable {
 
     private float coyoteTimer;
     private Vector2 inputVector;
-
-    #endregion
-
-    #region Unity Functions
-
-    private void Awake() {
-        GetComponents();
-        AssignPlayer();
-        InitializeTrackedValues();
-        SubscribeEvents();
-    }
-
-    private void Update() {
-        HandleCoyoteTime();
-        CheckGrounded();
-        UpdateTrackedValues();
-    }
-
-    private void OnEnable() {
-        EnableAllInputs();
-    }
-
-    private void OnDisable() {
-        DisableAllInputs();
-    }
 
     #endregion
 }

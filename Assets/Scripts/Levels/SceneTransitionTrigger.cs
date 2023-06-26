@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+///     Behaviour that starts  a scene transition when triggered.  
+/// </summary>
 [RequireComponent(typeof(Collider2D))]
 public class SceneTransitionTrigger : MonoBehaviour {
     /// <summary>

@@ -15,19 +15,27 @@ public class CameraController : MonoBehaviour {
         get => target;
         set {
             target = value;
-            if (target == null) return;
-            var targetPos = target.transform.position;
-            var selfTransform = transform;
-            selfTransform.position = new Vector3(targetPos.x, targetPos.y, selfTransform.position.z);
+            ResetPosition();
         }
     }
 
     private void Awake() {
         shaker = GetComponent<Shaker>();
+        GameManager.Instance.LevelStarted += ResetPosition;
     }
 
     private void Update() {
         FollowTarget();
+    }
+
+    /// <summary>
+    /// Reset the camera to the target's position.
+    /// </summary>
+    private void ResetPosition() {
+        if (!target) return;
+        var targetPos = target.transform.position;
+        var selfTransform = transform;
+        selfTransform.position = new Vector3(targetPos.x, targetPos.y, selfTransform.position.z);
     }
 
     /// <summary>

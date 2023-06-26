@@ -6,6 +6,16 @@ using System;
 [Serializable]
 public class SaveData {
     /// <summary>
+    ///     The player's current health.
+    /// </summary>
+    public float currentHealth;
+
+    /// <summary>
+    ///     The player's maximum health.
+    /// </summary>
+    public float maxHealth;
+    
+    /// <summary>
     ///     Input binding overrides that the player has made.
     /// </summary>
     public string bindingOverrides;
@@ -21,6 +31,8 @@ public class SaveData {
     public string saveScene;
 
     public SaveData() {
+        currentHealth = 5;
+        maxHealth = 5;
         bindingOverrides = "";
         language = "en";
         saveScene = "Level1";

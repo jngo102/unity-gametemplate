@@ -18,7 +18,7 @@ public abstract class Interactable : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
-            other.GetComponent<PlayerInputManager>().Move.performed += OnInteract;
+            other.GetComponent<PlayerInputHandler>().Move.performed += OnInteract;
             if (autoInteract)
                 Interact();
             else
@@ -28,7 +28,7 @@ public abstract class Interactable : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")) {
-            other.GetComponent<PlayerInputManager>().Move.performed -= OnInteract;
+            other.GetComponent<PlayerInputHandler>().Move.performed -= OnInteract;
             CanInteract = false;
         }
     }

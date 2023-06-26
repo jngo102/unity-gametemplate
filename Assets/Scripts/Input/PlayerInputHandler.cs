@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 /// <summary>
 ///     Singleton that manages global inputs.
 /// </summary>
-public class PlayerInputManager : MonoBehaviour {
+[RequireComponent(typeof(PlayerInput))]
+public class PlayerInputHandler : MonoBehaviour {
     /// <summary>
     ///     The duration that an input may be buffered for.
     /// </summary>
@@ -21,15 +22,12 @@ public class PlayerInputManager : MonoBehaviour {
     /// </summary>
     [NonSerialized] public InputAction Move;
 
-    /// <summary>
-    ///     The player input actions instance.
-    /// </summary>
-    public PlayerInputActions InputActions { get; private set; }
+    public PlayerInput PlayerInput { get; private set; }
 
     /// <summary>
     ///     Whether the input manager is enabled.
     /// </summary>
-    public bool IsEnabled => InputActions.asset.enabled;
+    public bool IsEnabled => PlayerInput.enabled;
 
     private void Awake() {
         SetupInputActions();
@@ -47,26 +45,26 @@ public class PlayerInputManager : MonoBehaviour {
     ///     Initialize input actions.
     /// </summary>
     private void SetupInputActions() {
-        InputActions ??= new PlayerInputActions();
+        PlayerInput = GetComponent<PlayerInput>();
         var overridesJson = UIManager.Instance.ReferencePlayerActions.asset.SaveBindingOverridesAsJson();
-        InputActions.asset.LoadBindingOverridesFromJson(overridesJson);
+        PlayerInput.actions.LoadBindingOverridesFromJson(overridesJson);
 
-        Jump = new BufferedInputAction(InputActions.Player.Jump, inputBufferTime);
+        Jump = new BufferedInputAction(PlayerInput.actions["jump"], inputBufferTime);
 
-        Move = InputActions.Player.Move;
+        Move = PlayerInput.actions["move"];
     }
 
     /// <summary>
     ///     Disable all input.
     /// </summary>
     public void Disable() {
-        InputActions.Disable();
+        PlayerInput.actions.Disable();
     }
 
     /// <summary>
     ///     Enable all input.
     /// </summary>
     public void Enable() {
-        InputActions.Enable();
+        PlayerInput.actions.Enable();
     }
 }

@@ -51,7 +51,7 @@ public class SaveDataManager : Singleton<SaveDataManager> {
         saveData = fileManager.Load(selectedProfileId);
 
         if (saveData == null) {
-            Debug.LogError("No save data was found. Creating new save data.");
+            Debug.LogWarning("No save data was found. Creating new save data.");
             NewGame();
         }
 

@@ -72,9 +72,9 @@ public abstract class AbstractedObjectPool<T> : MonoBehaviour where T : MonoBeha
     }
 
     /// <summary>
-    ///     Callback for when an object is destroyed.
+    ///     Callback for when an object is deleted.
     /// </summary>
-    /// <param name="obj">The object that is being destroyed.</param>
+    /// <param name="obj">The object that is being deleted.</param>
     protected virtual void OnDelete(T obj) {
         obj.OnDelete();
         Destroy(obj);

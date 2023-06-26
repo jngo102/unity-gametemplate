@@ -14,16 +14,16 @@ public class GlobalManager : MonoBehaviour {
     /// </summary>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Initialize() {
-        InstantiateSingletons();
+        CreateSingletons();
     }
 
     /// <summary>
     ///     Create instances of all singletons.
     /// </summary>
-    private static void InstantiateSingletons() {
-        Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/GameManager"));
-        Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/UIManager"));
-        Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/SaveDataManager"));
+    private static void CreateSingletons() {
+        var gameManager = GameManager.Instance;
+        var uiManager = UIManager.Instance;
+        var saveDataManager = SaveDataManager.Instance;
 #if UNITY_EDITOR
         Instantiate(Resources.Load<GameObject>($"{SingletonsDirName}/UnityExplorer"));
 #endif
