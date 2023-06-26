@@ -111,6 +111,8 @@ Desktop.ini
 .DS_Store
 
 # Project specific
+.idea/
+.vsconfig
 /Build
 /UnityExplorer.Editor
 /sinai-dev-UnityExplorer

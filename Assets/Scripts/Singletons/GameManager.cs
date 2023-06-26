@@ -26,19 +26,26 @@ public class GameManager : Singleton<GameManager> {
     protected override void OnAwake() {
         playerInputManager = GetComponent<PlayerInputManager>();
 
-        InputSystem.onDeviceChange += (device, change) => {
-            switch (change) {
-                case InputDeviceChange.Added:
-                case InputDeviceChange.Reconnected:
-                    AddNewPlayer(device);
-                    break;
-                case InputDeviceChange.Disconnected:
-                    RemoveExistingPlayer(device);
-                    break;
-            }
-        };
+        InputSystem.onDeviceChange += OnDeviceChange;
     }
-    
+
+    /// <summary>
+    ///     Callback for when a controller event occurs.
+    /// </summary>
+    /// <param name="device">The device that triggered the event.</param>
+    /// <param name="change">The change that occurred.</param>
+    private void OnDeviceChange(InputDevice device, InputDeviceChange change) {
+        switch (change) {
+            case InputDeviceChange.Added:
+            case InputDeviceChange.Reconnected:
+                AddNewPlayer(device);
+                break;
+            case InputDeviceChange.Disconnected:
+                RemoveExistingPlayer(device);
+                break;
+        }
+    }
+
     /// <summary>
     ///     Change scenes with a fade transition.
     /// </summary>
