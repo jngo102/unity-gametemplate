@@ -98,6 +98,10 @@ MonoBehaviour:
     m_Localized: Jump
     m_Metadata:
       m_Items: []
+  - m_Id: 1432796338655232
+    m_Localized: Score
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

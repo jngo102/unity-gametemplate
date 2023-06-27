@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 388969869324
-    m_Localized: Sfx
+    m_Localized: SFX
     m_Metadata:
       m_Items: []
   - m_Id: 890718038855680
@@ -96,6 +96,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 890718093381646
     m_Localized: Springen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1432796338655232
+    m_Localized: Punktzahl
     m_Metadata:
       m_Items: []
   references:

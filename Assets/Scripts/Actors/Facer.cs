@@ -6,6 +6,10 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 public class Facer : MonoBehaviour {
+    public delegate void OnFlip();
+
+    public event OnFlip Flipped;
+    
     private Rigidbody2D body;
 
     private void Awake() {
@@ -39,5 +43,6 @@ public class Facer : MonoBehaviour {
         var localScale = selfTransform.localScale;
         localScale.x *= -1;
         selfTransform.localScale = localScale;
+        Flipped?.Invoke();
     }
 }

@@ -95,6 +95,10 @@ MonoBehaviour:
     m_Key: JUMP
     m_Metadata:
       m_Items: []
+  - m_Id: 1432796338655232
+    m_Key: SCORE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -59,7 +59,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 890718093381637
-    m_Localized: Ataduras
+    m_Localized: "Fijaci\xF3n"
     m_Metadata:
       m_Items: []
   - m_Id: 890718093381638
@@ -96,6 +96,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 890718093381646
     m_Localized: Saltar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1432796338655232
+    m_Localized: Puntaje
     m_Metadata:
       m_Items: []
   references:

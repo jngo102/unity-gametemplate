@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Runner))]
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(HealthManager))]
+[RequireComponent(typeof(SquashStretchManager))]
 public class Player : MonoBehaviour, ISpawnable {
     #region Exposed Values
 
@@ -36,6 +37,7 @@ public class Player : MonoBehaviour, ISpawnable {
     private Jumper jumper;
     private Runner runner;
     private HealthManager healthManager;
+    private SquashStretchManager squashStretchManager;
 
     #endregion
 
@@ -115,8 +117,9 @@ public class Player : MonoBehaviour, ISpawnable {
         grounder = GetComponent<Grounder>();
         jumper = GetComponent<Jumper>();
         runner = GetComponent<Runner>();
-        healthManager = GetComponent<HealthManager>();
         InputHandler = GetComponent<PlayerInputHandler>();
+        healthManager = GetComponent<HealthManager>();
+        squashStretchManager = GetComponent<SquashStretchManager>();
     }
 
     /// <summary>
@@ -133,6 +136,7 @@ public class Player : MonoBehaviour, ISpawnable {
         if (grounder.IsGrounded() || coyoteTimer <= coyoteTime) {
             coyoteTimer = coyoteTime + 1;
             jumper.Jump();
+            squashStretchManager.Stretch = true;
         }
     }
 
@@ -141,6 +145,7 @@ public class Player : MonoBehaviour, ISpawnable {
     /// </summary>
     private void OnLand() {
         if (InputHandler.IsEnabled && InputHandler.Jump.IsBuffered()) Jump();
+        squashStretchManager.Squash = true;
     }
 
     /// <summary>
@@ -239,15 +244,9 @@ public class Player : MonoBehaviour, ISpawnable {
         if (InputHandler.IsEnabled && !InputHandler.Jump.InputAction.IsPressed()) jumper.CancelJump();
 
         if (grounder.IsGrounded() && Mathf.Abs(body.velocity.x) > 0) {
-            if (!runParticles.isEmitting) {
-                Debug.Log("PLAY");
-                runParticles.Play();
-            }
+            if (!runParticles.isEmitting) runParticles.Play();
         } else {
-            if (runParticles.isEmitting) {
-                Debug.Log("STOP");
-                runParticles.Stop();
-            }
+            if (runParticles.isEmitting) runParticles.Stop();
         }
     }
 }

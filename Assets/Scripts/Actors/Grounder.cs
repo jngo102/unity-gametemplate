@@ -43,4 +43,23 @@ public class Grounder : MonoBehaviour {
 
         return false;
     }
+
+    /// <summary>
+    ///     Force the actor to the ground.
+    /// </summary>
+    public void ForceGround() {
+        for (var rayIdx = 0; rayIdx < numGroundCheckRays; rayIdx++) {
+            var bounds = collider.bounds;
+            var rayOrigin =
+                new Vector2(bounds.min.x + bounds.size.x * rayIdx / (numGroundCheckRays - 1),
+                    bounds.min.y);
+            var hit = Physics2D.Raycast(rayOrigin, Vector2.down, Mathf.Infinity,
+                LayerMask.GetMask("Terrain"));
+            if (hit) {
+                var selfTransform = transform;
+                selfTransform.position = new Vector2(selfTransform.position.x, hit.point.y + collider.bounds.size.y / 2);
+                return;
+            }
+        }
+    }
 }
