@@ -10,24 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: Dialogue_zh
+  m_Name: Dialogue_ko
   m_EditorClassIdentifier: 
   m_LocaleId:
-    m_Code: zh
+    m_Code: ko
   m_SharedData: {fileID: 11400000, guid: 0d906ac6dda4b934dac50877500fdd71, type: 2}
   m_Metadata:
     m_Items: []
   m_TableData:
   - m_Id: 891804126359552
-    m_Localized: "\u8FD9\u662F\u7B2C1\u9875\u3002"
+    m_Localized: "\uC774\uAC83\uC740 \uD398\uC774\uC9C0 1\uC785\uB2C8\uB2E4."
     m_Metadata:
       m_Items: []
   - m_Id: 891804164108288
-    m_Localized: "\u73B0\u5728\u6211\u4EEC\u5728\u7B2C2\u9875\u4E0A\u3002\u8FD9\u662F\u4E00\u4E2A\u989D\u5916\u7684\u957F\u5B57\u7B26\u4E32\uFF0C\u5B83\u5C06\u5141\u8BB8\u5BF9\u8BDD\u7BA1\u7406\u5668\u4E2D\u7684SKIP\u529F\u80FD\u6D4B\u8BD5\u3002"
+    m_Localized: "\uC774\uC81C \uC6B0\uB9AC\uB294 2 \uD398\uC774\uC9C0\uC5D0 \uC788\uC2B5\uB2C8\uB2E4.
+      \uC774\uAC83\uC740 \uB300\uD654 \uAD00\uB9AC\uC790\uC758 \uC2A4\uD0B5 \uAE30\uB2A5\uC744
+      \uD14C\uC2A4\uD2B8 \uD560 \uC218\uC788\uB294 \uAE34 \uC2A4\uD2B8\uB9C1\uC785\uB2C8\uB2E4."
     m_Metadata:
       m_Items: []
   - m_Id: 891804164108289
-    m_Localized: "\u6700\u540E\uFF0C\u8FD9\u662F\u7B2C3\u9875\uFF0C\u6700\u540E\u4E00\u9875\u3002"
+    m_Localized: "\uB9C8\uC9C0\uB9C9\uC73C\uB85C, \uC5EC\uAE30\uC5D0 \uB9C8\uC9C0\uB9C9
+      \uD398\uC774\uC9C0\uAC00 \uC788\uC2B5\uB2C8\uB2E4."
     m_Metadata:
       m_Items: []
   references:

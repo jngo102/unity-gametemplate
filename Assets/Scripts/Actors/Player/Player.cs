@@ -146,6 +146,7 @@ public class Player : MonoBehaviour, ISpawnable {
     private void OnLand() {
         if (InputHandler.IsEnabled && InputHandler.Jump.IsBuffered()) Jump();
         squashStretchManager.Squash = true;
+        grounder.ForceGround();
     }
 
     /// <summary>
