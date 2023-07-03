@@ -34,7 +34,6 @@ jobs:
         id: checkout-repo
         uses: actions/checkout@v3
         with:
-          lfs: true
           submodules: true
 
       - name: Install Unity Explorer dependency
